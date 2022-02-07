@@ -37,7 +37,6 @@ export class UserWordService {
   private static setWorDifficultyById(id: string, wordId: string, difficulty: string) {
     const getWord = this.getAllWordsByUserId(id).then((data) => {
       const wordData = data.find((word) => word.wordId === wordId);
-      console.log(wordData);
       if (wordData) {
         return {
           difficulty,
