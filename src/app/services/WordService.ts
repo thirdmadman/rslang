@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { GlobalConstants } from '../../GlobalConstants';
+import { IPaginatedArray } from '../interfaces/IPaginatedArray';
 import { IWord } from '../interfaces/IWord';
 
 export class WordService {
@@ -11,7 +12,16 @@ export class WordService {
           page,
         },
       })
-      .then((res) => res.data as Array<IWord>);
+      .then((res) => {
+        const paginatedArray = {
+          array: res.data as Array<IWord>,
+          pageSize: 20,
+          currentGroup: group,
+          currentPage: page,
+          size: -1,
+        } as IPaginatedArray<IWord>;
+        return paginatedArray;
+      });
   }
 
   static getWordsById(id: string) {
