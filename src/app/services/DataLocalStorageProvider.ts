@@ -1,7 +1,7 @@
 import { IConfigs } from '../interfaces/IConfigs';
 
 class DataLocalStorageProvider {
-  static localStorageItemName = 'christmas-task';
+  static localStorageItemName = 'thirdmadman-rs-lang';
 
   public static setData(data: IConfigs) {
     localStorage.setItem(DataLocalStorageProvider.localStorageItemName, JSON.stringify(data));
@@ -38,10 +38,10 @@ class DataLocalStorageProvider {
   }
 
   private static generateData() {
-    const gameConfigs = {
+    const configs = {
       isExists: false,
     };
-    return gameConfigs as IConfigs;
+    return configs as IConfigs;
   }
 }
 
