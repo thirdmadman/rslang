@@ -1,59 +1,59 @@
-/* eslint-disable max-len */
-import { Control } from '../../../../services/control';
 import { IWord } from '../../../../interfaces/IWord';
 import { GlobalConstants } from '../../../../../GlobalConstants';
+import { dch } from '../../../dch';
+import Renderable from '../../../Renderable';
+import './card.scss';
 
-export class Card extends Control {
+interface IButtonVisible {
+  isButtonVisible: boolean;
+}
+
+export class Card extends Renderable {
   data: IWord;
 
-  imageContainer: Control;
-
-  image: Control;
-
-  textContainer: Control;
-
-  word: Control;
-
-  transcription: Control;
-
-  wordTranslate: Control;
-
-  audioButton: Control;
-
-  audioWord: HTMLAudioElement;
-
-  textMeaning: Control;
-
-  textMeaningTranslate: Control;
-
-  textExample: Control;
-
-  textExampleTranslate: Control;
-
-  constructor(parentNode: HTMLElement, data: IWord) {
-    super(parentNode, 'div', 'word-card');
+  constructor(data: IWord, buttonVisible: IButtonVisible) {
+    super();
     this.data = data;
-    this.audioWord = new Audio(`${GlobalConstants.DEFAULT_API_URL}/${data.audio}`);
-    this.imageContainer = new Control(this.node, 'div', 'card-image-container');
-    this.image = new Control(this.imageContainer.node, 'img', 'card-mage');
-    this.image.node.setAttribute('src', `${GlobalConstants.DEFAULT_API_URL}/${data.image}`);
-    this.image.node.setAttribute('alt', 'image');
-    this.textContainer = new Control(this.node, 'div', 'discription-container');
-    this.word = new Control(this.textContainer.node, 'h3', 'word-title', data.word);
-    this.transcription = new Control(this.textContainer.node, 'span', 'word-subtitle', data.transcription);
-    this.wordTranslate = new Control(this.textContainer.node, 'span', 'word-subtitle', data.wordTranslate);
-    this.audioButton = new Control(this.textContainer.node, 'button', 'word-btn', 'play');
+    const image = dch('img', ['card-mage']);
+    image.setAttribute('src', `${GlobalConstants.DEFAULT_API_URL}/${data.image}`);
+    image.setAttribute('alt', 'image');
 
-    this.audioButton.node.onclick = async () => this.playAudio();
-    this.textMeaning = new Control(this.textContainer.node, 'p', 'card-text');
-    this.textMeaning.node.innerHTML = data.textMeaning;
-    this.textMeaningTranslate = new Control(this.textContainer.node, 'p', 'card-text', data.textMeaningTranslate);
-    this.textExample = new Control(this.textContainer.node, 'p', 'card-text');
-    this.textExample.node.innerHTML = data.textExample;
-    this.textExampleTranslate = new Control(this.textContainer.node, 'p', 'card-text', data.textExampleTranslate);
-  }
+    const imageContainer = dch('div', ['card-image-container'], '', image);
+    const textContainer = dch('div', ['discription-container']);
+    this.rootNode = dch('div', ['card'], '', imageContainer, textContainer);
+    const audioWord = new Audio(`${GlobalConstants.DEFAULT_API_URL}/${data.audio}`);
+    const audioMeaning = new Audio(`${GlobalConstants.DEFAULT_API_URL}/${data.audioMeaning}`);
+    const audioExample = new Audio(`${GlobalConstants.DEFAULT_API_URL}/${data.audioExample}`);
 
-  async playAudio() {
-    await this.audioWord.play();
+    const word = dch('h3', ['word-title'], data.word);
+    const transcription = dch('span', ['word-subtitle'], data.transcription);
+    const wordTranslate = dch('span', ['word-subtitle'], data.wordTranslate);
+    const audioButton = dch('button', ['word-btn'], 'play');
+    audioButton.onclick = async () => {
+      await audioMeaning.play();
+      await audioWord.play();
+      await audioExample.play();
+    };
+
+    const textMeaning = dch('p', ['card-text'], data.textMeaning);
+    const textMeaningTranslate = dch('p', ['card-text'], data.textMeaningTranslate);
+    const textExample = dch('p', ['card-text'], data.textExample);
+    const textExampleTranslate = dch('p', ['card-text'], data.textExampleTranslate);
+    textContainer.append(
+      word,
+      transcription,
+      wordTranslate,
+      audioButton,
+      textMeaning,
+      textMeaningTranslate,
+      textExample,
+      textExampleTranslate,
+    );
+
+    if (buttonVisible.isButtonVisible) {
+      const dificcultyButton = dch('button', ['word-btn'], 'сложное');
+      const studyButton = dch('button', ['word-btn'], 'изученное');
+      textContainer.append(dificcultyButton, studyButton);
+    }
   }
 }
