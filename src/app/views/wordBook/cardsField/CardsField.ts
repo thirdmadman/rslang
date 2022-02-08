@@ -1,16 +1,22 @@
-import { Control } from '../../../services/control';
+import { dch } from '../../dch';
 import { IWord } from '../../../interfaces/IWord';
 import { Card } from './card/Card';
+import Renderable from '../../Renderable';
+// import { WordService } from '../../../services/WordService';
+import { IPaginatedArray } from '../../../interfaces/IPaginatedArray';
+import './CardField.scss';
 
-export class CardField extends Control {
-  constructor(parentNode: HTMLElement) {
-    super(parentNode, 'div', 'cards-container');
+export class CardField extends Renderable {
+  constructor(data: IPaginatedArray<IWord>) {
+    super();
+    this.rootNode = dch('div', ['cards-container'], '');
+    this.addCards(data.array);
   }
 
-  addCards(cards: IWord[]) {
-    cards.forEach((el) => {
-      const card = new Card(this.node, el);
-      return card;
+  addCards(arrayWords: IWord[]) {
+    arrayWords.forEach((el) => {
+      const card = new Card(el, { isButtonVisible: true });
+      this.rootNode.append(card.getElement());
     });
   }
 }
