@@ -51,9 +51,9 @@ export class Card extends Renderable {
     );
 
     if (buttonVisible.isButtonVisible) {
-      const dificcultyButton = dch('button', ['word-btn'], 'сложное');
-      const studyButton = dch('button', ['word-btn'], 'изученное');
-      textContainer.append(dificcultyButton, studyButton);
+      const difficultyButton = dch('button', ['word-btn'], 'сложное');
+      const buttonAddWordToStudied = dch('button', ['word-btn'], 'изученное');
+      textContainer.append(difficultyButton, buttonAddWordToStudied);
     }
   }
 }
