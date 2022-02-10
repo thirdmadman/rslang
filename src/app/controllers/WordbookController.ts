@@ -1,11 +1,6 @@
 import { AbstractController } from './AbstractController';
 import { CardField } from '../views/wordBook/cardsField/CardsField';
 import { WordService } from '../services/WordService';
-// import { IPaginatedArray } from '../interfaces/IPaginatedArray';
-// import { IWord } from '../interfaces/IWord';
-// import { GlobalConstants } from '../../GlobalConstants';
-// import { PathBus } from '../services/PathBus';
-// import { dch } from '../views/dch';
 import { LevelNavigation } from '../views/wordBook/levelNavigation/LevelNavigation';
 
 export class WordbookController extends AbstractController {
@@ -15,8 +10,7 @@ export class WordbookController extends AbstractController {
     const currentGroup = +path.split('/')[1];
     WordService.getWordsByGroupAndPage(currentGroup, currentPage).then((data) => {
       const cardField = new CardField(data);
-      const levelNavigation = new LevelNavigation(data);
-      console.log(data);
+      const levelNavigation = new LevelNavigation(data);      
       this.rootNode.append(cardField.getElement(), levelNavigation.getElement());
     }).catch(() => {});
   }
