@@ -39,8 +39,8 @@ export class CardsField extends Renderable {
   }
 
   changePage(btn: string) {
-    if (this.data.currentPage < 1) {
-      this.data.currentPage = 1;
+    if (this.data.currentPage < 0) {
+      this.data.currentPage = 0;
     } else if (this.data.currentPage > GlobalConstants.NUMBER_OF_PAGES) {
       this.data.currentPage = GlobalConstants.NUMBER_OF_PAGES;
     }
