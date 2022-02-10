@@ -2,7 +2,6 @@ import { dch } from '../../dch';
 import { IWord } from '../../../interfaces/IWord';
 import { Card } from './card/Card';
 import Renderable from '../../Renderable';
-// import { WordService } from '../../../services/WordService';
 import { IPaginatedArray } from '../../../interfaces/IPaginatedArray';
 import './CardField.scss';
 import { PathBus } from '../../../services/PathBus';
