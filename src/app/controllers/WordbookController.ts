@@ -8,7 +8,7 @@ export class WordbookController extends AbstractController {
     this.rootNode.innerHTML = `WordbookController - ${path}`;
     const currentPage = +path.split('/')[2];
     const currentGroup = +path.split('/')[1];
-    WordService.getWordsByGroupAndPage(currentGroup, currentPage).then((data) => {
+    WordService.getWordsByGroupAndPage(currentGroup - 1, currentPage - 1).then((data) => {
       const cardField = new CardsField(data);
       const levelNavigation = new LevelNavigation(data);
       this.rootNode.append(cardField.getElement(), levelNavigation.getElement());

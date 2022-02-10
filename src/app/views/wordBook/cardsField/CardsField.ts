@@ -24,7 +24,7 @@ export class CardsField extends Renderable {
     this.pagenationNum = dch(
       'div',
       ['pagination-text'],
-      `${this.data.currentPage}/${GlobalConstants.NUMBER_OF_PAGES - 1}`,
+      `${this.data.currentPage + 1}/${GlobalConstants.NUMBER_OF_PAGES}`,
     );
     const pagenation = dch('div', ['pagination'], '', this.prevButton, this.pagenationNum, nextButton);
     this.rootNode = dch('div', ['cards-container'], '', pagenation);
@@ -47,7 +47,7 @@ export class CardsField extends Renderable {
     if (btn === 'prev') {
       if (this.data.currentPage > 0) this.data.currentPage--;
       PathBus.setCurrentPath(
-        `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup}/${this.data.currentPage}`,
+        `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
       );
     }
 
@@ -55,7 +55,7 @@ export class CardsField extends Renderable {
       if (this.data.currentPage < GlobalConstants.NUMBER_OF_PAGES - 1) this.data.currentPage++;
       this.updateCardField(this.data);
       PathBus.setCurrentPath(
-        `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup}/${this.data.currentPage}`,
+        `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
       );
     }
     this.pagenationNum.innerHTML = `${this.data.currentPage}/${GlobalConstants.NUMBER_OF_PAGES - 1}`;
