@@ -8,7 +8,7 @@ import './CardField.scss';
 import { PathBus } from '../../../services/PathBus';
 import { GlobalConstants } from '../../../../GlobalConstants';
 
-export class CardField extends Renderable {
+export class CardsField extends Renderable {
   data: IPaginatedArray<IWord>;
 
   pagenationNum: HTMLElement;
