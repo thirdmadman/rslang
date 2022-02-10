@@ -28,8 +28,6 @@ export class TokenProvider {
     if (this.checkIsAuthDataExists()) {
       const expiresIn = new Date(this.authDataDate);
       expiresIn.setHours(expiresIn.getHours() + 4);
-      console.log(new Date(this.authDataDate));
-      console.log(expiresIn);
       return new Date().getTime() > expiresIn.getTime();
     }
     return true;
