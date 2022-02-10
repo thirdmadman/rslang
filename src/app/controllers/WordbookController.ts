@@ -6,6 +6,7 @@ import { WordService } from '../services/WordService';
 // import { GlobalConstants } from '../../GlobalConstants';
 // import { PathBus } from '../services/PathBus';
 // import { dch } from '../views/dch';
+import { LevelNavigation } from '../views/wordBook/levelNavigation/LevelNavigation';
 
 export class WordbookController extends AbstractController {
   resolve(path: string) {
@@ -14,8 +15,9 @@ export class WordbookController extends AbstractController {
     const currentGroup = +path.split('/')[1];
     WordService.getWordsByGroupAndPage(currentGroup, currentPage).then((data) => {
       const cardField = new CardField(data);
+      const levelNavigation = new LevelNavigation(data);
       console.log(data);
-      this.rootNode.append(cardField.getElement());
+      this.rootNode.append(cardField.getElement(), levelNavigation.getElement());
     }).catch(() => {});
   }
 }
