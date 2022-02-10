@@ -20,4 +20,6 @@ export class GlobalConstants {
   public static ROUTE_VOCABULARY = '/vocabulary';
 
   public static ROUTE_STATISTICS = '/statistics';
+
+  public static NUMBER_OF_PAGES = 30;
 }
