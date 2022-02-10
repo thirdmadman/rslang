@@ -15,7 +15,7 @@ export class UserService {
   }
 
   static createUser(email: string, password: string, name: string = email) {
-    return axiosIntance()
+    return axiosIntance(true)
       .post(`${GlobalConstants.API_ENDPOINT_USERS}`, {
         name,
         email,
