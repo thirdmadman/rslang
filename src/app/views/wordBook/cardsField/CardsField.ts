@@ -53,13 +53,10 @@ export class CardsField extends Renderable {
 
     if (btn === 'next') {
       if (this.data.currentPage < GlobalConstants.NUMBER_OF_PAGES - 1) this.data.currentPage++;
-      this.updateCardField(this.data);
       PathBus.setCurrentPath(
         `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
       );
     }
     this.pagenationNum.innerHTML = `${this.data.currentPage}/${GlobalConstants.NUMBER_OF_PAGES - 1}`;
   }
-
-  updateCardField: (data: IPaginatedArray<IWord>) => void = () => {};
 }
