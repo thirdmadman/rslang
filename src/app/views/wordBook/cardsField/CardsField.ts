@@ -3,7 +3,7 @@ import { IWord } from '../../../interfaces/IWord';
 import { Card } from './card/Card';
 import Renderable from '../../Renderable';
 import { IPaginatedArray } from '../../../interfaces/IPaginatedArray';
-import './CardField.scss';
+import './CardsField.scss';
 import { PathBus } from '../../../services/PathBus';
 import { GlobalConstants } from '../../../../GlobalConstants';
 
