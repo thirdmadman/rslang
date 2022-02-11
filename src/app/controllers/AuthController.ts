@@ -1,11 +1,16 @@
 import { AbstractController } from './AbstractController';
-import { AuthorizationForm } from '../views/auth/AuthorizationForm';
+import { AuthorizationPage } from '../views/auth/AuthorizationPage';
+import { dch } from '../views/dch';
 
 export class AuthController extends AbstractController {
   resolve(path: string) {
-    const currentPage = +path.split('/').length;
-    this.rootNode.innerHTML = `AuthController - ${path} ${currentPage}`;
-    const authForm = new AuthorizationForm('login');
-    this.rootNode.append(authForm.getElement());
+    this.rootNode.innerHTML = `AuthController - ${path}`;
+    const currentPath = path.split('/');
+    const redirectPage = path.split('?path=');
+    if (!path) { this.rootNode.append(new AuthorizationPage().getElement()); }
+    if (currentPath[1] === 'expired?path=') {
+      const expiredMessage = dch('p', [], ' Сеанс пользователя истек, пожалуйста, войдите в систему');
+      this.rootNode.append(expiredMessage, new AuthorizationPage(redirectPage[1]).getElement());
+    }
   }
 }
