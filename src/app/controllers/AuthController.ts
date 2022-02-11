@@ -9,13 +9,13 @@ export class AuthController extends AbstractController {
     const currentPath = path.split('/');
     const redirectPage = path.split('?path=');
     if (!path) { this.rootNode.append(new AuthorizationPage().getElement()); }
+    if (path === '/expired') {
+      const expiredMessage = dch('p', [], ' Сеанс пользователя истек, пожалуйста, войдите в систему');
+      this.rootNode.append(expiredMessage, new AuthorizationPage(GlobalConstants.ROUTE_MAIN).getElement());
+    }
     if (currentPath[1] === 'expired?path=') {
       const expiredMessage = dch('p', [], ' Сеанс пользователя истек, пожалуйста, войдите в систему');
       this.rootNode.append(expiredMessage, new AuthorizationPage(redirectPage[1]).getElement());
-    }
-    if (redirectPage[0] === '/expired') {
-      const expiredMessage = dch('p', [], ' Сеанс пользователя истек, пожалуйста, войдите в систему');
-      this.rootNode.append(expiredMessage, new AuthorizationPage(GlobalConstants.ROUTE_MAIN).getElement());
     }
   }
 }
