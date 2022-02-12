@@ -1,4 +1,4 @@
-class MusicPlayer {
+export class MusicPlayer {
   private isPlaying = false;
 
   private currentVolume = 1;
@@ -105,5 +105,3 @@ class MusicPlayer {
     return this.play();
   }
 }
-
-export default MusicPlayer;
