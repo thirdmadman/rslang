@@ -1,5 +1,3 @@
-import { GlobalConstants } from '../../GlobalConstants';
-
 class MusicPlayer {
   private isPlaying = false;
 
@@ -45,7 +43,7 @@ class MusicPlayer {
     }
 
     if (!this.isPlaying) {
-      this.audio.src = `${GlobalConstants.DEFAULT_API_URL}/${this.currentPlaylist[this.currentTrack]}`;
+      this.audio.src = this.currentPlaylist[this.currentTrack];
       this.audio.volume = this.currentVolume;
 
       this.audio.onended = () => {
