@@ -17,10 +17,9 @@ export class MusicPlayer {
     this.stop();
     this.currentPlaylist = srcArray;
     this.currentTrack = -1;
-    console.log(this.currentPlaylist);
   }
 
-  public scrollTrackTo(porc: number) {
+  scrollTrackTo(porc: number) {
     if (this.audio) {
       this.audio.play().then(
         () => {
@@ -33,7 +32,7 @@ export class MusicPlayer {
     }
   }
 
-  public play() {
+  play() {
     if (this.currentPlaylist.length <= 0) {
       return new Promise(() => {});
     }
@@ -61,7 +60,7 @@ export class MusicPlayer {
     return new Promise(() => {});
   }
 
-  public setVoulume(value: number) {
+  setVoulume(value: number) {
     this.currentVolume = value;
     this.audio.volume = value;
   }
@@ -70,7 +69,7 @@ export class MusicPlayer {
     return this.isPlaying;
   }
 
-  public stop() {
+  stop() {
     if (this.audio) {
       this.audio.pause();
       this.audio.currentTime = 0;
@@ -78,7 +77,7 @@ export class MusicPlayer {
     this.isPlaying = false;
   }
 
-  public pause() {
+  pause() {
     if (this.audio) {
       this.audio.pause();
       this.isPlaying = false;
