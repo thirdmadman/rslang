@@ -16,7 +16,9 @@ class MusicPlayer {
   }
 
   setPlayList(srcArray: Array<string>) {
+    this.stop();
     this.currentPlaylist = srcArray;
+    this.currentTrack = -1;
     console.log(this.currentPlaylist);
   }
 
@@ -33,47 +35,32 @@ class MusicPlayer {
     }
   }
 
-  public switchPlay() {
-    console.log('gg');
-    if (this.currentPlaylist.length === 0) {
-      return;
+  public play() {
+    if (this.currentPlaylist.length <= 0) {
+      return new Promise(() => {});
     }
+
     if (this.currentTrack === -1) {
       this.currentTrack = 0;
     }
+
     if (!this.isPlaying) {
-      this.audio.currentTime = 0;
-      this.audio.volume = this.currentVolume;
       this.audio.src = `${GlobalConstants.DEFAULT_API_URL}/${this.currentPlaylist[this.currentTrack]}`;
-      this.audio.addEventListener('ended', () => {
+      this.audio.volume = this.currentVolume;
+
+      this.audio.onended = () => {
         if (this.currentTrack < this.currentPlaylist.length - 1) {
           this.isPlaying = !this.isPlaying;
           this.stop();
-          this.next();
+          return this.next();
         }
-      });
+        return null;
+      };
 
-      this.audio.play().then(
-        () => {
-        },
-        (e) => {
-          console.error(e);
-          this.isPlaying = false;
-        },
-      );
-    } else {
-      if (this.audio) {
-        this.audio.pause();
-      }
-      this.isPlaying = !this.isPlaying;
+      return this.audio.play();
     }
-  }
 
-  public play() {
-    if (!this.isPlaying) {
-      this.stop();
-      this.switchPlay();
-    }
+    return new Promise(() => {});
   }
 
   public setVoulume(value: number) {
@@ -107,7 +94,7 @@ class MusicPlayer {
     } else {
       this.currentTrack = this.currentPlaylist.length - 1;
     }
-    this.switchPlay();
+    return this.play();
   }
 
   next() {
@@ -117,7 +104,7 @@ class MusicPlayer {
     } else {
       this.currentTrack = 0;
     }
-    this.switchPlay();
+    return this.play();
   }
 }
 
