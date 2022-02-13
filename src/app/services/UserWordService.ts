@@ -53,7 +53,7 @@ export class UserWordService {
           optional: {},
         } as IUserWordData);
       }
-      return data;
+      return this.updateUserWord(id, wordId, data);
     });
   }
 

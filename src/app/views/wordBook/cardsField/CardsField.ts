@@ -33,7 +33,7 @@ export class CardsField extends Renderable {
 
   addCards(arrayWords: IWord[]) {
     arrayWords.forEach((el) => {
-      const card = new Card(el, { isButtonVisible: true });
+      const card = new Card(el);
       this.rootNode.append(card.getElement());
     });
   }
