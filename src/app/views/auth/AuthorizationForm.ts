@@ -3,6 +3,7 @@ import Renderable from '../Renderable';
 import { PathBus } from '../../services/PathBus';
 import { SigninService } from '../../services/SigninService';
 import { UserService } from '../../services/UserService';
+import { GlobalConstants } from '../../../GlobalConstants';
 
 export class AuthorizationForm extends Renderable {
   form: HTMLElement;
@@ -66,7 +67,7 @@ export class AuthorizationForm extends Renderable {
       });
   }
 
-  signIn(page?: string) {
+  signIn(page: string = GlobalConstants.ROUTE_MAIN) {
     const emailValue = this.emailInput.value;
     const passwordValue = this.passwordInput.value;
     SigninService.auth(emailValue, passwordValue).then(() => {
