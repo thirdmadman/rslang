@@ -41,7 +41,7 @@ export class AuthorizationForm extends Renderable {
       const emailValue = this.emailInput.value;
       const passwordValue = this.passwordInput.value;
       const nameValue = this.nameInput.value;
-      this.registerUser(emailValue, passwordValue, nameValue, redirectPage);
+      this.registerUser(emailValue, passwordValue, nameValue);
     });
     this.nameInput = dch('input', ['auth-form_input']) as HTMLInputElement;
     this.nameInput.setAttribute('type', 'username');
@@ -56,17 +56,14 @@ export class AuthorizationForm extends Renderable {
     this.rootNode = dch('div', ['auth-form-container'], '', this.form);
   }
 
-  registerUser(email: string, password: string, userName?: string, page?: string) {
-    if (page) {
-      UserService.createUser(email, password, userName).then(() => {
-        this.signIn(page);
-        PathBus.setCurrentPath(`${page}`);
-      })
-        .catch((error) => {
-          console.error(error);
-          this.rootNode.append(this.errorMessage);
-        });
-    }
+  registerUser(email: string, password: string, userName?: string) {
+    UserService.createUser(email, password, userName).then(() => {
+      this.signIn();
+    })
+      .catch((error) => {
+        console.error(error);
+        this.rootNode.append(this.errorMessage);
+      });
   }
 
   signIn(page?: string) {

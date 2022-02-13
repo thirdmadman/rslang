@@ -17,7 +17,7 @@ export class AuthorizationPage extends Renderable {
     super();
     this.loginForm = new AuthorizationForm('login', redirectPage).getElement();
     this.formContainer = dch('div', ['form-container'], '', this.loginForm);
-    this.registrationForm = new AuthorizationForm('register', redirectPage).getElement();
+    this.registrationForm = new AuthorizationForm('register').getElement();
     this.transitionToLoginButton = dch('button', ['auth-button'], 'Войти');
     this.transitionToLoginButton.addEventListener('click', () => {
       this.registrationForm.remove();
