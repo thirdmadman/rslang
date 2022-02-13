@@ -67,7 +67,7 @@ export class UserWordService {
   /**
    * This method uses token
    */
-  static setWorNarmalById(id: string, wordId: string) {
+  static setWordNormalById(id: string, wordId: string) {
     return this.setWorDifficultyById(id, wordId, 'normal');
   }
 
