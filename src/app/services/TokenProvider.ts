@@ -4,12 +4,12 @@ import DataLocalStorageProvider from './DataLocalStorageProvider';
 import { PathBus } from './PathBus';
 
 export class TokenProvider {
-  private static authData: IAuth;
+  private static authData: IAuth | undefined;
 
-  private static authDataDate: number;
+  private static authDataDate: number | undefined;
 
   static getUserId() {
-    if (this.checkIsAuthDataExists()) {
+    if (this.checkIsAuthDataExists() && this.authData?.userId) {
       return this.authData.userId;
     }
     return null;
@@ -18,6 +18,7 @@ export class TokenProvider {
   static redirectIfTokenExpired() {
     if (TokenProvider.checkIsExpired()) {
       const currentPath = PathBus.getCurrentPath();
+      this.clearAuthData();
       PathBus.setCurrentPath(`${GlobalConstants.ROUTE_AUTH}/expired?path=${currentPath}`);
       return true;
     }
@@ -25,7 +26,7 @@ export class TokenProvider {
   }
 
   static checkIsExpired() {
-    if (this.checkIsAuthDataExists()) {
+    if (this.checkIsAuthDataExists() && this.authDataDate) {
       const expiresIn = new Date(this.authDataDate);
       expiresIn.setHours(expiresIn.getHours() + 4);
       return new Date().getTime() > expiresIn.getTime();
@@ -49,7 +50,7 @@ export class TokenProvider {
   }
 
   static getToken() {
-    if (this.checkIsAuthDataExists()) {
+    if (this.checkIsAuthDataExists() && this.authData?.token) {
       return this.authData.token;
     }
     return null;
@@ -68,5 +69,11 @@ export class TokenProvider {
 
   static refreshToken() {
     throw new Error('Not implemented');
+  }
+
+  static clearAuthData() {
+    this.authDataDate = undefined;
+    this.authData = undefined;
+    DataLocalStorageProvider.destroy();
   }
 }
