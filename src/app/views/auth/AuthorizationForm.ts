@@ -6,8 +6,6 @@ import { UserService } from '../../services/UserService';
 import { GlobalConstants } from '../../../GlobalConstants';
 
 export class AuthorizationForm extends Renderable {
-  form: HTMLElement;
-
   emailInput: HTMLInputElement;
 
   passwordInput: HTMLInputElement;
@@ -22,7 +20,6 @@ export class AuthorizationForm extends Renderable {
 
   constructor(param: string, redirectPage?: string) {
     super();
-    this.form = dch('form', ['auth-form'], '');
     this.emailInput = dch('input', ['auth-form_input']) as HTMLInputElement;
     this.emailInput.setAttribute('type', 'email');
     this.emailInput.setAttribute('id', `${param}Email`);
@@ -49,12 +46,12 @@ export class AuthorizationForm extends Renderable {
     this.nameInput.setAttribute('id', `${param}Name`);
     this.nameInput.setAttribute('placeholder', 'username');
     this.errorMessage = dch('p', [], 'Что-то пошло не так. Попробуйте снова.');
+    this.rootNode = dch('div', ['auth-form-container'], '');
     if (param === 'register') {
-      this.form.append(this.nameInput, this.emailInput, this.passwordInput, this.registerButton);
+      this.rootNode.append(this.nameInput, this.emailInput, this.passwordInput, this.registerButton);
     } else {
-      this.form.append(this.emailInput, this.passwordInput, this.signinButton);
+      this.rootNode.append(this.emailInput, this.passwordInput, this.signinButton);
     }
-    this.rootNode = dch('div', ['auth-form-container'], '', this.form);
   }
 
   registerUser(email: string, password: string, userName?: string) {
