@@ -33,7 +33,7 @@ export class App {
     const statisticsController = new StatisticsController(this.rootNode);
 
     this.router.addRoute(GlobalConstants.ROUTE_MAIN, () => mainController.resolve());
-    this.router.addRoute(GlobalConstants.ROUTE_AUTH, () => authController.resolve());
+    this.router.addRoute(GlobalConstants.ROUTE_AUTH, (path: string) => authController.resolve(path));
     this.router.addRoute(GlobalConstants.ROUTE_WORDBOOK, (path: string) => wordbookController.resolve(path));
     this.router.addRoute(GlobalConstants.ROUTE_AUDIOCALL, (path: string) => audiocallController.resolve(path));
     this.router.addRoute(GlobalConstants.ROUTE_SPRINT, (path: string) => sprintController.resolve(path));
