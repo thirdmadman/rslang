@@ -8,7 +8,9 @@ export class AuthController extends AbstractController {
     this.rootNode.innerHTML = `AuthController - ${path}`;
     const currentPath = path.split('/');
     const redirectPage = path.split('?path=');
-    if (!path) { this.rootNode.append(new AuthorizationPage().getElement()); }
+    if (!path) {
+      this.rootNode.append(new AuthorizationPage().getElement());
+    }
     if (path === '/expired') {
       const expiredMessage = dch('p', [], ' Сеанс пользователя истек, пожалуйста, войдите в систему');
       this.rootNode.append(expiredMessage, new AuthorizationPage(GlobalConstants.ROUTE_MAIN).getElement());
