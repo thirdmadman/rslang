@@ -3,17 +3,22 @@ import { GlobalConstants } from '../../../../../GlobalConstants';
 import { dch } from '../../../dch';
 import Renderable from '../../../Renderable';
 import './card.scss';
-
-interface IButtonVisible {
-  isButtonVisible: boolean;
-}
+import { TokenProvider } from '../../../../services/TokenProvider';
+import { UserWordService } from '../../../../services/UserWordService';
 
 export class Card extends Renderable {
   data: IWord;
 
-  constructor(data: IWord, buttonVisible: IButtonVisible) {
+  difficultyButton: HTMLElement;
+
+  buttonAddWordToStudied: HTMLElement;
+
+  userId: string | null;
+
+  constructor(data: IWord) {
     super();
     this.data = data;
+    this.userId = TokenProvider.getUserId();
     const image = dch('img', ['card-mage']);
     image.setAttribute('src', `${GlobalConstants.DEFAULT_API_URL}/${data.image}`);
     image.setAttribute('alt', 'image');
@@ -50,10 +55,49 @@ export class Card extends Renderable {
       textExampleTranslate,
     );
 
-    if (buttonVisible.isButtonVisible) {
-      const difficultyButton = dch('button', ['word-btn'], 'сложное');
-      const buttonAddWordToStudied = dch('button', ['word-btn'], 'изученное');
-      textContainer.append(difficultyButton, buttonAddWordToStudied);
+    if (this.userId) {
+      UserWordService.getAllWordsByUserId(this.userId).then((words) => {
+        words.find((userWord) => userWord.id === data.id);
+      }).catch((e) => { console.error(e); });
+      UserWordService.getUserWordById(this.userId, data.id).then((wordData) => {
+        this.difficultyButton.innerText = (wordData.difficulty === 'normal')
+          ? 'простое' : 'сложное';
+      }).catch((e) => { console.error(e); });
+    }
+
+    this.difficultyButton = dch(
+      'button',
+      ['word-btn'],
+    );
+    this.difficultyButton.addEventListener('click', () => {
+      this.toggleWordDifficulty(data.id);
+    });
+
+    this.buttonAddWordToStudied = dch('button', ['word-btn'], 'изученное');
+
+    if (!TokenProvider.checkIsExpired()) {
+      textContainer.append(this.difficultyButton, this.buttonAddWordToStudied);
+    }
+  }
+
+  toggleWordDifficulty(id: string) {
+    if (this.userId) {
+      UserWordService.getUserWordById(this.userId, id).then((wordData) => {
+        if (!wordData && this.userId) {
+          UserWordService.setWorDifficultById(this.userId, id)
+            .catch(() => {});
+          this.difficultyButton.innerText = 'простое';
+        } else if (wordData.difficulty === 'hard' && this.userId) {
+          UserWordService.setWorNarmalById(this.userId, id)
+            .catch(() => {});
+          this.difficultyButton.innerText = 'простое';
+        } else if (wordData.difficulty === 'normal' && this.userId) {
+          UserWordService.setWorDifficultById(this.userId, id)
+            .catch(() => {});
+          this.difficultyButton.innerText = 'сложное';
+        }
+      }).catch(() => {
+      });
     }
   }
 }
