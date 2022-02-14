@@ -5,6 +5,7 @@ import Renderable from '../../../Renderable';
 import './Card.scss';
 import { TokenProvider } from '../../../../services/TokenProvider';
 import { UserWordService } from '../../../../services/UserWordService';
+import { musicPlayer } from '../../../../services/SingleMusicPlayer';
 
 export class Card extends Renderable {
   data: IWordAdanced;
@@ -26,18 +27,17 @@ export class Card extends Renderable {
     const imageContainer = dch('div', ['card-image-container'], '', image);
     const textContainer = dch('div', ['discription-container']);
     this.rootNode = dch('div', ['card'], '', imageContainer, textContainer);
-    const audioWord = new Audio(`${GlobalConstants.DEFAULT_API_URL}/${this.data.word.audio}`);
-    const audioMeaning = new Audio(`${GlobalConstants.DEFAULT_API_URL}/${this.data.word.audioMeaning}`);
-    const audioExample = new Audio(`${GlobalConstants.DEFAULT_API_URL}/${this.data.word.audioExample}`);
+    const audioWord = `${GlobalConstants.DEFAULT_API_URL}/${this.data.word.audio}`;
+    const audioMeaning = `${GlobalConstants.DEFAULT_API_URL}/${this.data.word.audioMeaning}`;
+    const audioExample = `${GlobalConstants.DEFAULT_API_URL}/${this.data.word.audioExample}`;
 
     const word = dch('h3', ['word-title'], this.data.word.word);
     const transcription = dch('span', ['word-subtitle'], this.data.word.transcription);
     const wordTranslate = dch('span', ['word-subtitle'], this.data.word.wordTranslate);
     const audioButton = dch('button', ['word-btn'], 'play');
-    audioButton.onclick = async () => {
-      await audioMeaning.play();
-      await audioWord.play();
-      await audioExample.play();
+    audioButton.onclick = () => {
+      musicPlayer.setPlayList([audioWord, audioMeaning, audioExample]);
+      musicPlayer.play().catch(() => {});
     };
 
     const textMeaning = dch('p', ['card-text'], this.data.word.textMeaning);
