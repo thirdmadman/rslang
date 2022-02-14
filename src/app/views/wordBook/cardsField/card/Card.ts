@@ -1,33 +1,38 @@
-import { IWord } from '../../../../interfaces/IWord';
+import { IWordAdanced } from '../../../../interfaces/IWordAdvanced';
 import { GlobalConstants } from '../../../../../GlobalConstants';
 import { dch } from '../../../dch';
 import Renderable from '../../../Renderable';
-import './card.scss';
-
-interface IButtonVisible {
-  isButtonVisible: boolean;
-}
+import './Card.scss';
+import { TokenProvider } from '../../../../services/TokenProvider';
+import { UserWordService } from '../../../../services/UserWordService';
 
 export class Card extends Renderable {
-  data: IWord;
+  data: IWordAdanced;
 
-  constructor(data: IWord, buttonVisible: IButtonVisible) {
+  difficultyButton: HTMLElement;
+
+  buttonAddWordToStudied: HTMLElement;
+
+  private isWordDifficult = false;
+
+  constructor(data: IWordAdanced) {
     super();
     this.data = data;
+    const userId = TokenProvider.getUserId();
     const image = dch('img', ['card-mage']);
-    image.setAttribute('src', `${GlobalConstants.DEFAULT_API_URL}/${data.image}`);
+    image.setAttribute('src', `${GlobalConstants.DEFAULT_API_URL}/${this.data.word.image}`);
     image.setAttribute('alt', 'image');
 
     const imageContainer = dch('div', ['card-image-container'], '', image);
     const textContainer = dch('div', ['discription-container']);
     this.rootNode = dch('div', ['card'], '', imageContainer, textContainer);
-    const audioWord = new Audio(`${GlobalConstants.DEFAULT_API_URL}/${data.audio}`);
-    const audioMeaning = new Audio(`${GlobalConstants.DEFAULT_API_URL}/${data.audioMeaning}`);
-    const audioExample = new Audio(`${GlobalConstants.DEFAULT_API_URL}/${data.audioExample}`);
+    const audioWord = new Audio(`${GlobalConstants.DEFAULT_API_URL}/${this.data.word.audio}`);
+    const audioMeaning = new Audio(`${GlobalConstants.DEFAULT_API_URL}/${this.data.word.audioMeaning}`);
+    const audioExample = new Audio(`${GlobalConstants.DEFAULT_API_URL}/${this.data.word.audioExample}`);
 
-    const word = dch('h3', ['word-title'], data.word);
-    const transcription = dch('span', ['word-subtitle'], data.transcription);
-    const wordTranslate = dch('span', ['word-subtitle'], data.wordTranslate);
+    const word = dch('h3', ['word-title'], this.data.word.word);
+    const transcription = dch('span', ['word-subtitle'], this.data.word.transcription);
+    const wordTranslate = dch('span', ['word-subtitle'], this.data.word.wordTranslate);
     const audioButton = dch('button', ['word-btn'], 'play');
     audioButton.onclick = async () => {
       await audioMeaning.play();
@@ -35,10 +40,10 @@ export class Card extends Renderable {
       await audioExample.play();
     };
 
-    const textMeaning = dch('p', ['card-text'], data.textMeaning);
-    const textMeaningTranslate = dch('p', ['card-text'], data.textMeaningTranslate);
-    const textExample = dch('p', ['card-text'], data.textExample);
-    const textExampleTranslate = dch('p', ['card-text'], data.textExampleTranslate);
+    const textMeaning = dch('p', ['card-text'], this.data.word.textMeaning);
+    const textMeaningTranslate = dch('p', ['card-text'], this.data.word.textMeaningTranslate);
+    const textExample = dch('p', ['card-text'], this.data.word.textExample);
+    const textExampleTranslate = dch('p', ['card-text'], this.data.word.textExampleTranslate);
     textContainer.append(
       word,
       transcription,
@@ -50,10 +55,48 @@ export class Card extends Renderable {
       textExampleTranslate,
     );
 
-    if (buttonVisible.isButtonVisible) {
-      const difficultyButton = dch('button', ['word-btn'], 'сложное');
-      const buttonAddWordToStudied = dch('button', ['word-btn'], 'изученное');
-      textContainer.append(difficultyButton, buttonAddWordToStudied);
+    this.difficultyButton = dch('button', ['word-btn']);
+    this.buttonAddWordToStudied = dch('button', ['word-btn'], 'add to "learning"');
+
+    if (userId) {
+      if (this.data.userData) {
+        if (this.data.userData.difficulty === 'normal') {
+          this.isWordDifficult = false;
+          this.difficultyButton.innerText = 'Add to "difficult"';
+          this.difficultyButton.onclick = () => this.buttonToggleDifficultHandler();
+        } else {
+          this.isWordDifficult = true;
+          this.difficultyButton.innerText = 'Remove from "difficult"';
+          this.difficultyButton.onclick = () => this.buttonToggleDifficultHandler();
+        }
+      } else {
+        this.difficultyButton.innerText = 'Add to "difficult"';
+        this.difficultyButton.onclick = () => this.buttonToggleDifficultHandler();
+      }
+
+      textContainer.append(this.difficultyButton, this.buttonAddWordToStudied);
+    }
+  }
+
+  private buttonToggleDifficultHandler() {
+    const userId = TokenProvider.getUserId();
+    if (!userId) {
+      return;
+    }
+    if (!this.isWordDifficult) {
+      UserWordService.setWorDifficultById(userId, this.data.word.id).then((userWord) => {
+        if (userWord) {
+          this.isWordDifficult = true;
+          this.difficultyButton.innerText = 'Remove from "difficult"';
+        }
+      }).catch(() => {});
+    } else {
+      UserWordService.setWordNormalById(userId, this.data.word.id).then((userWord) => {
+        if (userWord) {
+          this.isWordDifficult = false;
+          this.difficultyButton.innerText = 'Add to "difficult"';
+        }
+      }).catch(() => {});
     }
   }
 }

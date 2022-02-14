@@ -6,6 +6,9 @@ import { IPaginatedArray } from '../../../interfaces/IPaginatedArray';
 import './CardsField.scss';
 import { PathBus } from '../../../services/PathBus';
 import { GlobalConstants } from '../../../../GlobalConstants';
+import { TokenProvider } from '../../../services/TokenProvider';
+import { UserWordService } from '../../../services/UserWordService';
+import { IWordAdanced } from '../../../interfaces/IWordAdvanced';
 
 export class CardsField extends Renderable {
   data: IPaginatedArray<IWord>;
@@ -26,14 +29,33 @@ export class CardsField extends Renderable {
       ['pagination-text'],
       `${this.data.currentPage + 1}/${GlobalConstants.NUMBER_OF_PAGES}`,
     );
-    const pagenation = dch('div', ['pagination'], '', this.prevButton, this.pagenationNum, nextButton);
-    this.rootNode = dch('div', ['cards-container'], '', pagenation);
-    this.addCards(this.data.array);
+    const pagination = dch('div', ['pagination'], '', this.prevButton, this.pagenationNum, nextButton);
+    this.rootNode = dch('div', ['cards-container'], '', pagination);
+
+    const userId = TokenProvider.getUserId();
+    let advancedWords = this.data.array.map((word) => ({ word } as IWordAdanced));
+    if (userId) {
+      UserWordService.getAllWordsByUserId(userId).then((wordsData) => {
+        advancedWords = this.data.array.map((word) => {
+          const userWordFound = wordsData.find((userWord) => userWord.wordId === word.id);
+          if (userWordFound) {
+            return {
+              word,
+              userData: userWordFound,
+            } as IWordAdanced;
+          }
+          return {
+            word,
+          } as IWordAdanced;
+        });
+        this.addCards(advancedWords);
+      }).catch(() => {});
+    }
   }
 
-  addCards(arrayWords: IWord[]) {
+  addCards(arrayWords: Array<IWordAdanced>) {
     arrayWords.forEach((el) => {
-      const card = new Card(el, { isButtonVisible: true });
+      const card = new Card(el);
       this.rootNode.append(card.getElement());
     });
   }
