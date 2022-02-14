@@ -88,7 +88,7 @@ export class Card extends Renderable {
             .catch(() => {});
           this.difficultyButton.innerText = 'простое';
         } else if (wordData.difficulty === 'hard' && this.userId) {
-          UserWordService.setWorNarmalById(this.userId, id)
+          UserWordService.setWordNormalById(this.userId, id)
             .catch(() => {});
           this.difficultyButton.innerText = 'простое';
         } else if (wordData.difficulty === 'normal' && this.userId) {
