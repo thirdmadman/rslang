@@ -2,7 +2,7 @@ import { IWord } from '../../../../interfaces/IWord';
 import { GlobalConstants } from '../../../../../GlobalConstants';
 import { dch } from '../../../dch';
 import Renderable from '../../../Renderable';
-import './card.scss';
+import './Card.scss';
 import { TokenProvider } from '../../../../services/TokenProvider';
 import { UserWordService } from '../../../../services/UserWordService';
 
@@ -56,13 +56,24 @@ export class Card extends Renderable {
     );
 
     if (this.userId) {
-      UserWordService.getAllWordsByUserId(this.userId).then((words) => {
-        words.find((userWord) => userWord.id === data.id);
-      }).catch((e) => { console.error(e); });
       UserWordService.getUserWordById(this.userId, data.id).then((wordData) => {
-        this.difficultyButton.innerText = (wordData.difficulty === 'normal')
-          ? 'простое' : 'сложное';
-      }).catch((e) => { console.error(e); });
+        if (wordData) {
+          this.difficultyButton.innerText = (wordData.difficulty === 'normal')
+            ? 'простое' : 'сложное';
+          this.difficultyButton.addEventListener('click', () => {
+            this.toggleWordDifficulty(data.id);
+          });
+        }
+      }).catch(() => {
+        this.difficultyButton.innerText = 'сложное';
+        this.difficultyButton.addEventListener('click', () => {
+          if (this.userId) {
+            UserWordService.setWorDifficultById(this.userId, data.id)
+              .catch(() => {});
+            this.difficultyButton.innerText = 'простое';
+          }
+        });
+      });
     }
 
     this.difficultyButton = dch(
@@ -72,7 +83,6 @@ export class Card extends Renderable {
     this.difficultyButton.addEventListener('click', () => {
       this.toggleWordDifficulty(data.id);
     });
-
     this.buttonAddWordToStudied = dch('button', ['word-btn'], 'изученное');
 
     if (!TokenProvider.checkIsExpired()) {
@@ -83,11 +93,7 @@ export class Card extends Renderable {
   toggleWordDifficulty(id: string) {
     if (this.userId) {
       UserWordService.getUserWordById(this.userId, id).then((wordData) => {
-        if (!wordData && this.userId) {
-          UserWordService.setWorDifficultById(this.userId, id)
-            .catch(() => {});
-          this.difficultyButton.innerText = 'простое';
-        } else if (wordData.difficulty === 'hard' && this.userId) {
+        if (wordData.difficulty === 'hard' && this.userId) {
           UserWordService.setWordNormalById(this.userId, id)
             .catch(() => {});
           this.difficultyButton.innerText = 'простое';
