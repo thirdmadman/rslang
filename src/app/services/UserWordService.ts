@@ -50,11 +50,59 @@ export class UserWordService {
       if (!data) {
         return UserWordService.createUserWord(id, wordId, {
           difficulty,
-          optional: {},
+          optional: {
+            successCounter: 0,
+            failCounter: 0,
+            isLearned: false,
+          },
         } as IUserWordData);
       }
       return this.updateUserWord(id, wordId, data);
     });
+  }
+
+  /**
+   * This method uses token
+   */
+  private static setWordLearnedState(id: string, wordId: string, isLearned: boolean) {
+    const getWord = this.getAllWordsByUserId(id).then((data) => {
+      const wordData = data.find((word) => word.wordId === wordId);
+      if (wordData) {
+        return {
+          difficulty: wordData.difficulty,
+          optional: { ...wordData.optional },
+        } as IUserWordData;
+      }
+      return null;
+    });
+
+    return getWord.then((data) => {
+      if (!data) {
+        return UserWordService.createUserWord(id, wordId, {
+          difficulty: 'normal',
+          optional: {
+            successCounter: 0,
+            failCounter: 0,
+            isLearned,
+          },
+        } as IUserWordData);
+      }
+      return this.updateUserWord(id, wordId, data);
+    });
+  }
+
+  /**
+   * This method uses token
+   */
+  static setWordLearned(id: string, wordId: string) {
+    return this.setWordLearnedState(id, wordId, true);
+  }
+
+  /**
+   * This method uses token
+   */
+  static removeWordFromLearned(id: string, wordId: string) {
+    return this.setWordLearnedState(id, wordId, false);
   }
 
   /**
