@@ -94,14 +94,14 @@ export class UserWordService {
   /**
    * This method uses token
    */
-  static setWordLearned(id: string, wordId: string) {
+  static addWordLearnedById(id: string, wordId: string) {
     return this.setWordLearnedState(id, wordId, true);
   }
 
   /**
    * This method uses token
    */
-  static removeWordFromLearned(id: string, wordId: string) {
+  static removeWordFromLearnedById(id: string, wordId: string) {
     return this.setWordLearnedState(id, wordId, false);
   }
 
