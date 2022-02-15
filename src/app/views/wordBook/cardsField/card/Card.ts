@@ -12,9 +12,11 @@ export class Card extends Renderable {
 
   difficultyButton: HTMLElement;
 
-  buttonAddWordToStudied: HTMLElement;
+  buttonSetLearnedState: HTMLElement;
 
   private isWordDifficult = false;
+
+  private isWordLearned = false;
 
   constructor(data: IWordAdanced) {
     super();
@@ -54,31 +56,31 @@ export class Card extends Renderable {
       textExample,
       textExampleTranslate,
     );
-
     this.difficultyButton = dch('button', ['word-btn']);
-    this.buttonAddWordToStudied = dch('button', ['word-btn'], 'add to "learning"');
+    this.difficultyButton.innerText = 'Add to "difficult"';
+    this.difficultyButton.onclick = () => this.buttonToggleDifficultyHandler();
+
+    this.buttonSetLearnedState = dch('button', ['word-btn']);
+    this.buttonSetLearnedState.innerText = 'Add to "learned"';
+    this.buttonSetLearnedState.onclick = () => this.buttonToggleLearnedHandler();
 
     if (userId) {
       if (this.data.userData) {
-        if (this.data.userData.difficulty === 'normal') {
-          this.isWordDifficult = false;
-          this.difficultyButton.innerText = 'Add to "difficult"';
-          this.difficultyButton.onclick = () => this.buttonToggleDifficultHandler();
-        } else {
+        if (this.data.userData.difficulty !== 'normal') {
           this.isWordDifficult = true;
           this.difficultyButton.innerText = 'Remove from "difficult"';
-          this.difficultyButton.onclick = () => this.buttonToggleDifficultHandler();
         }
-      } else {
-        this.difficultyButton.innerText = 'Add to "difficult"';
-        this.difficultyButton.onclick = () => this.buttonToggleDifficultHandler();
-      }
 
-      textContainer.append(this.difficultyButton, this.buttonAddWordToStudied);
+        if (this.data.userData.optional.isLearned) {
+          this.isWordLearned = true;
+          this.buttonSetLearnedState.innerText = 'Remove from "learned"';
+        }
+      }
+      textContainer.append(this.difficultyButton, this.buttonSetLearnedState);
     }
   }
 
-  private buttonToggleDifficultHandler() {
+  private buttonToggleDifficultyHandler() {
     const userId = TokenProvider.getUserId();
     if (!userId) {
       return;
@@ -95,6 +97,28 @@ export class Card extends Renderable {
         if (userWord) {
           this.isWordDifficult = false;
           this.difficultyButton.innerText = 'Add to "difficult"';
+        }
+      }).catch(() => {});
+    }
+  }
+
+  private buttonToggleLearnedHandler() {
+    const userId = TokenProvider.getUserId();
+    if (!userId) {
+      return;
+    }
+    if (!this.isWordLearned) {
+      UserWordService.addWordLearnedById(userId, this.data.word.id).then((userWord) => {
+        if (userWord) {
+          this.isWordLearned = true;
+          this.buttonSetLearnedState.innerText = 'Remove from "learned"';
+        }
+      }).catch(() => {});
+    } else {
+      UserWordService.removeWordFromLearnedById(userId, this.data.word.id).then((userWord) => {
+        if (userWord) {
+          this.isWordLearned = false;
+          this.buttonSetLearnedState.innerText = 'Add to "learned"';
         }
       }).catch(() => {});
     }
