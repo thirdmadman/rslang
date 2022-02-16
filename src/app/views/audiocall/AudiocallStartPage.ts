@@ -4,7 +4,6 @@ import { GlobalConstants } from '../../../GlobalConstants';
 import { AudiocallGameField } from './AudiocallGameField';
 import { WordService } from '../../services/WordService';
 import { IWord } from '../../interfaces/IWord';
-import { AudiocallService } from '../../services/audiocallService';
 import { IAudiocallAnswer } from '../../interfaces/IAudiocallAnswer';
 import { IAudiocallQuestionArary } from '../../interfaces/IAudiocallQuestionArary';
 import { IAudiocallQuestion } from '../../interfaces/IAudiocallQuestion';
@@ -56,7 +55,7 @@ export class AudiocallStartPage extends Renderable {
       WordService.getWordsByGroupAndPage(this.currentGroup, this.currentPage).then((wordData) => {
         this.arrayWordsToQuestion = wordData.array;
         const questionsArray = this.arrayWordsToQuestion.map((item) => {
-          this.arrayAnswers = this.createAnswers(answersCount);
+          this.arrayAnswers = this.createAnswers(this.arrayWordsToQuestion, answersCount, item);
           const quesytionData = {
             wordData: item,
             isCorrect: true,
@@ -90,13 +89,16 @@ export class AudiocallStartPage extends Renderable {
     this.rootNode.append(gameField.getElement());
   }
 
-  createAnswers(count: number) {
-    const arrayAnswers = AudiocallService.getRandomElement(this.arrayWordsToQuestion, count);
-    const result = arrayAnswers.map((item) => ({
-      wordData: item,
-      isCorrect: false,
-    } as IAudiocallAnswer
-    ));
+  createAnswers = (array: IWord[], count: number, currentQuestion: IWord) => {
+    const shuffleArray = array.filter((item) => item.id !== currentQuestion.id).sort(() => Math.random() - 0.5);
+    const answersDataArray = [...shuffleArray.slice(0, count)];
+    const result = answersDataArray.map((item) => {
+      const answerData = {
+        wordData: item,
+        isCorrect: false,
+      } as IAudiocallAnswer;
+      return answerData;
+    });
     return result;
-  }
+  };
 }
