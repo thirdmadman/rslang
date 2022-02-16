@@ -14,9 +14,12 @@ export class AudiocallGameField extends Renderable {
 
   result: IAudiocallResultData[];
 
+  answerChain: number;
+
   constructor(qiestionArrayData: IAudiocallQuestionArary) {
     super();
     this.data = qiestionArrayData;
+    this.answerChain = 0;
     this.result = [];
 
     console.log(qiestionArrayData);
@@ -33,6 +36,11 @@ export class AudiocallGameField extends Renderable {
     const cardQuestion = new AudiocallQuestion(this.data.questions[index]);
     this.rootNode.append(cardQuestion.getElement());
     cardQuestion.onAnswer = (questionData, isCorrect) => {
+      if (isCorrect) {
+        this.answerChain += 1;
+      } else if (!isCorrect) {
+        this.answerChain = 0;
+      }
       cardQuestion.destroy();
       this.result.push({ questionData, isCorrect });
       this.data.currentQuestion++;
