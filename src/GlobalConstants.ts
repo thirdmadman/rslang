@@ -22,4 +22,8 @@ export class GlobalConstants {
   public static ROUTE_STATISTICS = '/statistics';
 
   public static NUMBER_OF_PAGES = 30;
+
+  public static NUMBER_OF_GROUP_NO_AUTH_USER = 6;
+
+  public static NUMBER_OF_GROUP_AUTH_USER = 7;
 }
