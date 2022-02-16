@@ -34,7 +34,7 @@ export class CardsField extends Renderable {
 
     const userId = TokenProvider.getUserId();
     let advancedWords = this.data.array.map((word) => ({ word } as IWordAdanced));
-    if (userId) {
+    if (userId && !TokenProvider.checkIsExpired()) {
       UserWordService.getAllWordsByUserId(userId).then((wordsData) => {
         advancedWords = this.data.array.map((word) => {
           const userWordFound = wordsData.find((userWord) => userWord.wordId === word.id);
@@ -50,6 +50,8 @@ export class CardsField extends Renderable {
         });
         this.addCards(advancedWords);
       }).catch(() => {});
+    } else {
+      this.addCards(advancedWords);
     }
   }
 
