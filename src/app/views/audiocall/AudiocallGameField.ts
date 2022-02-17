@@ -16,13 +16,17 @@ export class AudiocallGameField extends Renderable {
 
   answerChain: number;
 
+  countCorrectAnswer: number;
+
+  countUncorrectAnswer: number;
+
   constructor(qiestionArrayData: IAudiocallQuestionArary) {
     super();
     this.data = qiestionArrayData;
     this.answerChain = 0;
+    this.countCorrectAnswer = 0;
+    this.countUncorrectAnswer = 0;
     this.result = [];
-
-    console.log(qiestionArrayData);
 
     this.rootNode = dch('div', ['gamefield-container'], '');
 
@@ -38,13 +42,14 @@ export class AudiocallGameField extends Renderable {
     cardQuestion.onAnswer = (questionData, isCorrect) => {
       if (isCorrect) {
         this.answerChain += 1;
+        this.countCorrectAnswer += 1;
       } else if (!isCorrect) {
         this.answerChain = 0;
+        this.countUncorrectAnswer -= 1;
       }
       cardQuestion.destroy();
       this.result.push({ questionData, isCorrect });
       this.data.currentQuestion++;
-      console.log(this.data.currentQuestion);
       this.gameCycle(questionArray, index + 1);
     };
   }

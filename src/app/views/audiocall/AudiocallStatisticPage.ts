@@ -3,17 +3,21 @@ import { dch } from '../dch';
 import { IAudiocallResultData } from '../../interfaces/IAudiocallResultData';
 import { GlobalConstants } from '../../../GlobalConstants';
 import { musicPlayer2 } from '../../services/SingleMusicPlayer2';
+import { AudiocallService } from '../../services/audiocallService';
 
 export class AudiocallStatisticPage extends Renderable {
   resultData: IAudiocallResultData[];
 
   resultContainer: HTMLElement;
 
+  date: string;
+
   constructor(resultData: IAudiocallResultData[]) {
     super();
     this.resultData = resultData;
     this.resultContainer = dch('div', ['result-container']);
     this.rootNode = dch('div', ['result-page'], '', this.resultContainer);
+    this.date = AudiocallService.formatDate(new Date());
     resultData.forEach((item) => {
       const auduoWordData = `${GlobalConstants.DEFAULT_API_URL}/${item.questionData.audio}`;
       const playAudioBtn = dch('button', [], 'play');
