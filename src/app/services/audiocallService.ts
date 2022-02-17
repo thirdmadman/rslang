@@ -6,4 +6,10 @@ export class AudiocallService {
     const result = shuffledArray.slice(0, count);
     return result;
   }
+
+  static formatDate = (date: Date) => date.toLocaleDateString('ru-RU', {
+    day: 'numeric',
+    month: 'numeric',
+    year: 'numeric',
+  });
 }
