@@ -15,14 +15,13 @@ export class AudiocallQuestion extends Renderable {
   constructor(questionData: IAudiocallQuestion) {
     super();
     this.questionData = questionData;
-    this.audioWord = '';
 
     this.audioWord = `${GlobalConstants.DEFAULT_API_URL}/${this.questionData.wordData.audio}`;
-    this.playAudio();
+    this.playAudio(this.audioWord);
 
     this.playAudioButton = dch('button', [], 'play');
     this.playAudioButton.onclick = () => {
-      this.playAudio();
+      this.playAudio(this.audioWord);
     };
     this.rootNode = dch('div', ['word-container'], '', this.playAudioButton);
     this.questionData.variants.sort(() => Math.random() - 0.5)
@@ -35,11 +34,11 @@ export class AudiocallQuestion extends Renderable {
       });
   }
 
-  playAudio() {
-    musicPlayer.setPlayList([this.audioWord]);
+  playAudio = (audio: string) => {
+    musicPlayer.setPlayList([audio]);
     musicPlayer.play()
       .catch(() => {});
-  }
+  };
 
   destroy() {
     this.rootNode.remove();

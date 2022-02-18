@@ -4,5 +4,4 @@ import { IWord } from './IWord';
 export interface IAudiocallQuestion {
   wordData: IWord,
   variants: IAudiocallAnswer[],
-  isCorrectVariant: boolean,
 }
