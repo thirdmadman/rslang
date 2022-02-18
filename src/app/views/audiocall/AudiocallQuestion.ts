@@ -30,7 +30,6 @@ export class AudiocallQuestion extends Renderable {
         const answerBtn = dch('button', [], answer.wordData.wordTranslate);
         this.rootNode.append(answerBtn);
         answerBtn.onclick = () => {
-          console.log(answer);
           this.onAnswer(this.questionData.wordData, answer.isCorrect);
         };
       });
