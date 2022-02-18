@@ -5,7 +5,7 @@ import { AudiocallGameField } from './AudiocallGameField';
 import { WordService } from '../../services/WordService';
 import { IWord } from '../../interfaces/IWord';
 import { IAudiocallAnswer } from '../../interfaces/IAudiocallAnswer';
-import { IAudiocallQuestionArary } from '../../interfaces/IAudiocallQuestionArary';
+import { IAudiocallQuestionArray } from '../../interfaces/IAudiocallQuestionArray';
 import { IAudiocallQuestion } from '../../interfaces/IAudiocallQuestion';
 
 export class AudiocallStartPage extends Renderable {
@@ -30,7 +30,7 @@ export class AudiocallStartPage extends Renderable {
     this.arrayAnswers = [];
     this.answersCount = 4;
     this.pages = GlobalConstants.NUMBER_OF_PAGES;
-    this.gameDescription = dch('div', [], 'описание игры');
+    this.gameDescription = dch('div', [], 'About game');
     this.startButton = dch('button', [], 'start');
 
     this.rootNode = dch('div', [], '', this.gameDescription, this.startButton);
@@ -41,26 +41,27 @@ export class AudiocallStartPage extends Renderable {
         this.rootNode.append(levelBtn);
         levelBtn.addEventListener('click', () => {
           Array.from(Array(this.pages).keys())
-            .map((pagecount) => WordService.getWordsByGroupAndPage(i - 1, pagecount)
+            .map((pageCount) => WordService.getWordsByGroupAndPage((i - 1), pageCount)
               .then((result) => this.createQuestionData(result.array))
               .catch(() => {}));
         });
       }
     } else if (this.group && this.page) {
-      WordService.getWordsByGroupAndPage(this.group, this.page).then((wordData) => {
+      WordService.getWordsByGroupAndPage(this.group - 1, this.page - 1).then((wordData) => {
         this.createQuestionData(wordData.array);
       }).catch(() => {});
     }
   }
 
-  startGame(questionArrayData: IAudiocallQuestionArary) {
+  startGame(questionArrayData: IAudiocallQuestionArray) {
     const gameField = new AudiocallGameField(questionArrayData);
     this.rootNode.innerHTML = '';
     this.rootNode.append(gameField.getElement());
   }
 
   createAnswers = (array: IWord[], count: number, currentQuestion: IWord) => {
-    const shuffleArray = array.filter((item) => item.id !== currentQuestion.id).sort(() => Math.random() - 0.5);
+    const shuffleArray = array.filter((item) => item.id !== currentQuestion.id);
+    shuffleArray.sort(() => Math.random() - 0.5);
     const answersDataArray = [...shuffleArray.slice(0, count)];
     const result = answersDataArray.map((item) => {
       const answerData = {
@@ -73,15 +74,15 @@ export class AudiocallStartPage extends Renderable {
   };
 
   createQuestionData(array: IWord[]) {
-    const questionsArray = array.map((item) => {
+    const questionsArray = array.sort(() => Math.random() - 0.5).map((item) => {
       this.arrayAnswers = this.createAnswers(array, this.answersCount, item);
-      const quesytionData = {
+      const questionData = {
         wordData: item,
         isCorrect: true,
       } as IAudiocallAnswer;
       const question = {
         wordData: item,
-        variants: [...this.arrayAnswers, quesytionData],
+        variants: [...this.arrayAnswers, questionData],
         isCorrectVariant: true,
       } as IAudiocallQuestion;
       return question;
@@ -89,7 +90,7 @@ export class AudiocallStartPage extends Renderable {
     const questionData = {
       questions: questionsArray,
       currentQuestion: 0,
-    } as IAudiocallQuestionArary;
+    } as IAudiocallQuestionArray;
     this.startButton.addEventListener('click', () => {
       this.startGame(questionData);
     });

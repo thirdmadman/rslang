@@ -2,7 +2,7 @@ import { dch } from '../dch';
 import Renderable from '../Renderable';
 import { IAudiocallQuestion } from '../../interfaces/IAudiocallQuestion';
 import { GlobalConstants } from '../../../GlobalConstants';
-import { musicPlayer2 } from '../../services/SingleMusicPlayer2';
+import { musicPlayer } from '../../services/SingleMusicPlayer';
 import { IWord } from '../../interfaces/IWord';
 
 export class AudiocallQuestion extends Renderable {
@@ -36,8 +36,8 @@ export class AudiocallQuestion extends Renderable {
   }
 
   playAudio() {
-    musicPlayer2.setPlayList([this.audioWord]);
-    musicPlayer2.play()
+    musicPlayer.setPlayList([this.audioWord]);
+    musicPlayer.play()
       .catch(() => {});
   }
 

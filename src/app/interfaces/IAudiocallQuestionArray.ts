@@ -1,6 +1,6 @@
 import { IAudiocallQuestion } from './IAudiocallQuestion';
 
-export interface IAudiocallQuestionArary {
+export interface IAudiocallQuestionArray {
   questions: Array<IAudiocallQuestion>,
   currentQuestion: number,
 }

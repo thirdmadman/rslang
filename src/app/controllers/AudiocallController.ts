@@ -8,12 +8,12 @@ export class AudiocallController extends AbstractController {
     const currentGroup = +path.split('/')[1] || 1;
 
     if (!path) {
-      const satartPage = new AudiocallStartPage();
-      this.rootNode.append(satartPage.getElement());
+      const startPage = new AudiocallStartPage();
+      this.rootNode.append(startPage.getElement());
     } else {
-      const satartPage = new AudiocallStartPage(currentGroup, currentPage);
+      const startPage = new AudiocallStartPage(currentGroup, currentPage);
 
-      this.rootNode.append(satartPage.getElement());
+      this.rootNode.append(startPage.getElement());
     }
   }
 }

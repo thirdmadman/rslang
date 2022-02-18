@@ -139,29 +139,29 @@ export class UserWordService {
     const getData = this.getAllWordsByUserId(id).then((data) => {
       const wordData = data.find((word) => word.wordId === wordId);
       if (wordData) {
-        const oldParametrs = wordData.optional;
-        const parametrs = {
-          successCounter: isCorrect ? oldParametrs.successCounter += 1 : oldParametrs.successCounter,
-          failCounter: isCorrect ? oldParametrs.successCounter : oldParametrs.failCounter += 1,
-          isLearned: oldParametrs.isLearned,
+        const oldParameters = wordData.optional;
+        const parameters = {
+          successCounter: isCorrect ? oldParameters.successCounter += 1 : oldParameters.successCounter,
+          failCounter: isCorrect ? oldParameters.successCounter : oldParameters.failCounter += 1,
+          isLearned: oldParameters.isLearned,
         };
         return {
           difficulty: wordData.difficulty,
-          optional: parametrs,
+          optional: parameters,
         };
       } return null;
     });
 
     return getData.then((wordData) => {
       if (!wordData) {
-        const parametrs = {
+        const parameters = {
           successCounter: isCorrect ? 1 : 0,
           failCounter: isCorrect ? 0 : 1,
           isLearned: false,
         };
         return UserWordService.createUserWord(id, wordId, {
           difficulty: 'normal',
-          optional: parametrs,
+          optional: parameters,
         });
       }
       return UserWordService.updateUserWord(id, wordId, wordData);
