@@ -134,4 +134,37 @@ export class UserWordService {
   static deleteUser(id: string, wordId: string) {
     return axiosIntance().delete(`${GlobalConstants.API_ENDPOINT_USERS}/${id}/words/${wordId}`);
   }
+
+  static setWordStatistic(id: string, wordId: string, isCorrect: boolean) {
+    const getData = this.getAllWordsByUserId(id).then((data) => {
+      const wordData = data.find((word) => word.wordId === wordId);
+      if (wordData) {
+        const oldParametrs = wordData.optional;
+        const parametrs = {
+          successCounter: isCorrect ? oldParametrs.successCounter += 1 : oldParametrs.successCounter,
+          failCounter: isCorrect ? oldParametrs.successCounter : oldParametrs.failCounter += 1,
+          isLearned: oldParametrs.isLearned,
+        };
+        return {
+          difficulty: wordData.difficulty,
+          optional: parametrs,
+        };
+      } return null;
+    });
+
+    return getData.then((wordData) => {
+      if (!wordData) {
+        const parametrs = {
+          successCounter: isCorrect ? 1 : 0,
+          failCounter: isCorrect ? 0 : 1,
+          isLearned: false,
+        };
+        return UserWordService.createUserWord(id, wordId, {
+          difficulty: 'normal',
+          optional: parametrs,
+        });
+      }
+      return UserWordService.updateUserWord(id, wordId, wordData);
+    });
+  }
 }

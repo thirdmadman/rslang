@@ -41,7 +41,7 @@ export class AudiocallStartPage extends Renderable {
         this.rootNode.append(levelBtn);
         levelBtn.addEventListener('click', () => {
           Array.from(Array(this.pages).keys())
-            .map((pagecount) => WordService.getWordsByGroupAndPage(i, pagecount)
+            .map((pagecount) => WordService.getWordsByGroupAndPage(i - 1, pagecount)
               .then((result) => this.createQuestionData(result.array))
               .catch(() => {}));
         });

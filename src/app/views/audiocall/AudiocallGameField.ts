@@ -6,6 +6,8 @@ import { IAudiocallQuestion } from '../../interfaces/IAudiocallQuestion';
 import './AudiocallGameField.scss';
 import { IAudiocallResultData } from '../../interfaces/IAudiocallResultData';
 import { AudiocallStatisticPage } from './AudiocallStatisticPage';
+import { TokenProvider } from '../../services/TokenProvider';
+import { UserWordService } from '../../services/UserWordService';
 
 export class AudiocallGameField extends Renderable {
   page: number | undefined;
@@ -18,13 +20,15 @@ export class AudiocallGameField extends Renderable {
 
   maxAnswerChain: number;
 
+  userId: string | null;
+
   constructor(qiestionArrayData: IAudiocallQuestionArary) {
     super();
     this.data = qiestionArrayData;
     this.answerChain = 0;
     this.maxAnswerChain = 1;
     this.result = [];
-
+    this.userId = TokenProvider.getUserId();
     this.rootNode = dch('div', ['gamefield-container'], '');
 
     this.gameCycle(this.data.questions, this.data.currentQuestion);
@@ -38,11 +42,21 @@ export class AudiocallGameField extends Renderable {
     this.rootNode.append(cardQuestion.getElement());
     cardQuestion.onAnswer = (questionData, isCorrect) => {
       if (isCorrect) {
-        this.answerChain += 1;
-        if (this.answerChain > this.maxAnswerChain) {
-          this.maxAnswerChain = this.answerChain;
+        if (this.userId && !TokenProvider.checkIsExpired()) {
+          UserWordService.setWordStatistic(this.userId, questionData.id, isCorrect)
+            .then((data) => console.log(data))
+            .catch(() => {});
+          this.answerChain += 1;
+          if (this.answerChain > this.maxAnswerChain) {
+            this.maxAnswerChain = this.answerChain;
+          }
         }
       } else if (!isCorrect) {
+        if (this.userId && !TokenProvider.checkIsExpired()) {
+          UserWordService.setWordStatistic(this.userId, questionData.id, isCorrect)
+            .then((data) => console.log(data))
+            .catch(() => {});
+        }
         this.answerChain = 0;
       }
       cardQuestion.destroy();
