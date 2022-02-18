@@ -3,7 +3,6 @@ import { dch } from '../dch';
 import { IAudiocallResultData } from '../../interfaces/IAudiocallResultData';
 import { GlobalConstants } from '../../../GlobalConstants';
 import { musicPlayer } from '../../services/SingleMusicPlayer';
-import { AudiocallService } from '../../services/audiocallService';
 import { PathBus } from '../../services/PathBus';
 
 export class AudiocallStatisticPage extends Renderable {
@@ -27,7 +26,7 @@ export class AudiocallStatisticPage extends Renderable {
       PathBus.setCurrentPath(PathBus.getCurrentPath());
     };
     this.rootNode = dch('div', ['result-page'], '', this.resultContainer, this.playAgainButton);
-    this.date = AudiocallService.formatDate(new Date());
+    this.date = this.formatDate(new Date());
     resultData.forEach((item) => {
       const audioWordData = `${GlobalConstants.DEFAULT_API_URL}/${item.questionData.audio}`;
       const playAudioBtn = dch('button', [], 'play');
@@ -48,4 +47,10 @@ export class AudiocallStatisticPage extends Renderable {
     musicPlayer.play()
       .catch(() => {});
   };
+
+  formatDate = (date: Date) => date.toLocaleDateString('ru-RU', {
+    day: 'numeric',
+    month: 'numeric',
+    year: 'numeric',
+  });
 }
