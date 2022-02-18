@@ -35,9 +35,9 @@ export class AudiocallStatisticPage extends Renderable {
       };
       const word = dch('p', ['word-container_item'], `${item.questionData.word}`);
       const wordTranslate = dch('p', ['word-container_item'], `${item.questionData.wordTranslate}`);
-      const worResult = dch('p', ['word-container_item'], `${item.isCorrect ? 'true' : 'false'}`);
+      const wordResult = dch('p', ['word-container_item'], `${item.isCorrect ? 'true' : 'false'}`);
       const wordContainer = dch('div', ['word-container']);
-      wordContainer.append(playAudioBtn, word, wordTranslate, worResult);
+      wordContainer.append(playAudioBtn, word, wordTranslate, wordResult);
       this.resultContainer.append(wordContainer, this.statisticContainer);
     });
   }
