@@ -139,7 +139,7 @@ export class UserWordService {
     const getData = this.getAllWordsByUserId(id).then((data) => {
       const wordData = data.find((word) => word.wordId === wordId);
       if (wordData) {
-        const oldParameters = wordData.optional;
+        const oldParameters = { ...wordData.optional };
         const parameters = {
           successCounter: isCorrect ? oldParameters.successCounter += 1 : oldParameters.successCounter,
           failCounter: isCorrect ? oldParameters.successCounter : oldParameters.failCounter += 1,
@@ -148,7 +148,7 @@ export class UserWordService {
         return {
           difficulty: wordData.difficulty,
           optional: parameters,
-        };
+        } as IUserWordData;
       } return null;
     });
 
@@ -162,7 +162,7 @@ export class UserWordService {
         return UserWordService.createUserWord(id, wordId, {
           difficulty: 'normal',
           optional: parameters,
-        });
+        } as IUserWordData);
       }
       return UserWordService.updateUserWord(id, wordId, wordData);
     });
