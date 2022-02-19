@@ -75,6 +75,10 @@ export class Card extends Renderable {
           this.isWordLearned = true;
           this.buttonSetLearnedState.innerText = 'Remove from "learned"';
         }
+        const gamesResultContainer = dch('div', ['gamesResult-container'], `
+     ${this.data.userData.optional.successCounter}/
+     ${this.data.userData.optional.successCounter + this.data.userData.optional.successCounter}`);
+        this.rootNode.append(gamesResultContainer);
       }
       textContainer.append(this.difficultyButton, this.buttonSetLearnedState);
     }
