@@ -1,6 +1,6 @@
 import Renderable from '../Renderable';
 import { dch } from '../dch';
-import { IAudiocallResultData } from '../../interfaces/IAudiocallResultData';
+import { IAudiocallResultData } from '../../interfaces/IResultData';
 import { GlobalConstants } from '../../../GlobalConstants';
 import { musicPlayer } from '../../services/SingleMusicPlayer';
 import { PathBus } from '../../services/PathBus';

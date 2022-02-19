@@ -1,4 +1,4 @@
-import { IAudiocallResultData } from '../../interfaces/IAudiocallResultData';
+import { IResultData } from '../../interfaces/IResultData';
 import { TokenProvider } from '../../services/TokenProvider';
 import { UserWordService } from '../../services/UserWordService';
 import { dch } from '../dch';
@@ -13,7 +13,7 @@ export class SprintGameField extends Renderable {
 
   data: ISprintQuestionData[];
 
-  result: IAudiocallResultData[];
+  result: IResultData[];
 
   answerChain: number;
 
@@ -67,7 +67,7 @@ export class SprintGameField extends Renderable {
         this.result.push({
           questionData: questionData.word,
           isCorrect: true,
-        } as IAudiocallResultData);
+        } as IResultData);
       } else if (questionData.isCorrect !== answer) {
         if (this.userId && !TokenProvider.checkIsExpired()) {
           UserWordService.setWordStatistic(this.userId, questionData.word.id, questionData.isCorrect)
@@ -95,7 +95,7 @@ export class SprintGameField extends Renderable {
     }, 1000);
   }
 
-  onFinish = (result: IAudiocallResultData[], answerChain: number) => {
+  onFinish = (result: IResultData[], answerChain: number) => {
     this.rootNode.innerHTML = '';
     if (!this.result.length) {
       this.result.push({
