@@ -6,6 +6,7 @@ import Renderable from '../Renderable';
 import { SprintQuestion } from './SprintQuestion';
 import { ISprintQuestionData } from '../../interfaces/ISprintQuestionData';
 import { SprintStatisticPage } from './SprintStatisticPage';
+import { GlobalConstants } from '../../../GlobalConstants';
 
 export class SprintGameField extends Renderable {
   page: number | undefined;
@@ -22,6 +23,12 @@ export class SprintGameField extends Renderable {
 
   startQuestion: number;
 
+  gameTime: number;
+
+  currentTime: number;
+
+  timerContainer: HTMLElement;
+
   constructor(questionArrayData: ISprintQuestionData[]) {
     super();
     this.data = questionArrayData;
@@ -29,14 +36,19 @@ export class SprintGameField extends Renderable {
     this.maxAnswerChain = 1;
     this.result = [];
     this.userId = TokenProvider.getUserId();
-    this.rootNode = dch('div', ['gamefield-container'], '');
     this.startQuestion = 0;
-
+    this.gameTime = GlobalConstants.GAME_TIME;
+    this.currentTime = this.gameTime;
+    this.timerContainer = dch('div', []);
+    this.rootNode = dch('div', ['gamefield-container'], '');
+    this.showTime();
     this.gameCycle(this.data, this.startQuestion);
   }
 
   gameCycle(questionArray: ISprintQuestionData[], index: number) {
+    this.rootNode.append(this.timerContainer);
     if (index >= questionArray.length) {
+      this.currentTime = 0;
       this.onFinish(this.result, this.maxAnswerChain);
       return;
     }
@@ -72,8 +84,25 @@ export class SprintGameField extends Renderable {
     };
   }
 
+  showTime() {
+    const changeTime = setInterval(() => {
+      this.currentTime--;
+      this.timerContainer.innerText = `${this.currentTime}`;
+      if (this.currentTime === 0) {
+        clearInterval(changeTime);
+        this.onFinish(this.result, this.maxAnswerChain);
+      }
+    }, 1000);
+  }
+
   onFinish = (result: IAudiocallResultData[], answerChain: number) => {
     this.rootNode.innerHTML = '';
+    if (!this.result.length) {
+      this.result.push({
+        questionData: this.data[0].word,
+        isCorrect: false,
+      });
+    }
     const resultPage = new SprintStatisticPage(result, answerChain);
     this.rootNode.append(resultPage.getElement());
   };

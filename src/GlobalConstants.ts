@@ -26,4 +26,6 @@ export class GlobalConstants {
   public static NUMBER_OF_GROUP_NO_AUTH_USER = 6;
 
   public static NUMBER_OF_GROUP_AUTH_USER = 7;
+
+  public static GAME_TIME = 60;
 }
