@@ -40,14 +40,8 @@ export class SprintQuestion extends Renderable {
     this.rootNode.remove();
   }
 
-  onAnswer = (questionData: ISprintQuestionData, answer: boolean) => {
-    if (questionData.isCorrect === answer) {
-      // some reaction
-    }
-    if (questionData.isCorrect !== answer) {
-      // some reaction
-    }
-  };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onAnswer = (questionData: ISprintQuestionData, answer: boolean) => {};
 
   handlerKey = (event: KeyboardEvent) => {
     if (event.code === 'ArrowLeft') {
