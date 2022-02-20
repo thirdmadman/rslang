@@ -4,7 +4,7 @@ import { IAudiocallQuestionArray } from '../../interfaces/IAudiocallQuestionArra
 import { AudiocallQuestion } from './AudiocallQuestion';
 import { IAudiocallQuestion } from '../../interfaces/IAudiocallQuestion';
 import './AudiocallGameField.scss';
-import { IAudiocallResultData } from '../../interfaces/IAudiocallResultData';
+import { IResultData } from '../../interfaces/IResultData';
 import { AudiocallStatisticPage } from './AudiocallStatisticPage';
 import { TokenProvider } from '../../services/TokenProvider';
 import { UserWordService } from '../../services/UserWordService';
@@ -14,7 +14,7 @@ export class AudiocallGameField extends Renderable {
 
   data: IAudiocallQuestionArray;
 
-  result: IAudiocallResultData[];
+  result: IResultData[];
 
   answerChain: number;
 
@@ -67,7 +67,7 @@ export class AudiocallGameField extends Renderable {
     };
   }
 
-  onFinish = (result: IAudiocallResultData[], answerChain: number) => {
+  onFinish = (result: IResultData[], answerChain: number) => {
     this.rootNode.innerHTML = '';
     const resultPage = new AudiocallStatisticPage(result, answerChain);
     this.rootNode.append(resultPage.getElement());

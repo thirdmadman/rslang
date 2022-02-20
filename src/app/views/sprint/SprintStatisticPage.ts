@@ -1,11 +1,11 @@
 import Renderable from '../Renderable';
 import { dch } from '../dch';
 import { IResultData } from '../../interfaces/IResultData';
+import { PathBus } from '../../services/PathBus';
 import { GlobalConstants } from '../../../GlobalConstants';
 import { musicPlayer } from '../../services/SingleMusicPlayer';
-import { PathBus } from '../../services/PathBus';
 
-export class AudiocallStatisticPage extends Renderable {
+export class SprintStatisticPage extends Renderable {
   resultData: IResultData[];
 
   resultContainer: HTMLElement;

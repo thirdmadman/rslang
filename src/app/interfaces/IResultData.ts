@@ -1,6 +1,6 @@
 import { IWord } from './IWord';
 
-export interface IAudiocallResultData {
+export interface IResultData {
   questionData: IWord,
   isCorrect: boolean,
 }
