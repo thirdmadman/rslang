@@ -4,6 +4,7 @@ import { IAudiocallQuestion } from '../../interfaces/IAudiocallQuestion';
 import { GlobalConstants } from '../../../GlobalConstants';
 import { musicPlayer } from '../../services/SingleMusicPlayer';
 import { IWord } from '../../interfaces/IWord';
+// import { IAudiocallAnswer } from '../../interfaces/IAudiocallAnswer';
 
 export class AudiocallQuestion extends Renderable {
   questionData: IAudiocallQuestion;
@@ -32,6 +33,7 @@ export class AudiocallQuestion extends Renderable {
           this.onAnswer(this.questionData.wordData, answer.isCorrect);
         };
       });
+    document.addEventListener('keydown', this.handlerKey);
   }
 
   playAudio = (audio: string) => {
@@ -44,11 +46,22 @@ export class AudiocallQuestion extends Renderable {
     this.rootNode.remove();
   }
 
-  onAnswer = (questionData: IWord, isCorrect: boolean) => {
-    if (isCorrect) {
-      // some reaction
-    } else {
-      // some reaction
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onAnswer = (questionData: IWord, isCorrect: boolean) => {};
+
+  handlerKey = (event: KeyboardEvent) => {
+    if (event.code === 'Digit1') {
+      this.onAnswer(this.questionData.wordData, this.questionData.variants[0].isCorrect);
+      document.removeEventListener('keydown', this.handlerKey);
+    } else if (event.code === 'Digit2') {
+      this.onAnswer(this.questionData.wordData, this.questionData.variants[1].isCorrect);
+      document.removeEventListener('keydown', this.handlerKey);
+    } else if (event.code === 'Digit3') {
+      this.onAnswer(this.questionData.wordData, this.questionData.variants[2].isCorrect);
+      document.removeEventListener('keydown', this.handlerKey);
+    } else if (event.code === 'Digit4') {
+      this.onAnswer(this.questionData.wordData, this.questionData.variants[3].isCorrect);
+      document.removeEventListener('keydown', this.handlerKey);
     }
   };
 }

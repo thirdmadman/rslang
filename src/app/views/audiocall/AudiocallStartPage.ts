@@ -62,7 +62,7 @@ export class AudiocallStartPage extends Renderable {
   createAnswers = (array: IWord[], count: number, currentQuestion: IWord) => {
     const shuffleArray = array.filter((item) => item.id !== currentQuestion.id);
     shuffleArray.sort(() => Math.random() - 0.5);
-    const answersDataArray = [...shuffleArray.slice(0, count)];
+    const answersDataArray = [...shuffleArray.slice(0, count - 1)];
     const result = answersDataArray.map((item) => {
       const answerData = {
         wordData: item,
