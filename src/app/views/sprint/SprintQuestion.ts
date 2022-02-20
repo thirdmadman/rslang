@@ -33,6 +33,7 @@ export class SprintQuestion extends Renderable {
     };
     this.btnContainer = dch('div', ['button-container'], '', this.wrongBtn, this.rightBtn);
     this.rootNode = dch('div', ['question-section'], '', this.questionContainer, this.btnContainer);
+    document.addEventListener('keydown', this.handlerKey);
   }
 
   destroy() {
@@ -45,6 +46,16 @@ export class SprintQuestion extends Renderable {
     }
     if (questionData.isCorrect !== answer) {
       // some reaction
+    }
+  };
+
+  handlerKey = (event: KeyboardEvent) => {
+    if (event.code === 'ArrowLeft') {
+      this.wrongBtn.click();
+      document.removeEventListener('keydown', this.handlerKey);
+    } else if (event.code === 'ArrowRight') {
+      this.rightBtn.click();
+      document.removeEventListener('keydown', this.handlerKey);
     }
   };
 }

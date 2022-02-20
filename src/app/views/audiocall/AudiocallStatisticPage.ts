@@ -1,12 +1,12 @@
 import Renderable from '../Renderable';
 import { dch } from '../dch';
-import { IAudiocallResultData } from '../../interfaces/IResultData';
+import { IResultData } from '../../interfaces/IResultData';
 import { GlobalConstants } from '../../../GlobalConstants';
 import { musicPlayer } from '../../services/SingleMusicPlayer';
 import { PathBus } from '../../services/PathBus';
 
 export class AudiocallStatisticPage extends Renderable {
-  resultData: IAudiocallResultData[];
+  resultData: IResultData[];
 
   resultContainer: HTMLElement;
 
@@ -16,7 +16,7 @@ export class AudiocallStatisticPage extends Renderable {
 
   playAgainButton: HTMLElement;
 
-  constructor(resultData: IAudiocallResultData[], answerChain: number) {
+  constructor(resultData: IResultData[], answerChain: number) {
     super();
     this.resultData = resultData;
     this.statisticContainer = dch('p', [], `The longest answer Chain - ${answerChain}`);
