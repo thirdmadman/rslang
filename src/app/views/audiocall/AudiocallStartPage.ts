@@ -7,6 +7,7 @@ import { IWord } from '../../interfaces/IWord';
 import { IAudiocallAnswer } from '../../interfaces/IAudiocallAnswer';
 import { IAudiocallQuestionArray } from '../../interfaces/IAudiocallQuestionArray';
 import { IAudiocallQuestion } from '../../interfaces/IAudiocallQuestion';
+import './AudiocallStartPage.scss';
 
 export class AudiocallStartPage extends Renderable {
   gameDescription: HTMLElement;
@@ -23,9 +24,18 @@ export class AudiocallStartPage extends Renderable {
 
   pages: number;
 
-  menuButton: HTMLElement;
-
   title: HTMLElement;
+
+  mainContainer: HTMLElement;
+
+  buttonsContainer: HTMLElement;
+
+  titleContainer: HTMLElement;
+
+  buttonContainerText: HTMLElement;
+
+  levelBtnContainer: HTMLElement;
+
 
   constructor(group?: number, page?: number) {
     super();
@@ -34,16 +44,46 @@ export class AudiocallStartPage extends Renderable {
     this.arrayAnswers = [];
     this.answersCount = 4;
     this.pages = GlobalConstants.NUMBER_OF_PAGES;
-    this.menuButton = dch('button', ['menu-button']);
-    this.gameDescription = dch('div', [], 'About game');
-    this.startButton = dch('button', [], 'start');
     this.title = dch('h2', ['audiocall-page--title'], 'audio decoding');
-    this.rootNode = dch('div', [], '', this.menuButton, this.title, this.gameDescription, this.startButton);
+    this.titleContainer = dch('div', ['audiocall-page--title-container'], '', this.title);
+    this.gameDescription = dch(
+      'div',
+      ['audiocall-page--text'],
+      `Record of vice will be played.
+    Make a match between what is said and what is written.`,
+    );
+
+    this.startButton = dch('button', ['audiocall-page--button'], 'Start decoding');
+    this.buttonContainerText = dch('p', ['button-container--text'], 'Choose your level of depth');
+    this.levelBtnContainer = dch('div', ['level-button-container']);
+    this.buttonsContainer = dch(
+      'div',
+      ['button-container'],
+      '',
+      this.buttonContainerText,
+      this.levelBtnContainer,
+      this.startButton,
+    );
+    this.mainContainer = dch(
+      'div',
+      ['audiocall-page--main'],
+      '',
+      this.titleContainer,
+      this.gameDescription,
+    );
+    this.rootNode = dch(
+      'div',
+      ['audiocall-page'],
+      '',
+      this.mainContainer,
+      this.buttonsContainer,
+    );
+
     if (!this.group && !this.page) {
       const countLevel = GlobalConstants.NUMBER_OF_GROUP_NO_AUTH_USER;
       for (let i = 1; i <= countLevel; i++) {
-        const levelBtn = dch('button', ['level_button'], `${i}`);
-        this.rootNode.append(levelBtn);
+        const levelBtn = dch('button', ['level-button'], `${i}`);
+        this.levelBtnContainer.append(levelBtn);
         levelBtn.addEventListener('click', () => {
           Array.from(Array(this.pages).keys())
             .map((pageCount) => WordService.getWordsByGroupAndPage((i - 1), pageCount)
@@ -56,6 +96,7 @@ export class AudiocallStartPage extends Renderable {
         this.createQuestionData(wordData.array);
       }).catch((e) => console.error(e));
     }
+    // this.rootNode.append(new Menu().getElement());
   }
 
   startGame(questionArrayData: IAudiocallQuestionArray) {

@@ -1,0 +1,31 @@
+$color-dark-s: #767676;
+$color-dark-m: #555555;
+$color-dark-xl: #1b1b1b;
+$color-light-m: #f6f6f6;
+.result-word-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 15px;
+}
+.result-page {
+    margin: 0 auto;
+}
+.result-audio-btn {
+    border: 1px solid #767676;
+    background-image: url('../../../assets/img/svg/icon-audio.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 35px;
+    width: 35px;
+    background-color: white;
+}
+.word-container--item {
+    font-weight: 100;
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-transform: uppercase;
+}
