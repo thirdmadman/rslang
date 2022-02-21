@@ -5,7 +5,6 @@ import { LevelNavigation } from '../views/wordBook/levelNavigation/LevelNavigati
 
 export class WordbookController extends AbstractController {
   resolve(path: string) {
-    this.rootNode.innerHTML = `WordbookController - ${path}`;
     const currentPage = +path.split('/')[2];
     const currentGroup = +path.split('/')[1];
     WordService.getWordsByGroupAndPage(currentGroup - 1, currentPage - 1).then((data) => {
