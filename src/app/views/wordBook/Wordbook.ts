@@ -4,8 +4,9 @@ import { IWord } from '../../interfaces/IWord';
 import { PathBus } from '../../services/PathBus';
 import { dch } from '../dch';
 import Renderable from '../Renderable';
-import { CardsField } from './cardsField/CardsField';
+import { CardsContainer } from './cardsField/CardsContainer';
 import { LevelNavigation } from './levelNavigation/LevelNavigation';
+import './Wordbook.scss';
 
 export class Wordbook extends Renderable {
   private data: IPaginatedArray<IWord>;
@@ -25,10 +26,10 @@ export class Wordbook extends Renderable {
     );
     const pagination = dch('div', ['pagination'], '', prevButton, paginationNum, nextButton);
 
-    const cardField = new CardsField(data);
+    const cardsContainer = new CardsContainer(data);
     const levelNavigation = new LevelNavigation(data);
 
-    this.rootNode.append(levelNavigation.getElement(), pagination, cardField.getElement());
+    this.rootNode.append(levelNavigation.getElement(), pagination, cardsContainer.getElement());
   }
 
   changePage(btn: string) {

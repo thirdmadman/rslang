@@ -3,12 +3,12 @@ import { IWord } from '../../../interfaces/IWord';
 import { Card } from './card/Card';
 import Renderable from '../../Renderable';
 import { IPaginatedArray } from '../../../interfaces/IPaginatedArray';
-import './CardsField.scss';
 import { TokenProvider } from '../../../services/TokenProvider';
 import { UserWordService } from '../../../services/UserWordService';
 import { IWordAdanced } from '../../../interfaces/IWordAdvanced';
+import './CardsContainer.scss';
 
-export class CardsField extends Renderable {
+export class CardsContainer extends Renderable {
   data: IPaginatedArray<IWord>;
 
   constructor(data: IPaginatedArray<IWord>) {
