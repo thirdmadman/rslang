@@ -4,7 +4,7 @@ import { IWord } from '../../interfaces/IWord';
 import { PathBus } from '../../services/PathBus';
 import { dch } from '../dch';
 import Renderable from '../Renderable';
-import { CardsContainer } from './cardsField/CardsContainer';
+import { CardsContainer } from './cardsContainer/CardsContainer';
 import { LevelNavigation } from './levelNavigation/LevelNavigation';
 import './Wordbook.scss';
 
