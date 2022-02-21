@@ -3,6 +3,14 @@ $color-dark-m: #555555;
 $color-dark-xl: #1b1b1b;
 $color-light-m: #f6f6f6;
 
+.menu {
+  z-index: 99;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
 .container {
   max-width: 1920px;
   margin: 0 auto;
@@ -24,35 +32,19 @@ $color-light-m: #f6f6f6;
   align-items: center;
   height: 100%;
   width: 50%;
+  background-color: white;
 
   @media screen and (max-width: 1000px) {
-    width: 80%;
+    width: 100%;
   }
 }
 .app-name {
-  position: relative;
-  display: inline-block;
-  border: 2px solid #dfdfdf;
+  background: url('/src/assets/img/svg/corner-left-top.svg') top left no-repeat,
+    url('/src/assets/img/svg/corner-right-top.svg') top right no-repeat,
+    url('/src/assets/img/svg/corner-right-bottom.svg') bottom right no-repeat,
+    url('/src/assets/img/svg/corner-left-bottom.svg') bottom left no-repeat;
   padding: 9px 40px;
-  &:before,
-  &:after {
-    content: '';
-    z-index: 1;
-    display: block;
-    position: absolute;
-    background: #fff;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  &:before {
-    width: calc(100% + 6px);
-    height: 50%;
-  }
-  &:after {
-    height: calc(100% + 64px);
-    width: 93%;
-  }
+
   &--text {
     z-index: 2;
     position: relative;
@@ -76,7 +68,7 @@ $color-light-m: #f6f6f6;
   height: 100%;
 
   @media screen and (max-width: 1000px) {
-    width: 80%;
+    width: 100%;
   }
 }
 .nav-menu--link {
@@ -89,6 +81,7 @@ $color-light-m: #f6f6f6;
   &:hover {
     color: $color-dark-xl;
     font-weight: 300;
+    transition: all 0.1s;
   }
 }
 
@@ -120,6 +113,7 @@ $color-light-m: #f6f6f6;
   padding: 10px;
 
   &:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
+    transition: all 0.1s;
   }
 }

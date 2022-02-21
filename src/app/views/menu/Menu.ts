@@ -1,5 +1,4 @@
 import { GlobalConstants } from '../../../GlobalConstants';
-import { PathBus } from '../../services/PathBus';
 import { dch } from '../dch';
 import Renderable from '../Renderable';
 import './Menu.scss';
@@ -46,11 +45,8 @@ export class Menu extends Renderable {
 
   closeBtn: HTMLElement;
 
-  redirectPage: string;
-
-  constructor(redirectPage: string) {
+  constructor() {
     super();
-    this.redirectPage = redirectPage;
     this.nameText = dch('div', ['app-name--text'], 'Forgotten Words');
     this.name = dch('div', ['app-name'], '', this.nameText);
     this.logoContainer = dch('div', ['logo-container']);
@@ -66,15 +62,13 @@ export class Menu extends Renderable {
     this.navigationContainer = dch('div', ['navigation-container'], '', this.logoContainer, this.navigation);
     this.closeBtn = dch('button', ['close-button']);
     this.closeBtn.onclick = () => {
-      this.cancel(this.redirectPage);
+      this.cancel();
     };
     this.main = dch('div', ['main'], '', this.appNameContainer, this.navigationContainer);
     this.rootNode = dch('div', ['menu'], '', this.main, this.closeBtn);
   }
 
-  cancel = (path: string = GlobalConstants.ROUTE_MAIN) => {
-    if (path) {
-      PathBus.setCurrentPath(path);
-    }
+  cancel = () => {
+    this.rootNode.remove();
   };
 }

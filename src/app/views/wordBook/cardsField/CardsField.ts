@@ -9,6 +9,7 @@ import { GlobalConstants } from '../../../../GlobalConstants';
 import { TokenProvider } from '../../../services/TokenProvider';
 import { UserWordService } from '../../../services/UserWordService';
 import { IWordAdanced } from '../../../interfaces/IWordAdvanced';
+import { Menu } from '../../menu/Menu';
 
 export class CardsField extends Renderable {
   data: IPaginatedArray<IWord>;
@@ -20,6 +21,12 @@ export class CardsField extends Renderable {
   constructor(data: IPaginatedArray<IWord>) {
     super();
     this.data = data;
+    const btn = dch('button', ['menu-btn'], 'menu');
+    const menu = new Menu();
+    btn.onclick = () => {
+      this.rootNode.append(menu.getElement());
+    };
+
     this.prevButton = dch('button', ['pagination-button', 'prev'], 'prev');
     this.prevButton.onclick = () => this.changePage('prev');
     const nextButton = dch('button', ['pagination-button', 'next'], 'next');
@@ -30,7 +37,7 @@ export class CardsField extends Renderable {
       `${this.data.currentPage + 1}/${GlobalConstants.NUMBER_OF_PAGES}`,
     );
     const pagination = dch('div', ['pagination'], '', this.prevButton, this.pagenationNum, nextButton);
-    this.rootNode = dch('div', ['cards-container'], '', pagination);
+    this.rootNode = dch('div', ['cards-container'], '', btn, pagination);
 
     const userId = TokenProvider.getUserId();
     let advancedWords = this.data.array.map((word) => ({ word } as IWordAdanced));
