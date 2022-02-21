@@ -24,8 +24,6 @@ export class AudiocallGameField extends Renderable {
 
   startQuestion: number;
 
-  menuButton: HTMLElement;
-
   title: HTMLElement;
 
   constructor(questionArrayData: IAudiocallQuestionArray) {
@@ -35,9 +33,8 @@ export class AudiocallGameField extends Renderable {
     this.maxAnswerChain = 1;
     this.result = [];
     this.userId = TokenProvider.getUserId();
-    this.menuButton = dch('button', ['menu-button']);
     this.title = dch('h2', ['audiocall-page--title'], 'Audio decoding');
-    this.rootNode = dch('div', ['gamefield-container'], '', this.menuButton, this.title);
+    this.rootNode = dch('div', ['gamefield-container'], '', this.title);
     this.startQuestion = 0;
     this.gameCycle(this.data.questions, this.startQuestion);
   }

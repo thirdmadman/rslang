@@ -16,8 +16,6 @@ export class AuthorizationPage extends Renderable {
 
   registrationForm: HTMLElement;
 
-  menuBtn: HTMLElement;
-
   constructor(redirectPage?: string) {
     super();
     this.loginForm = new AuthorizationForm('login', redirectPage).getElement();
@@ -30,14 +28,12 @@ export class AuthorizationPage extends Renderable {
     this.transitionToRegisterButton = dch('button', ['auth-form--button'], 'create new');
     this.transitionToRegisterButton.addEventListener('click', () => {
       this.rootNode.innerHTML = '';
-      this.rootNode.append(this.menuBtn, this.registrationForm, this.cancelButton);
+      this.rootNode.append(this.registrationForm, this.cancelButton);
     });
-    this.menuBtn = dch('button', ['menu-button']);
     this.rootNode = dch(
       'div',
       ['auth-container'],
       '',
-      this.menuBtn,
       this.formContainer,
       this.transitionToRegisterButton,
     );
