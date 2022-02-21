@@ -6,32 +6,15 @@ $color-light-m: #f6f6f6;
 .auth-page {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 95px;
+  color: $color-dark-s;
 }
 .auth-container--title-container {
-  position: relative;
   display: inline-block;
-  border: 1px solid #dfdfdf;
   padding: 3px 20px;
-  &:before,
-  &:after {
-    content: '';
-    z-index: 1;
-    display: block;
-    position: absolute;
-    background: #fff;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  &:before {
-    width: calc(100% + 6px);
-    height: 50%;
-  }
-  &:after {
-    height: calc(100% + 64px);
-    width: 93%;
-  }
+  background: url('/src/assets/img/svg/corner-left-top.svg') top left no-repeat,
+    url('/src/assets/img/svg/corner-right-bottom.svg') bottom right no-repeat;
 }
 .auth-container {
   height: 100%;
@@ -53,53 +36,13 @@ $color-light-m: #f6f6f6;
 }
 
 .auth-form_input-container {
+  background: url('/src/assets/img/svg/corner-left-top.svg') top left no-repeat,
+    url('/src/assets/img/svg/corner-right-bottom.svg') bottom right no-repeat;
   position: relative;
   text-align: center;
   padding: 3px 20px;
 }
 
-.corner-borders {
-  &::before,
-  &::after {
-    border-color: #dfdfdf;
-    border-width: 2px;
-    content: '';
-    display: block;
-    height: 20px;
-    pointer-events: none;
-    position: absolute;
-    width: 20px;
-  }
-
-  &--left {
-    &::before,
-    &::after {
-      left: 0;
-    }
-
-    &::before {
-      border: {
-        left-style: solid;
-        top-style: solid;
-      }
-      top: 0;
-    }
-  }
-
-  &--right {
-    &::before,
-    &::after {
-      right: 0;
-    }
-    &::after {
-      border: {
-        bottom-style: solid;
-        right-style: solid;
-      }
-      bottom: 0;
-    }
-  }
-}
 .auth-form--input {
   border: none;
   width: 260px;
@@ -109,7 +52,9 @@ $color-light-m: #f6f6f6;
   &::placeholder {
     font-size: 25px;
     line-height: 29px;
+    font-weight: 100;
     color: $color-dark-s;
+    font-family: 'Roboto';
   }
 }
 
@@ -130,6 +75,12 @@ $color-light-m: #f6f6f6;
   line-height: 28px;
   text-transform: uppercase;
   color: $color-dark-s;
+  font-family: 'Roboto';
+
+  &:hover {
+    color: $color-dark-xl;
+    transition: all 0.1s;
+  }
 }
 
 .auth-form--text {
@@ -137,4 +88,8 @@ $color-light-m: #f6f6f6;
   font-size: 18px;
   line-height: 28px;
   text-transform: uppercase;
+}
+.error-text {
+  color: $color-dark-xl;
+  font-weight: 300;
 }

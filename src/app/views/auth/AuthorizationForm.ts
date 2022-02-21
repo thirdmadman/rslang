@@ -27,14 +27,6 @@ export class AuthorizationForm extends Renderable {
 
   emailInputContainer: HTMLElement;
 
-  rightCornerEmailInput: HTMLElement;
-
-  leftCornerEmailInput: HTMLElement;
-
-  leftCornerPasswordInput: HTMLElement;
-
-  rightCornerPasswordInput: HTMLElement;
-
   passwordInputContainer: HTMLElement;
 
   emailInputTitle: HTMLElement;
@@ -51,10 +43,6 @@ export class AuthorizationForm extends Renderable {
 
   nameInputTitle: HTMLElement;
 
-  leftCornerNameInput: HTMLElement;
-
-  rightCornerNameInput: HTMLElement;
-
   nameInputContainer: HTMLElement;
 
   constructor(param: string, redirectPage?: string) {
@@ -67,30 +55,18 @@ export class AuthorizationForm extends Renderable {
     this.nameInput.setAttribute('type', 'username');
     this.nameInput.setAttribute('placeholder', 'any-name');
     this.nameInputTitle = dch('h2', ['auth-form--title'], 'UID');
-    this.leftCornerNameInput = dch('div', ['corner-borders', 'corner-borders--left']);
-    this.rightCornerNameInput = dch('div', ['corner-borders', 'corner-borders--right']);
     this.nameInputContainer = dch(
       'div',
       ['auth-form_input-container'],
       '',
-      this.leftCornerNameInput,
-
-      this.rightCornerNameInput,
-
       this.nameInput,
     );
     this.emailInput = dch('input', ['auth-form--input']) as HTMLInputElement;
     this.emailInputTitle = dch('h2', ['auth-form--title'], 'E-mail');
-    this.leftCornerEmailInput = dch('div', ['corner-borders', 'corner-borders--left']);
-    this.rightCornerEmailInput = dch('div', ['corner-borders', 'corner-borders--right']);
     this.emailInputContainer = dch(
       'div',
       ['auth-form_input-container'],
       '',
-      this.leftCornerEmailInput,
-
-      this.rightCornerEmailInput,
-
       this.emailInput,
     );
     this.emailInput.setAttribute('type', 'email');
@@ -99,16 +75,10 @@ export class AuthorizationForm extends Renderable {
     this.passwordInput.setAttribute('type', 'password');
     this.passwordInput.setAttribute('placeholder', '*****');
     this.passwordInputTitle = dch('h2', ['auth-form--title'], 'Secret');
-    this.leftCornerPasswordInput = dch('div', ['corner-borders', 'corner-borders--left']);
-    this.rightCornerPasswordInput = dch('div', ['corner-borders', 'corner-borders--right']);
     this.passwordInputContainer = dch(
       'div',
       ['auth-form_input-container'],
       '',
-      this.leftCornerPasswordInput,
-
-      this.rightCornerPasswordInput,
-
       this.passwordInput,
     );
     this.signinButton = dch('button', ['auth-form--button'], 'Start sync');
@@ -127,7 +97,7 @@ export class AuthorizationForm extends Renderable {
       this.registerUser(emailValue, passwordValue, nameValue);
     });
 
-    this.errorMessage = dch('p', ['auth-form--text'], 'Something went wrong. Try again');
+    this.errorMessage = dch('p', ['auth-form--text', 'error-text'], 'Something went wrong. Try again');
     this.authContainer = dch('div', ['auth-container'], '', this.mainTitleContainer, this.emailInputContainer);
     this.rootNode = dch('div', ['auth-page']);
     if (this.param === 'register') {
