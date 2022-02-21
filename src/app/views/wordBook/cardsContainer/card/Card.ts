@@ -2,17 +2,17 @@ import { IWordAdanced } from '../../../../interfaces/IWordAdvanced';
 import { GlobalConstants } from '../../../../../GlobalConstants';
 import { dch } from '../../../dch';
 import Renderable from '../../../Renderable';
-import './Card.scss';
-// import { TokenProvider } from '../../../../services/TokenProvider';
-// import { UserWordService } from '../../../../services/UserWordService';
 import { musicPlayer } from '../../../../services/SingleMusicPlayer';
+import { TokenProvider } from '../../../../services/TokenProvider';
+import { UserWordService } from '../../../../services/UserWordService';
+import './Card.scss';
 
 export class Card extends Renderable {
   data: IWordAdanced;
 
-  // difficultyButton: HTMLElement = new HTMLElement();
+  buttonSetDifficultyState: HTMLElement;
 
-  // buttonSetLearnedState: HTMLElement = new HTMLElement();
+  buttonSetLearnedState: HTMLElement;
 
   private isWordDifficult = false;
 
@@ -21,7 +21,7 @@ export class Card extends Renderable {
   constructor(data: IWordAdanced) {
     super();
     this.data = data;
-    // const userId = TokenProvider.getUserId();
+    const userId = TokenProvider.getUserId();
     this.rootNode = dch('div', ['word-card']);
 
     const image = dch('img', ['word-card__image']);
@@ -111,106 +111,83 @@ export class Card extends Renderable {
       ruDescriptionContainer,
     );
 
-    // const imageContainer = dch('div', ['card-image-container'], '', image);
-    // const textContainer = dch('div', ['discription-container']);
-    // this.rootNode = dch('div', ['word-card'], '', imageContainer, textContainer);
+    this.buttonSetDifficultyState = dch('button', ['word-card__button-difficulty']);
+    this.buttonSetDifficultyState.onclick = () => this.buttonToggleDifficultyHandler();
 
-    // const audioWord = `${GlobalConstants.DEFAULT_API_URL}/${this.data.word.audio}`;
-    // const audioMeaning = `${GlobalConstants.DEFAULT_API_URL}/${this.data.word.audioMeaning}`;
-    // const audioExample = `${GlobalConstants.DEFAULT_API_URL}/${this.data.word.audioExample}`;
+    this.buttonSetLearnedState = dch('button', ['word-card__button-learned']);
+    this.buttonSetLearnedState.onclick = () => this.buttonToggleLearnedHandler();
 
-    // const word = dch('h3', ['word-title'], this.data.word.word);
-    // const transcription = dch('span', ['word-subtitle'], this.data.word.transcription);
-    // const wordTranslate = dch('span', ['word-subtitle'], this.data.word.wordTranslate);
-    // const audioButton = dch('button', ['word-btn'], 'play');
-    // audioButton.onclick = () => {
-    //   musicPlayer.setPlayList([audioWord, audioMeaning, audioExample]);
-    //   musicPlayer.play().catch(() => {});
-    // };
+    if (userId) {
+      if (this.data.userData) {
+        if (this.data.userData.difficulty && this.data.userData.difficulty !== 'normal') {
+          this.isWordDifficult = true;
+          this.buttonSetDifficultyState.classList.add('word-card__button-difficulty_true');
+        }
 
-    // const textMeaning = dch('p', ['card-text'], this.data.word.textMeaning);
-    // const textMeaningTranslate = dch('p', ['card-text'], this.data.word.textMeaningTranslate);
-    // const textExample = dch('p', ['card-text'], this.data.word.textExample);
-    // const textExampleTranslate = dch('p', ['card-text'], this.data.word.textExampleTranslate);
-    // textContainer.append(
-    //   word,
-    //   transcription,
-    //   wordTranslate,
-    //   audioButton,
-    //   textMeaning,
-    //   textMeaningTranslate,
-    //   textExample,
-    //   textExampleTranslate,
-    // );
-    // this.difficultyButton = dch('button', ['word-btn']);
-    // this.difficultyButton.innerText = 'Add to "difficult"';
-    // this.difficultyButton.onclick = () => this.buttonToggleDifficultyHandler();
+        if (this.data.userData.optional && this.data.userData.optional.isLearned) {
+          this.isWordLearned = true;
+          this.buttonSetLearnedState.classList.add('word-card__button-learned_true');
 
-    // this.buttonSetLearnedState = dch('button', ['word-btn']);
-    // this.buttonSetLearnedState.innerText = 'Add to "learned"';
-    // this.buttonSetLearnedState.onclick = () => this.buttonToggleLearnedHandler();
+          const resultText = `${this.data.userData.optional.successCounter}/
+          ${this.data.userData.optional.successCounter + this.data.userData.optional.successCounter}`;
 
-    // if (userId) {
-    //   if (this.data.userData) {
-    //     if (this.data.userData.difficulty !== 'normal') {
-    //       this.isWordDifficult = true;
-    //       this.difficultyButton.innerText = 'Remove from "difficult"';
-    //     }
-
-    //     if (this.data.userData.optional.isLearned) {
-    //       this.isWordLearned = true;
-    //       this.buttonSetLearnedState.innerText = 'Remove from "learned"';
-    //     }
-    //     const gamesResultContainer = dch('div', ['gamesResult-container'], `
-    //  ${this.data.userData.optional.successCounter}/
-    //  ${this.data.userData.optional.successCounter + this.data.userData.optional.successCounter}`);
-    //     this.rootNode.append(gamesResultContainer);
-    //   }
-    //   textContainer.append(this.difficultyButton, this.buttonSetLearnedState);
-    // }
+          const gamesResultContainer = dch('div', ['word-card__games-result'], resultText);
+          imageContainer.append(gamesResultContainer);
+        }
+      }
+      imageContainer.append(this.buttonSetDifficultyState, this.buttonSetLearnedState);
+    }
   }
 
-  // private buttonToggleDifficultyHandler() {
-  //   const userId = TokenProvider.getUserId();
-  //   if (!userId) {
-  //     return;
-  //   }
-  //   if (!this.isWordDifficult) {
-  //     UserWordService.setWorDifficultById(userId, this.data.word.id).then((userWord) => {
-  //       if (userWord) {
-  //         this.isWordDifficult = true;
-  //         this.difficultyButton.innerText = 'Remove from "difficult"';
-  //       }
-  //     }).catch(() => {});
-  //   } else {
-  //     UserWordService.setWordNormalById(userId, this.data.word.id).then((userWord) => {
-  //       if (userWord) {
-  //         this.isWordDifficult = false;
-  //         this.difficultyButton.innerText = 'Add to "difficult"';
-  //       }
-  //     }).catch(() => {});
-  //   }
-  // }
+  private buttonToggleDifficultyHandler() {
+    const userId = TokenProvider.getUserId();
+    if (!userId) {
+      return;
+    }
+    if (!this.isWordDifficult) {
+      UserWordService.setWorDifficultById(userId, this.data.word.id)
+        .then((userWord) => {
+          if (userWord) {
+            this.isWordDifficult = true;
+            this.buttonSetDifficultyState.classList.add('word-card__button-difficulty_true');
+          }
+        })
+        .catch(() => {});
+    } else {
+      UserWordService.setWordNormalById(userId, this.data.word.id)
+        .then((userWord) => {
+          if (userWord) {
+            this.isWordDifficult = false;
+            this.buttonSetDifficultyState.classList.remove('word-card__button-difficulty_true');
+          }
+        })
+        .catch(() => {});
+    }
+  }
 
-  // private buttonToggleLearnedHandler() {
-  //   const userId = TokenProvider.getUserId();
-  //   if (!userId) {
-  //     return;
-  //   }
-  //   if (!this.isWordLearned) {
-  //     UserWordService.addWordLearnedById(userId, this.data.word.id).then((userWord) => {
-  //       if (userWord) {
-  //         this.isWordLearned = true;
-  //         this.buttonSetLearnedState.innerText = 'Remove from "learned"';
-  //       }
-  //     }).catch(() => {});
-  //   } else {
-  //     UserWordService.removeWordFromLearnedById(userId, this.data.word.id).then((userWord) => {
-  //       if (userWord) {
-  //         this.isWordLearned = false;
-  //         this.buttonSetLearnedState.innerText = 'Add to "learned"';
-  //       }
-  //     }).catch(() => {});
-  //   }
-  // }
+  private buttonToggleLearnedHandler() {
+    const userId = TokenProvider.getUserId();
+    if (!userId) {
+      return;
+    }
+    if (!this.isWordLearned) {
+      UserWordService.addWordLearnedById(userId, this.data.word.id)
+        .then((userWord) => {
+          if (userWord) {
+            this.isWordLearned = true;
+            this.buttonSetLearnedState.classList.add('word-card__button-learned_true');
+          }
+        })
+        .catch(() => {});
+    } else {
+      UserWordService.removeWordFromLearnedById(userId, this.data.word.id)
+        .then((userWord) => {
+          if (userWord) {
+            this.isWordLearned = false;
+            this.buttonSetLearnedState.classList.remove('word-card__button-learned_true');
+          }
+        })
+        .catch(() => {});
+    }
+  }
 }
