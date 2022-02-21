@@ -3,7 +3,7 @@ import { SprintStartPage } from '../views/sprint/SprintStartPage';
 
 export class SprintController extends AbstractController {
   resolve(path: string) {
-    this.rootNode.innerHTML = `SprintController - ${path}`;
+    this.rootNode.innerHTML = '';
     const currentPage = +path.split('/')[2] || 1;
     const currentGroup = +path.split('/')[1] || 1;
 

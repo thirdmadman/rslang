@@ -4,6 +4,7 @@ import { GlobalConstants } from '../../GlobalConstants';
 
 export class AuthController extends AbstractController {
   resolve(path: string) {
+    this.rootNode.innerHTML = '';
     const currentPath = path.split('/');
     const redirectPage = path.split('?path=');
     if (!path) {
