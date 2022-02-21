@@ -52,8 +52,6 @@ export class Menu extends Renderable {
 
   main: HTMLElement;
 
-  nameText: HTMLElement;
-
   navigation: HTMLElement;
 
   navigationList: HTMLElement;
@@ -64,8 +62,7 @@ export class Menu extends Renderable {
 
   constructor() {
     super();
-    this.nameText = dch('div', ['app-name--text'], 'Forgotten Words');
-    this.name = dch('div', ['app-name'], '', this.nameText);
+    this.name = dch('div', ['app-name'], 'Forgotten Words');
     this.logoContainer = dch('div', ['logo-container']);
     this.navigationList = dch('ul', ['nav-menu--list']);
     const currentPath = PathBus.getCurrentPath();
@@ -89,15 +86,20 @@ export class Menu extends Renderable {
     this.navigation = dch('nav', ['nav-menu'], '', this.navigationList);
     this.appNameContainer = dch('div', ['app-name-container'], '', this.name);
     this.navigationContainer = dch('div', ['navigation-container'], '', this.logoContainer, this.navigation);
+
+    const buttonBurgerMenu = dch('button', ['burger-menu-button']);
+    buttonBurgerMenu.onclick = () => {
+      this.main.classList.remove('main-hidden');
+      buttonBurgerMenu.classList.add('burger-menu-button-hidden');
+    };
+
     this.closeBtn = dch('button', ['close-button']);
     this.closeBtn.onclick = () => {
-      this.cancel();
+      this.main.classList.add('main-hidden');
+      buttonBurgerMenu.classList.remove('burger-menu-button-hidden');
     };
-    this.main = dch('div', ['menu-main'], '', this.appNameContainer, this.navigationContainer);
-    this.rootNode = dch('div', ['menu'], '', this.main, this.closeBtn);
-  }
 
-  cancel = () => {
-    this.rootNode.remove();
-  };
+    this.main = dch('div', ['main', 'main-hidden'], '', this.appNameContainer, this.navigationContainer, this.closeBtn);
+    this.rootNode = dch('div', ['menu'], '', this.main, buttonBurgerMenu);
+  }
 }
