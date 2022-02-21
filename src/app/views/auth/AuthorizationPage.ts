@@ -1,9 +1,12 @@
 import Renderable from '../Renderable';
 import { dch } from '../dch';
 import { AuthorizationForm } from './AuthorizationForm';
+import { PathBus } from '../../services/PathBus';
+import { GlobalConstants } from '../../../GlobalConstants';
+import './AuthorizationPage.scss';
 
 export class AuthorizationPage extends Renderable {
-  transitionToLoginButton: HTMLElement;
+  cancelButton: HTMLElement;
 
   transitionToRegisterButton: HTMLElement;
 
@@ -13,29 +16,36 @@ export class AuthorizationPage extends Renderable {
 
   registrationForm: HTMLElement;
 
+  menuBtn: HTMLElement;
+
   constructor(redirectPage?: string) {
     super();
     this.loginForm = new AuthorizationForm('login', redirectPage).getElement();
     this.formContainer = dch('div', ['form-container'], '', this.loginForm);
     this.registrationForm = new AuthorizationForm('register').getElement();
-    this.transitionToLoginButton = dch('button', ['auth-button'], 'Войти');
-    this.transitionToLoginButton.addEventListener('click', () => {
-      this.registrationForm.remove();
-      this.formContainer.append(this.loginForm);
-    });
-    this.transitionToRegisterButton = dch('button', ['auth-button'], 'Регистрация');
+    this.cancelButton = dch('button', ['auth-form--button'], 'cancel');
+    this.cancelButton.onclick = () => {
+      this.cancel(redirectPage);
+    };
+    this.transitionToRegisterButton = dch('button', ['auth-form--button'], 'create new');
     this.transitionToRegisterButton.addEventListener('click', () => {
-      this.loginForm.remove();
-      this.rootNode.append(this.registrationForm);
+      this.rootNode.innerHTML = '';
+      this.rootNode.append(this.menuBtn, this.registrationForm, this.cancelButton);
     });
-
+    this.menuBtn = dch('button', ['menu-button']);
     this.rootNode = dch(
       'div',
       ['auth-container'],
       '',
-      this.transitionToLoginButton,
-      this.transitionToRegisterButton,
+      this.menuBtn,
       this.formContainer,
+      this.transitionToRegisterButton,
     );
   }
+
+  cancel = (page: string = GlobalConstants.ROUTE_MAIN) => {
+    if (page) {
+      PathBus.setCurrentPath(`${page}`);
+    }
+  };
 }
