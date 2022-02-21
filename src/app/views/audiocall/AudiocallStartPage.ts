@@ -26,8 +26,6 @@ export class AudiocallStartPage extends Renderable {
 
   title: HTMLElement;
 
-  menuButton: HTMLElement;
-
   mainContainer: HTMLElement;
 
   buttonsContainer: HTMLElement;
@@ -45,8 +43,6 @@ export class AudiocallStartPage extends Renderable {
     this.arrayAnswers = [];
     this.answersCount = 4;
     this.pages = GlobalConstants.NUMBER_OF_PAGES;
-    this.menuButton = dch('button', ['menu-button']);
-    this.menuButton.onclick = () => {};
     this.title = dch('h2', ['audiocall-page--title'], 'audio decoding');
     this.titleContainer = dch('div', ['audiocall-page--title-container'], '', this.title);
     this.gameDescription = dch(
@@ -78,7 +74,6 @@ export class AudiocallStartPage extends Renderable {
       'div',
       ['audiocall-page'],
       '',
-      this.menuButton,
       this.mainContainer,
       this.buttonsContainer,
     );
@@ -99,6 +94,7 @@ export class AudiocallStartPage extends Renderable {
         this.createQuestionData(wordData.array);
       }).catch(() => {});
     }
+    // this.rootNode.append(new Menu().getElement());
   }
 
   startGame(questionArrayData: IAudiocallQuestionArray) {
