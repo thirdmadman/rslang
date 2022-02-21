@@ -1,0 +1,22 @@
+$color-dark-s: #767676;
+$color-dark-m: #555555;
+$color-dark-xl: #1b1b1b;
+$color-light-m: #f6f6f6;
+
+.menu-button {
+    background: url('../../../assets/img/svg/burger-menu.svg');
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 36px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 36px;
+    border: none;
+    padding: 10px;
+
+    &:hover {
+        transform: scale(1.1);
+        transition: all 0.1s;
+    }
+}
