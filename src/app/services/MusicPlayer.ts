@@ -60,7 +60,7 @@ export class MusicPlayer {
     return new Promise(() => {});
   }
 
-  setVoulume(value: number) {
+  setVolume(value: number) {
     this.currentVolume = value;
     this.audio.volume = value;
   }
