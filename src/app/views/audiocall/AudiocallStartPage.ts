@@ -36,6 +36,7 @@ export class AudiocallStartPage extends Renderable {
 
   levelBtnContainer: HTMLElement;
 
+
   constructor(group?: number, page?: number) {
     super();
     this.group = group;
@@ -77,6 +78,7 @@ export class AudiocallStartPage extends Renderable {
       this.mainContainer,
       this.buttonsContainer,
     );
+
     if (!this.group && !this.page) {
       const countLevel = GlobalConstants.NUMBER_OF_GROUP_NO_AUTH_USER;
       for (let i = 1; i <= countLevel; i++) {
