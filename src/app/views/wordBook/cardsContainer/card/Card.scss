@@ -23,6 +23,10 @@
     width: 300px;
     opacity: 0.5;
     filter: saturate(0) brightness(1.4);
+
+    &_started {
+      filter: saturate(0.5) brightness(1.4);
+    }
   }
 
   .word-card__button-difficulty {

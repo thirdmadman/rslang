@@ -133,6 +133,7 @@ export class Card extends Renderable {
 
           const gamesResultContainer = dch('div', ['word-card__games-result'], resultText);
           imageContainer.append(gamesResultContainer);
+          image.classList.add('word-card__image_started');
         }
       }
       imageContainer.append(this.buttonSetDifficultyState, this.buttonSetLearnedState);
