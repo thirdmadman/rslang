@@ -4,6 +4,7 @@ import { PathBus } from '../../services/PathBus';
 import { SigninService } from '../../services/SigninService';
 import { UserService } from '../../services/UserService';
 import { GlobalConstants } from '../../../GlobalConstants';
+import './AuthorizationForm.scss';
 
 export class AuthorizationForm extends Renderable {
   emailInput: HTMLInputElement;
@@ -18,22 +19,106 @@ export class AuthorizationForm extends Renderable {
 
   errorMessage: HTMLElement;
 
+  authContainer: HTMLElement;
+
+  mainTitleContainer: HTMLElement;
+
+  mainTitleSignin: HTMLElement;
+
+  emailInputContainer: HTMLElement;
+
+  rightCornerEmailInput: HTMLElement;
+
+  leftCornerEmailInput: HTMLElement;
+
+  leftCornerPasswordInput: HTMLElement;
+
+  rightCornerPasswordInput: HTMLElement;
+
+  passwordInputContainer: HTMLElement;
+
+  emailInputTitle: HTMLElement;
+
+  passwordInputTitle: HTMLElement;
+
+  text: HTMLElement;
+
+  toRegisterButton: HTMLElement;
+
+  param: string;
+
+  mainTitleRegistration: HTMLElement;
+
+  nameInputTitle: HTMLElement;
+
+  leftCornerNameInput: HTMLElement;
+
+  rightCornerNameInput: HTMLElement;
+
+  nameInputContainer: HTMLElement;
+
   constructor(param: string, redirectPage?: string) {
     super();
-    this.emailInput = dch('input', ['auth-form_input']) as HTMLInputElement;
+    this.param = param;
+    this.mainTitleSignin = dch('div', ['auth-container--title'], 'Identity recognizing');
+    this.mainTitleRegistration = dch('div', ['auth-container--title'], 'Identity creation');
+    this.mainTitleContainer = dch('div', ['auth-container--title-container'], '');
+    this.nameInput = dch('input', ['auth-form--input']) as HTMLInputElement;
+    this.nameInput.setAttribute('type', 'username');
+    this.nameInput.setAttribute('placeholder', 'any-name');
+    this.nameInputTitle = dch('h2', ['auth-form--title'], 'UID');
+    this.leftCornerNameInput = dch('div', ['corner-borders', 'corner-borders--left']);
+    this.rightCornerNameInput = dch('div', ['corner-borders', 'corner-borders--right']);
+    this.nameInputContainer = dch(
+      'div',
+      ['auth-form_input-container'],
+      '',
+      this.leftCornerNameInput,
+
+      this.rightCornerNameInput,
+
+      this.nameInput,
+    );
+    this.emailInput = dch('input', ['auth-form--input']) as HTMLInputElement;
+    this.emailInputTitle = dch('h2', ['auth-form--title'], 'E-mail');
+    this.leftCornerEmailInput = dch('div', ['corner-borders', 'corner-borders--left']);
+    this.rightCornerEmailInput = dch('div', ['corner-borders', 'corner-borders--right']);
+    this.emailInputContainer = dch(
+      'div',
+      ['auth-form_input-container'],
+      '',
+      this.leftCornerEmailInput,
+
+      this.rightCornerEmailInput,
+
+      this.emailInput,
+    );
     this.emailInput.setAttribute('type', 'email');
-    this.emailInput.setAttribute('id', `${param}Email`);
-    this.emailInput.setAttribute('placeholder', 'e-mail');
-    this.passwordInput = dch('input', ['auth-form_input']) as HTMLInputElement;
+    this.emailInput.setAttribute('placeholder', 'notfound@syntax.error');
+    this.passwordInput = dch('input', ['auth-form--input']) as HTMLInputElement;
     this.passwordInput.setAttribute('type', 'password');
-    this.passwordInput.setAttribute('id', `${param}Password`);
-    this.passwordInput.setAttribute('placeholder', 'password');
-    this.signinButton = dch('button', ['auth-form_button'], 'Войти');
+    this.passwordInput.setAttribute('placeholder', '*****');
+    this.passwordInputTitle = dch('h2', ['auth-form--title'], 'Secret');
+    this.leftCornerPasswordInput = dch('div', ['corner-borders', 'corner-borders--left']);
+    this.rightCornerPasswordInput = dch('div', ['corner-borders', 'corner-borders--right']);
+    this.passwordInputContainer = dch(
+      'div',
+      ['auth-form_input-container'],
+      '',
+      this.leftCornerPasswordInput,
+
+      this.rightCornerPasswordInput,
+
+      this.passwordInput,
+    );
+    this.signinButton = dch('button', ['auth-form--button'], 'Start sync');
     this.signinButton.setAttribute('type', 'submit');
     this.signinButton.addEventListener('click', () => {
       this.signIn(redirectPage);
     });
-    this.registerButton = dch('button', ['auth-form_button'], 'Зарегистрироваться');
+    this.text = dch('h3', ['auth-form--text'], 'or');
+    this.toRegisterButton = dch('button', ['auth-form--button'], 'create new');
+    this.registerButton = dch('button', ['auth-form--button'], 'create new');
     this.registerButton.setAttribute('type', 'submit');
     this.registerButton.addEventListener('click', () => {
       const emailValue = this.emailInput.value;
@@ -41,16 +126,35 @@ export class AuthorizationForm extends Renderable {
       const nameValue = this.nameInput.value;
       this.registerUser(emailValue, passwordValue, nameValue);
     });
-    this.nameInput = dch('input', ['auth-form_input']) as HTMLInputElement;
-    this.nameInput.setAttribute('type', 'username');
-    this.nameInput.setAttribute('id', `${param}Name`);
-    this.nameInput.setAttribute('placeholder', 'username');
-    this.errorMessage = dch('p', [], 'Что-то пошло не так. Попробуйте снова.');
-    this.rootNode = dch('div', ['auth-form-container'], '');
-    if (param === 'register') {
-      this.rootNode.append(this.nameInput, this.emailInput, this.passwordInput, this.registerButton);
+
+    this.errorMessage = dch('p', ['auth-form--text'], 'Something went wrong. Try again');
+    this.authContainer = dch('div', ['auth-container'], '', this.mainTitleContainer, this.emailInputContainer);
+    this.rootNode = dch('div', ['auth-page']);
+    if (this.param === 'register') {
+      this.mainTitleContainer.append(this.mainTitleRegistration);
+      this.authContainer.append(
+        this.mainTitleContainer,
+        this.nameInputTitle,
+        this.nameInputContainer,
+        this.emailInputTitle,
+        this.emailInputContainer,
+        this.passwordInputTitle,
+        this.passwordInputContainer,
+        this.registerButton,
+      );
+      this.rootNode.append(this.mainTitleContainer, this.authContainer);
     } else {
-      this.rootNode.append(this.emailInput, this.passwordInput, this.signinButton);
+      this.mainTitleContainer.append(this.mainTitleSignin);
+      this.authContainer.append(
+        this.mainTitleContainer,
+        this.emailInputTitle,
+        this.emailInputContainer,
+        this.passwordInputTitle,
+        this.passwordInputContainer,
+        this.signinButton,
+        this.text,
+      );
+      this.rootNode.append(this.mainTitleContainer, this.authContainer);
     }
   }
 
@@ -60,7 +164,7 @@ export class AuthorizationForm extends Renderable {
     })
       .catch((error) => {
         console.error(error);
-        this.rootNode.append(this.errorMessage);
+        this.authContainer.append(this.errorMessage);
       });
   }
 

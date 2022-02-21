@@ -1,0 +1,140 @@
+$color-dark-s: #767676;
+$color-dark-m: #555555;
+$color-dark-xl: #1b1b1b;
+$color-light-m: #f6f6f6;
+
+.auth-page {
+  display: flex;
+  flex-direction: column;
+  gap: 95px;
+}
+.auth-container--title-container {
+  position: relative;
+  display: inline-block;
+  border: 1px solid #dfdfdf;
+  padding: 3px 20px;
+  &:before,
+  &:after {
+    content: '';
+    z-index: 1;
+    display: block;
+    position: absolute;
+    background: #fff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &:before {
+    width: calc(100% + 6px);
+    height: 50%;
+  }
+  &:after {
+    height: calc(100% + 64px);
+    width: 93%;
+  }
+}
+.auth-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 13px;
+}
+.auth-container--title {
+  z-index: 2;
+  position: relative;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 100;
+  text-transform: uppercase;
+  color: #767676;
+  line-height: 70px;
+}
+
+.auth-form_input-container {
+  position: relative;
+  text-align: center;
+  padding: 3px 20px;
+}
+
+.corner-borders {
+  &::before,
+  &::after {
+    border-color: #dfdfdf;
+    border-width: 2px;
+    content: '';
+    display: block;
+    height: 20px;
+    pointer-events: none;
+    position: absolute;
+    width: 20px;
+  }
+
+  &--left {
+    &::before,
+    &::after {
+      left: 0;
+    }
+
+    &::before {
+      border: {
+        left-style: solid;
+        top-style: solid;
+      }
+      top: 0;
+    }
+  }
+
+  &--right {
+    &::before,
+    &::after {
+      right: 0;
+    }
+    &::after {
+      border: {
+        bottom-style: solid;
+        right-style: solid;
+      }
+      bottom: 0;
+    }
+  }
+}
+.auth-form--input {
+  border: none;
+  width: 260px;
+  height: 38px;
+  text-align: center;
+
+  &::placeholder {
+    font-size: 25px;
+    line-height: 29px;
+    color: $color-dark-s;
+  }
+}
+
+.auth-form--title {
+  font-weight: 200;
+  font-size: 24px;
+  line-height: 28px;
+  text-transform: uppercase;
+}
+
+.auth-form--button {
+  width: 300px;
+  height: 50px;
+  background-color: white;
+  border: 1px solid #dfdfdf;
+  font-weight: 200;
+  font-size: 24px;
+  line-height: 28px;
+  text-transform: uppercase;
+  color: $color-dark-s;
+}
+
+.auth-form--text {
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 28px;
+  text-transform: uppercase;
+}
