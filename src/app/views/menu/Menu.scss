@@ -81,6 +81,8 @@ $color-light-m: #f6f6f6;
   &:hover {
     color: $color-dark-xl;
     font-weight: 300;
+    background: url('/src/assets/img/svg/corner-left-top.svg') top left no-repeat,
+    url('/src/assets/img/svg/corner-right-bottom.svg') bottom right no-repeat;
     transition: all 0.1s;
   }
 }
