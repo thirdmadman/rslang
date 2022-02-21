@@ -25,6 +25,56 @@
     filter: saturate(0) brightness(1.4);
   }
 
+  .word-card__button-difficulty {
+    all: unset;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 25px;
+    height: 25px;
+    background: url('/src/assets/img/svg/icon-hard.svg') top center no-repeat;
+    transition: all 0.1s ease-in-out;
+
+    &:hover {
+      transform: scale(1.5);
+    }
+
+    &_true {
+      background: url('/src/assets/img/svg/icon-normal.svg') top center no-repeat;
+    }
+  }
+
+  .word-card__button-learned {
+    all: unset;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 25px;
+    height: 25px;
+    background: url('/src/assets/img/svg/icon-trained.svg') top center no-repeat;
+    transition: all 0.1s ease-in-out;
+
+    &:hover {
+      transform: scale(1.5);
+    }
+
+    &_true {
+      background: url('/src/assets/img/svg/icon-untrained.svg') top center no-repeat;
+    }
+  }
+
+  .word-card__games-result {
+    position: absolute;
+    top: 10px;
+    left: 110px;
+    width: 80px;
+    height: 24px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 24px;
+    text-align: center;
+  }
 
   .word-card__word-english {
     margin-bottom: 5px;
