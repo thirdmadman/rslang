@@ -23,6 +23,10 @@ export class AudiocallStartPage extends Renderable {
 
   pages: number;
 
+  menuButton: HTMLElement;
+
+  title: HTMLElement;
+
   constructor(group?: number, page?: number) {
     super();
     this.group = group;
@@ -30,10 +34,11 @@ export class AudiocallStartPage extends Renderable {
     this.arrayAnswers = [];
     this.answersCount = 4;
     this.pages = GlobalConstants.NUMBER_OF_PAGES;
+    this.menuButton = dch('button', ['menu-button']);
     this.gameDescription = dch('div', [], 'About game');
     this.startButton = dch('button', [], 'start');
-
-    this.rootNode = dch('div', [], '', this.gameDescription, this.startButton);
+    this.title = dch('h2', ['audiocall-page--title'], 'audio decoding');
+    this.rootNode = dch('div', [], '', this.menuButton, this.title, this.gameDescription, this.startButton);
     if (!this.group && !this.page) {
       const countLevel = GlobalConstants.NUMBER_OF_GROUP_NO_AUTH_USER;
       for (let i = 1; i <= countLevel; i++) {
