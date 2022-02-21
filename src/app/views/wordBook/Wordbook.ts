@@ -5,7 +5,6 @@ import { PathBus } from '../../services/PathBus';
 import { dch } from '../dch';
 import Renderable from '../Renderable';
 import { CardsContainer } from './cardsContainer/CardsContainer';
-import { LevelNavigation } from './levelNavigation/LevelNavigation';
 import './Wordbook.scss';
 
 export class Wordbook extends Renderable {
@@ -15,29 +14,40 @@ export class Wordbook extends Renderable {
     super();
     this.rootNode = dch('div', ['wordbook']);
     this.data = data;
-    const prevButton = dch('button', ['pagination-button', 'prev'], 'prev');
-    prevButton.onclick = () => this.changePage('prev');
-    const nextButton = dch('button', ['pagination-button', 'next'], 'next');
-    nextButton.onclick = () => this.changePage('next');
-    const paginationNum = dch(
+
+    const pageTitle = dch('div', ['wordbook__title'], 'Their memories');
+
+    const prevPageButton = dch('button', ['pagination__button', 'pagination__button_prev']);
+    prevPageButton.onclick = () => this.changePage('prev');
+    const nextPageButton = dch('button', ['pagination__button', 'pagination__button_next']);
+    nextPageButton.onclick = () => this.changePage('next');
+    const paginationPageText = dch(
       'div',
-      ['pagination-text'],
-      `${data.currentPage + 1}/${GlobalConstants.NUMBER_OF_PAGES}`,
+      ['pagination__text'],
+      `Page number ${data.currentPage + 1}/${GlobalConstants.NUMBER_OF_PAGES}`,
     );
-    const pagination = dch('div', ['pagination'], '', prevButton, paginationNum, nextButton);
+    const paginationPage = dch('div', ['pagination'], '', prevPageButton, paginationPageText, nextPageButton);
+
+    const prevLevelButton = dch('button', ['pagination__button', 'pagination__button_prev']);
+    prevLevelButton.onclick = () => this.changeLevel('prev');
+    const nextLevelButton = dch('button', ['pagination__button', 'pagination__button_next']);
+    nextLevelButton.onclick = () => this.changeLevel('next');
+    const paginationLevelText = dch(
+      'div',
+      ['pagination__text'],
+      `Depth level ${data.currentGroup + 1}/${GlobalConstants.NUMBER_OF_GROUP_NO_AUTH_USER}`,
+    );
+    const paginationLevel = dch('div', ['pagination'], '', prevLevelButton, paginationLevelText, nextLevelButton);
 
     const cardsContainer = new CardsContainer(data);
-    const levelNavigation = new LevelNavigation(data);
 
-    this.rootNode.append(levelNavigation.getElement(), pagination, cardsContainer.getElement());
+    const navigationContainer = dch('div', ['navigation-container']);
+    navigationContainer.append(paginationLevel, paginationPage);
+
+    this.rootNode.append(pageTitle, navigationContainer, cardsContainer.getElement());
   }
 
   changePage(btn: string) {
-    if (this.data.currentPage < 0) {
-      this.data.currentPage = 0;
-    } else if (this.data.currentPage > GlobalConstants.NUMBER_OF_PAGES) {
-      this.data.currentPage = GlobalConstants.NUMBER_OF_PAGES;
-    }
     if (btn === 'prev') {
       if (this.data.currentPage > 0) this.data.currentPage--;
       PathBus.setCurrentPath(
@@ -47,6 +57,23 @@ export class Wordbook extends Renderable {
 
     if (btn === 'next') {
       if (this.data.currentPage < GlobalConstants.NUMBER_OF_PAGES - 1) this.data.currentPage++;
+      PathBus.setCurrentPath(
+        `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
+      );
+    }
+  }
+
+  changeLevel(btn: string) {
+    console.log('GG');
+    if (btn === 'prev') {
+      if (this.data.currentGroup > 0) this.data.currentGroup--;
+      PathBus.setCurrentPath(
+        `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
+      );
+    }
+
+    if (btn === 'next') {
+      if (this.data.currentGroup < GlobalConstants.NUMBER_OF_GROUP_NO_AUTH_USER - 1) this.data.currentGroup++;
       PathBus.setCurrentPath(
         `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
       );
