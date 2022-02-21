@@ -1,4 +1,5 @@
 .wordbook {
+  margin: 0 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,6 +22,7 @@
     margin-bottom: 30px;
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
   }
 
@@ -34,6 +36,7 @@
       background-position: 50%;
       background-repeat: no-repeat;
       background-size: contain;
+      transition: all 0.1s ease-in-out;
 
       &_prev {
         background-image: url('/src/assets/img/svg/arrow-horizontal-left.svg');
@@ -41,6 +44,10 @@
 
       &_next {
         background-image: url('/src/assets/img/svg/arrow-horizontal-right.svg');
+      }
+
+      &:hover {
+        transform: scale(1.1);
       }
     }
 
@@ -50,6 +57,15 @@
       line-height: 25px;
       text-align: center;
       text-transform: uppercase;
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .wordbook {
+    margin: 0 10px;
+    .wordbook__title {
+      font-size: 36px;
     }
   }
 }
