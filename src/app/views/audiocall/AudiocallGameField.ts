@@ -48,7 +48,7 @@ export class AudiocallGameField extends Renderable {
       if (isCorrect) {
         if (this.userId && !TokenProvider.checkIsExpired()) {
           UserWordService.setWordStatistic(this.userId, questionData.id, isCorrect)
-            .catch(() => {});
+            .catch((e) => console.error(e));
         }
         this.answerChain += 1;
         if (this.answerChain > this.maxAnswerChain) {
@@ -57,7 +57,7 @@ export class AudiocallGameField extends Renderable {
       } else if (!isCorrect) {
         if (this.userId && !TokenProvider.checkIsExpired()) {
           UserWordService.setWordStatistic(this.userId, questionData.id, isCorrect)
-            .catch(() => {});
+            .catch((e) => console.error(e));
         }
         this.answerChain = 0;
       }

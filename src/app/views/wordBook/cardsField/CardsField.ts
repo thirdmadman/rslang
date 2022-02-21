@@ -49,7 +49,7 @@ export class CardsField extends Renderable {
           } as IWordAdanced;
         });
         this.addCards(advancedWords);
-      }).catch(() => {});
+      }).catch((e) => console.error(e));
     } else {
       this.addCards(advancedWords);
     }

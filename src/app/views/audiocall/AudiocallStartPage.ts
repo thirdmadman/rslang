@@ -43,13 +43,13 @@ export class AudiocallStartPage extends Renderable {
           Array.from(Array(this.pages).keys())
             .map((pageCount) => WordService.getWordsByGroupAndPage((i - 1), pageCount)
               .then((result) => this.createQuestionData(result.array))
-              .catch(() => {}));
+              .catch((e) => console.error(e)));
         });
       }
     } else if (this.group && this.page) {
       WordService.getWordsByGroupAndPage(this.group - 1, this.page - 1).then((wordData) => {
         this.createQuestionData(wordData.array);
-      }).catch(() => {});
+      }).catch((e) => console.error(e));
     }
   }
 

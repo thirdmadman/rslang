@@ -12,6 +12,6 @@ export class WordbookController extends AbstractController {
       const cardField = new CardsField(data);
       const levelNavigation = new LevelNavigation(data);
       this.rootNode.append(cardField.getElement(), levelNavigation.getElement());
-    }).catch(() => {});
+    }).catch((e) => console.error(e));
   }
 }

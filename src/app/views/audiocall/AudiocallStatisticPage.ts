@@ -45,7 +45,7 @@ export class AudiocallStatisticPage extends Renderable {
   playAudio = (audio: string) => {
     musicPlayer.setPlayList([audio]);
     musicPlayer.play()
-      .catch(() => {});
+      .catch((e) => console.error(e));
   };
 
   formatDate = (date: Date) => date.toLocaleDateString('ru-RU', {
