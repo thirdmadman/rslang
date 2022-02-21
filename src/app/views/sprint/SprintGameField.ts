@@ -58,7 +58,7 @@ export class SprintGameField extends Renderable {
       if (questionData.isCorrect === answer) {
         if (this.userId && !TokenProvider.checkIsExpired()) {
           UserWordService.setWordStatistic(this.userId, questionData.word.id, questionData.isCorrect)
-            .catch(() => {});
+            .catch((e) => console.error(e));
         }
         this.answerChain += 1;
         if (this.answerChain > this.maxAnswerChain) {
@@ -71,7 +71,7 @@ export class SprintGameField extends Renderable {
       } else if (questionData.isCorrect !== answer) {
         if (this.userId && !TokenProvider.checkIsExpired()) {
           UserWordService.setWordStatistic(this.userId, questionData.word.id, questionData.isCorrect)
-            .catch(() => {});
+            .catch((e) => console.error(e));
         }
         this.answerChain = 0;
         this.result.push({

@@ -37,13 +37,13 @@ export class SprintStartPage extends Renderable {
               .then((result) => {
                 this.createQuestionData(result.array);
               })
-              .catch(() => {}));
+              .catch((e) => console.error(e)));
         });
       }
     } else if (this.group && this.page) {
       WordService.getWordsByGroupAndPage(this.group - 1, this.page - 1).then((wordData) => {
         this.createQuestionData(wordData.array);
-      }).catch(() => {});
+      }).catch((e) => console.error(e));
     }
   }
 
