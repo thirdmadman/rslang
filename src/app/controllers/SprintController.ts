@@ -1,9 +1,11 @@
 import { AbstractController } from './AbstractController';
 import { SprintStartPage } from '../views/sprint/SprintStartPage';
+import { Menu } from '../views/menu/Menu';
 
 export class SprintController extends AbstractController {
   resolve(path: string) {
-    this.rootNode.innerHTML = `SprintController - ${path}`;
+    this.rootNode.innerHTML = '';
+    this.rootNode.append(new Menu().getElement());
     const currentPage = +path.split('/')[2] || 1;
     const currentGroup = +path.split('/')[1] || 1;
 

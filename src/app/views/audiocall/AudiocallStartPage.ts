@@ -36,7 +36,6 @@ export class AudiocallStartPage extends Renderable {
 
   levelBtnContainer: HTMLElement;
 
-
   constructor(group?: number, page?: number) {
     super();
     this.group = group;

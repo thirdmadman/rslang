@@ -1,9 +1,12 @@
 import { AbstractController } from './AbstractController';
 import { AuthorizationPage } from '../views/auth/AuthorizationPage';
 import { GlobalConstants } from '../../GlobalConstants';
+import { Menu } from '../views/menu/Menu';
 
 export class AuthController extends AbstractController {
   resolve(path: string) {
+    this.rootNode.innerHTML = '';
+    this.rootNode.append(new Menu().getElement());
     const currentPath = path.split('/');
     const redirectPage = path.split('?path=');
     if (!path) {
