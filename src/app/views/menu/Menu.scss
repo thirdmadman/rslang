@@ -164,3 +164,20 @@ $color-light-m: #f6f6f6;
   max-width: 1920px;
   margin: 0 auto;
 }
+
+@media screen and (max-width: 640px) {
+  .menu {
+    .close-button {
+      top: 25px;
+      right: 25px;
+      width: 25px;
+      height: 25px;
+    }
+    .burger-menu-button {
+      top: 25px;
+      left: 25px;
+      width: 25px;
+      height: 25px;
+    }
+  }
+}

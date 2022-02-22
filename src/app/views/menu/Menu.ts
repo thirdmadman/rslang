@@ -8,7 +8,7 @@ import './Menu.scss';
 const menuData = [
   {
     title: 'Their memories',
-    path: `${GlobalConstants.ROUTE_WORDBOOK}/1/1`,
+    path: GlobalConstants.ROUTE_WORDBOOK,
     isAuthNeeded: false,
   },
   {
@@ -66,14 +66,14 @@ export class Menu extends Renderable {
     this.logoContainer = dch('div', ['logo-container']);
     this.navigationList = dch('ul', ['nav-menu--list']);
     const currentPath = PathBus.getCurrentPath();
-    const isUserAuth = Boolean(TokenProvider.getToken());
+    const isUserAuth = Boolean(TokenProvider.getToken()) && !TokenProvider.checkIsExpired();
     menuData.forEach((item) => {
       const link = dch('a', ['nav-menu--link'], `${item.title}`) as HTMLAnchorElement;
       link.href = `#${item.path}`;
       const list = dch('li', ['nav-menu--item'], '', link);
+
       if (currentPath.indexOf(item.path) === 0) {
         list.classList.add('nav-menu--item-active');
-        link.classList.add('nav-menu--link-active');
       }
       if (item.isAuthNeeded) {
         if (isUserAuth) {
