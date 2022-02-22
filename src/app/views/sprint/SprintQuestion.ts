@@ -44,10 +44,10 @@ export class SprintQuestion extends Renderable {
   onAnswer = (questionData: ISprintQuestionData, answer: boolean) => {};
 
   handlerKey = (event: KeyboardEvent) => {
-    if (event.code === 'ArrowLeft') {
+    if (event.code === 'Digit1') {
       this.wrongBtn.click();
       document.removeEventListener('keyup', this.handlerKey);
-    } else if (event.code === 'ArrowRight') {
+    } else if (event.code === 'Digit2') {
       this.rightBtn.click();
       document.removeEventListener('keydown', this.handlerKey);
     }
