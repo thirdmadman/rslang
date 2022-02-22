@@ -117,26 +117,37 @@ export class Card extends Renderable {
     this.buttonSetLearnedState = dch('button', ['word-card__button-learned']);
     this.buttonSetLearnedState.onclick = () => this.buttonToggleLearnedHandler();
 
-    if (userId) {
-      if (this.data.userData) {
-        if (this.data.userData.difficulty && this.data.userData.difficulty !== 'normal') {
-          this.isWordDifficult = true;
-          this.buttonSetDifficultyState.classList.add('word-card__button-difficulty_true');
-        }
+    if (!userId) {
+      return;
+    }
 
-        if (this.data.userData.optional && this.data.userData.optional.isLearned) {
-          this.isWordLearned = true;
-          this.buttonSetLearnedState.classList.add('word-card__button-learned_true');
+    imageContainer.append(this.buttonSetDifficultyState, this.buttonSetLearnedState);
 
-          const resultText = `${this.data.userData.optional.successCounter}/
-          ${this.data.userData.optional.successCounter + this.data.userData.optional.successCounter}`;
+    if (!this.data.userData) {
+      return;
+    }
 
-          const gamesResultContainer = dch('div', ['word-card__games-result'], resultText);
-          imageContainer.append(gamesResultContainer);
-          image.classList.add('word-card__image_started');
-        }
-      }
-      imageContainer.append(this.buttonSetDifficultyState, this.buttonSetLearnedState);
+    if (this.data.userData.difficulty && this.data.userData.difficulty !== 'normal') {
+      this.isWordDifficult = true;
+      this.buttonSetDifficultyState.classList.add('word-card__button-difficulty_true');
+    }
+
+    if (!this.data.userData.optional) {
+      return;
+    }
+
+    const resultText = `${this.data.userData.optional.successCounter}/
+    ${this.data.userData.optional.failCounter + this.data.userData.optional.successCounter}`;
+
+    const gamesResultContainer = dch('div', ['word-card__games-result'], resultText);
+    imageContainer.append(gamesResultContainer);
+    image.classList.add('word-card__image_started');
+
+    console.log(this.data.userData.optional.isLearned);
+
+    if (this.data.userData.optional.isLearned) {
+      this.isWordLearned = true;
+      this.buttonSetLearnedState.classList.add('word-card__button-learned_true');
     }
   }
 
@@ -172,6 +183,7 @@ export class Card extends Renderable {
       return;
     }
     if (!this.isWordLearned) {
+      console.log('gg');
       UserWordService.addWordLearnedById(userId, this.data.word.id)
         .then((userWord) => {
           if (userWord) {
