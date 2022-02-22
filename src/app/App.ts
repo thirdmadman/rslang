@@ -41,7 +41,7 @@ export class App {
     this.router.addRoute(GlobalConstants.ROUTE_STATISTICS, (path: string) => statisticsController.resolve(path));
 
     if (!PathBus.getRealCurrentPath() || PathBus.getRealCurrentPath() === '') {
-      PathBus.setCurrentPath(GlobalConstants.ROUTE_MAIN);
+      PathBus.setCurrentPath(GlobalConstants.ROUTE_WORDBOOK);
     } else {
       PathBus.setCurrentPath(PathBus.getRealCurrentPath());
     }
