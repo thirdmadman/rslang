@@ -33,7 +33,7 @@ export class SprintQuestion extends Renderable {
     };
     this.btnContainer = dch('div', ['button-container'], '', this.wrongBtn, this.rightBtn);
     this.rootNode = dch('div', ['question-section'], '', this.questionContainer, this.btnContainer);
-    document.addEventListener('keydown', this.handlerKey);
+    document.addEventListener('keyup', this.handlerKey);
   }
 
   destroy() {
@@ -46,7 +46,7 @@ export class SprintQuestion extends Renderable {
   handlerKey = (event: KeyboardEvent) => {
     if (event.code === 'ArrowLeft') {
       this.wrongBtn.click();
-      document.removeEventListener('keydown', this.handlerKey);
+      document.removeEventListener('keyup', this.handlerKey);
     } else if (event.code === 'ArrowRight') {
       this.rightBtn.click();
       document.removeEventListener('keydown', this.handlerKey);

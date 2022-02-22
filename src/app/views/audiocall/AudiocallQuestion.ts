@@ -37,7 +37,7 @@ export class AudiocallQuestion extends Renderable {
           this.onAnswer(this.questionData.wordData, answer.isCorrect);
         };
       });
-    document.addEventListener('keydown', this.handlerKey);
+    document.addEventListener('keyup', this.handlerKey);
   }
 
   playAudio = (audio: string) => {
@@ -56,16 +56,16 @@ export class AudiocallQuestion extends Renderable {
   handlerKey = (event: KeyboardEvent) => {
     if (event.code === 'Digit1') {
       this.onAnswer(this.questionData.wordData, this.questionData.variants[0].isCorrect);
-      document.removeEventListener('keydown', this.handlerKey);
+      document.removeEventListener('keyup', this.handlerKey);
     } else if (event.code === 'Digit2') {
       this.onAnswer(this.questionData.wordData, this.questionData.variants[1].isCorrect);
-      document.removeEventListener('keydown', this.handlerKey);
+      document.removeEventListener('keyup', this.handlerKey);
     } else if (event.code === 'Digit3') {
       this.onAnswer(this.questionData.wordData, this.questionData.variants[2].isCorrect);
-      document.removeEventListener('keydown', this.handlerKey);
+      document.removeEventListener('keyup', this.handlerKey);
     } else if (event.code === 'Digit4') {
       this.onAnswer(this.questionData.wordData, this.questionData.variants[3].isCorrect);
-      document.removeEventListener('keydown', this.handlerKey);
+      document.removeEventListener('keyup', this.handlerKey);
     }
   };
 }
