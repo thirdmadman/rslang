@@ -1,6 +1,7 @@
 import { GlobalConstants } from '../../GlobalConstants';
 import { IUserWord } from '../interfaces/IUserWord';
 import { IUserWordData } from '../interfaces/IUserWordData';
+import { IUserWordOptional } from '../interfaces/IUserWordOptional';
 import { axiosIntance } from './axiosIntance';
 
 export class UserWordService {
@@ -70,7 +71,11 @@ export class UserWordService {
       if (wordData) {
         return {
           difficulty: wordData.difficulty,
-          optional: { ...wordData.optional },
+          optional: {
+            successCounter: wordData.optional.successCounter,
+            failCounter: wordData.optional.failCounter,
+            isLearned,
+          } as IUserWordOptional,
         } as IUserWordData;
       }
       return null;
