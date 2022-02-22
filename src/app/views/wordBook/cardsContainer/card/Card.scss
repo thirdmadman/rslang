@@ -25,6 +25,10 @@
     filter: saturate(0) brightness(1.4);
 
     &_started {
+      filter: saturate(0.2) brightness(1.4);
+    }
+
+    &_learned {
       filter: saturate(0.5) brightness(1.4);
     }
   }

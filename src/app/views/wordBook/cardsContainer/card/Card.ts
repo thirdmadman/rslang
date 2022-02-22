@@ -8,15 +8,17 @@ import { UserWordService } from '../../../../services/UserWordService';
 import './Card.scss';
 
 export class Card extends Renderable {
-  data: IWordAdanced;
+  private data: IWordAdanced;
 
-  buttonSetDifficultyState: HTMLElement;
+  private buttonSetDifficultyState: HTMLElement;
 
-  buttonSetLearnedState: HTMLElement;
+  private buttonSetLearnedState: HTMLElement;
 
   private isWordDifficult = false;
 
   private isWordLearned = false;
+
+  private image = new Image();
 
   constructor(data: IWordAdanced) {
     super();
@@ -24,9 +26,9 @@ export class Card extends Renderable {
     const userId = TokenProvider.getUserId();
     this.rootNode = dch('div', ['word-card']);
 
-    const image = dch('img', ['word-card__image']);
-    image.setAttribute('src', `${GlobalConstants.DEFAULT_API_URL}/${this.data.word.image}`);
-    image.setAttribute('alt', this.data.word.word);
+    this.image = dch('img', ['word-card__image']) as HTMLImageElement;
+    this.image.setAttribute('src', `${GlobalConstants.DEFAULT_API_URL}/${this.data.word.image}`);
+    this.image.setAttribute('alt', this.data.word.word);
     const imageContainer = dch('div', ['word-card__image-container']);
 
     const buttonShowEngDescription = dch('button', ['word-card__button-vertical', 'word-card__button-vertical_show']);
@@ -102,7 +104,7 @@ export class Card extends Renderable {
     ruDescriptionContainer.append(buttonHideRuDescription, textWordRu, textWordRuMeaning, textWordRuExample);
 
     textContainer.append(buttonShowEngDescription, textWordEnglish, textWordTranscription);
-    imageContainer.append(image);
+    imageContainer.append(this.image);
     this.rootNode.append(
       imageContainer,
       textContainer,
@@ -141,11 +143,12 @@ export class Card extends Renderable {
 
     const gamesResultContainer = dch('div', ['word-card__games-result'], resultText);
     imageContainer.append(gamesResultContainer);
-    image.classList.add('word-card__image_started');
+    this.image.classList.add('word-card__image_started');
 
     console.log(this.data.userData.optional.isLearned);
 
     if (this.data.userData.optional.isLearned) {
+      this.image.classList.add('word-card__image_learned');
       this.isWordLearned = true;
       this.buttonSetLearnedState.classList.add('word-card__button-learned_true');
     }
@@ -183,11 +186,11 @@ export class Card extends Renderable {
       return;
     }
     if (!this.isWordLearned) {
-      console.log('gg');
       UserWordService.addWordLearnedById(userId, this.data.word.id)
         .then((userWord) => {
           if (userWord) {
             this.isWordLearned = true;
+            this.image.classList.add('word-card__image_learned');
             this.buttonSetLearnedState.classList.add('word-card__button-learned_true');
           }
         })
@@ -197,6 +200,7 @@ export class Card extends Renderable {
         .then((userWord) => {
           if (userWord) {
             this.isWordLearned = false;
+            this.image.classList.remove('word-card__image_learned');
             this.buttonSetLearnedState.classList.remove('word-card__button-learned_true');
           }
         })
