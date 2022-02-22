@@ -68,12 +68,13 @@ $color-light-m: #f6f6f6;
     cursor: pointer;
 
     &:hover {
-      color: $color-dark-xl;
+      font-weight: 300;
       transition: all 0.1s;
     }
     &:active {
       color: $color-dark-xl;
       font-weight: 300;
+      transition: all 0.1s;
     }
   }
 }
@@ -109,13 +110,13 @@ $color-light-m: #f6f6f6;
   color: $color-dark-s;
   cursor: pointer;
   &:hover {
-    font-weight: 200;
-    color: $color-dark-xl;
+    font-weight: 300;
     transition: all 0.1s;
   }
   &:active {
     color: $color-dark-xl;
     font-weight: 300;
+    transition: all 0.1s;
   }
 }
 
