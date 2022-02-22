@@ -3,13 +3,20 @@ import { WordService } from '../services/WordService';
 import { Wordbook } from '../views/wordBook/Wordbook';
 import { GlobalConstants } from '../../GlobalConstants';
 import { Menu } from '../views/menu/Menu';
+import { PathBus } from '../services/PathBus';
 
 export class WordbookController extends AbstractController {
   resolve(path: string) {
     this.rootNode.innerHTML = '';
     this.rootNode.append(new Menu().getElement());
-    let currentPage = +path.split('/')[2];
-    let currentGroup = +path.split('/')[1];
+
+    let currentGroup = Number(path.split('/')[1]);
+    let currentPage = Number(path.split('/')[2]);
+
+    if (!currentGroup || !currentPage) {
+      PathBus.setCurrentPath(`${GlobalConstants.ROUTE_WORDBOOK}/1/1`);
+      return;
+    }
 
     if (currentPage < 1) {
       currentPage = 1;
