@@ -7,28 +7,32 @@ import { IWord } from '../../interfaces/IWord';
 import './AudiocallQuestion.scss';
 
 export class AudiocallQuestion extends Renderable {
-  questionData: IAudiocallQuestion;
+  private questionData: IAudiocallQuestion;
 
-  audioWord: string;
+  private audioWord: string;
 
-  playAudioButton: HTMLElement;
+  private playAudioButton: HTMLElement;
 
-  title: HTMLElement;
+  private title: HTMLElement;
 
-  answersContainer: HTMLElement;
+  private answersContainer: HTMLElement;
 
   constructor(questionData: IAudiocallQuestion) {
     super();
+
     this.questionData = questionData;
     this.title = dch('h3', ['word-container--title'], 'In progress');
     this.audioWord = `${GlobalConstants.DEFAULT_API_URL}/${this.questionData.wordData.audio}`;
     this.playAudio(this.audioWord);
     this.answersContainer = dch('div', ['game-btn-container']);
+
     this.playAudioButton = dch('button', ['audio-btn']);
     this.playAudioButton.onclick = () => {
       this.playAudio(this.audioWord);
     };
+
     this.rootNode = dch('div', ['word-container'], '', this.title, this.playAudioButton, this.answersContainer);
+
     this.questionData.variants.sort(() => Math.random() - 0.5)
       .forEach((answer) => {
         const answerBtn = dch('button', ['game-btn'], answer.wordData.wordTranslate);
@@ -40,7 +44,7 @@ export class AudiocallQuestion extends Renderable {
     document.addEventListener('keyup', this.handlerKey);
   }
 
-  playAudio = (audio: string) => {
+  private playAudio = (audio: string) => {
     musicPlayer.setPlayList([audio]);
     musicPlayer.play()
       .catch((e) => console.error(e));

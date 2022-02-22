@@ -5,73 +5,78 @@ import { AudiocallQuestion } from './AudiocallQuestion';
 import { IAudiocallQuestion } from '../../interfaces/IAudiocallQuestion';
 import './AudiocallGameField.scss';
 import { IResultData } from '../../interfaces/IResultData';
-import { AudiocallStatisticPage } from './AudiocallStatisticPage';
-import { TokenProvider } from '../../services/TokenProvider';
-import { UserWordService } from '../../services/UserWordService';
 
 export class AudiocallGameField extends Renderable {
-  page: number | undefined;
+  private questionsArray: IAudiocallQuestionArray | null = null;
 
-  data: IAudiocallQuestionArray;
+  private result: Array<IResultData> = [];
 
-  result: IResultData[];
+  private answerChain = 0;
 
-  answerChain: number;
+  private maxAnswerChain = 0;
 
-  maxAnswerChain: number;
+  private title: HTMLElement;
 
-  userId: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onFinish = (result: IResultData[], answerChain: number) => {};
 
-  startQuestion: number;
-
-  title: HTMLElement;
-
-  constructor(questionArrayData: IAudiocallQuestionArray) {
+  constructor() {
     super();
-    this.data = questionArrayData;
+
+    this.title = dch('h2', ['audiocall-page--title'], 'Audio decoding');
+    this.rootNode = dch('div', ['gamefield-container'], '', this.title);
+  }
+
+  setQuestionsArray(questionsArray: IAudiocallQuestionArray) {
+    this.questionsArray = questionsArray;
     this.answerChain = 0;
     this.maxAnswerChain = 1;
     this.result = [];
-    this.userId = TokenProvider.getUserId();
-    this.title = dch('h2', ['audiocall-page--title'], 'Audio decoding');
-    this.rootNode = dch('div', ['gamefield-container'], '', this.title);
-    this.startQuestion = 0;
-    this.gameCycle(this.data.questions, this.startQuestion);
   }
 
-  gameCycle(questionArray: IAudiocallQuestion[], index: number) {
-    if (index >= questionArray.length) {
-      this.onFinish(this.result, this.maxAnswerChain);
+  startGame() {
+    if (!this.questionsArray) {
       return;
     }
-    const cardQuestion = new AudiocallQuestion(this.data.questions[index]);
-    this.rootNode.append(cardQuestion.getElement());
-    cardQuestion.onAnswer = (questionData, isCorrect) => {
-      if (isCorrect) {
-        if (this.userId && !TokenProvider.checkIsExpired()) {
-          UserWordService.setWordStatistic(this.userId, questionData.id, isCorrect)
-            .catch((e) => console.error(e));
-        }
-        this.answerChain += 1;
-        if (this.answerChain > this.maxAnswerChain) {
-          this.maxAnswerChain = this.answerChain;
-        }
-      } else if (!isCorrect) {
-        if (this.userId && !TokenProvider.checkIsExpired()) {
-          UserWordService.setWordStatistic(this.userId, questionData.id, isCorrect)
-            .catch((e) => console.error(e));
-        }
-        this.answerChain = 0;
-      }
-      cardQuestion.destroy();
-      this.result.push({ questionData, isCorrect });
-      this.gameCycle(questionArray, index + 1);
-    };
+
+    this.answerChain = 0;
+    this.maxAnswerChain = 1;
+    this.result = [];
+
+    this.renderCard(this.questionsArray.questions[this.questionsArray.currentQuestion]);
   }
 
-  onFinish = (result: IResultData[], answerChain: number) => {
-    this.rootNode.innerHTML = '';
-    const resultPage = new AudiocallStatisticPage(result, answerChain);
-    this.rootNode.append(resultPage.getElement());
-  };
+  nextQuestion() {
+    if (!this.questionsArray) {
+      return;
+    }
+
+    if (this.questionsArray.questions.length > this.questionsArray.currentQuestion + 1) {
+      this.questionsArray.currentQuestion += 1;
+      this.renderCard(this.questionsArray.questions[this.questionsArray.currentQuestion]);
+    } else {
+      this.onFinish(this.result, this.maxAnswerChain);
+    }
+  }
+
+  renderCard(question: IAudiocallQuestion) {
+    const cardQuestion = new AudiocallQuestion(question);
+    cardQuestion.onAnswer = (questionData, isCorrect) => {
+      this.result.push({ questionData, isCorrect });
+      cardQuestion.destroy();
+      this.nextQuestion();
+
+      if (!isCorrect) {
+        this.answerChain = 0;
+        return;
+      }
+
+      this.answerChain += 1;
+      if (this.answerChain > this.maxAnswerChain) {
+        this.maxAnswerChain = this.answerChain;
+      }
+    };
+
+    this.rootNode.append(cardQuestion.getElement());
+  }
 }

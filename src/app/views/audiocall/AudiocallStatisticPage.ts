@@ -4,6 +4,8 @@ import { IResultData } from '../../interfaces/IResultData';
 import { GlobalConstants } from '../../../GlobalConstants';
 import { musicPlayer } from '../../services/SingleMusicPlayer';
 import './AudiocallStatisticPage.scss';
+import { TokenProvider } from '../../services/TokenProvider';
+import { UserWordService } from '../../services/UserWordService';
 
 export class AudiocallStatisticPage extends Renderable {
   resultData: IResultData[];
@@ -30,6 +32,13 @@ export class AudiocallStatisticPage extends Renderable {
     // this.rootNode.append(new Menu().getElement());
     this.date = this.formatDate(new Date());
     resultData.forEach((item) => {
+      const userId = TokenProvider.getUserId();
+
+      if (userId && !TokenProvider.checkIsExpired()) {
+        UserWordService.setWordStatistic(userId, item.questionData.id, item.isCorrect)
+          .catch((e) => console.error(e));
+      }
+
       const audioWordData = `${GlobalConstants.DEFAULT_API_URL}/${item.questionData.audio}`;
       const playAudioBtn = dch('button', ['result-audio-btn']);
       playAudioBtn.onclick = () => {
