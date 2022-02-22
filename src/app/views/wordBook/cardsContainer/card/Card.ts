@@ -145,8 +145,6 @@ export class Card extends Renderable {
     imageContainer.append(gamesResultContainer);
     this.image.classList.add('word-card__image_started');
 
-    console.log(this.data.userData.optional.isLearned);
-
     if (this.data.userData.optional.isLearned) {
       this.image.classList.add('word-card__image_learned');
       this.isWordLearned = true;
