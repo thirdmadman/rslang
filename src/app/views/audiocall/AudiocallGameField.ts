@@ -72,6 +72,6 @@ export class AudiocallGameField extends Renderable {
   onFinish = (result: IResultData[], answerChain: number) => {
     this.rootNode.innerHTML = '';
     const resultPage = new AudiocallStatisticPage(result, answerChain);
-    this.rootNode.append(resultPage.getElement());
+    this.rootNode.append(this.title, resultPage.getElement());
   };
 }
