@@ -1,13 +1,14 @@
 import { dch } from '../dch';
 import Renderable from '../Renderable';
-import { IAudiocallQuestionArray } from '../../interfaces/IAudiocallQuestionArray';
 import { AudiocallQuestion } from './AudiocallQuestion';
-import { IAudiocallQuestion } from '../../interfaces/IAudiocallQuestion';
-import './AudiocallGameField.scss';
 import { IResultData } from '../../interfaces/IResultData';
+import { IGameQuestionArray } from '../../interfaces/IGameQuestionArray';
+import { IGameQuestion } from '../../interfaces/IGameQuestion';
+
+import './AudiocallGameField.scss';
 
 export class AudiocallGameField extends Renderable {
-  private questionsArray: IAudiocallQuestionArray | null = null;
+  private questionsArray: IGameQuestionArray | null = null;
 
   private result: Array<IResultData> = [];
 
@@ -27,7 +28,7 @@ export class AudiocallGameField extends Renderable {
     this.rootNode = dch('div', ['gamefield-container'], '', this.title);
   }
 
-  setQuestionsArray(questionsArray: IAudiocallQuestionArray) {
+  setQuestionsArray(questionsArray: IGameQuestionArray) {
     this.questionsArray = questionsArray;
     this.answerChain = 0;
     this.maxAnswerChain = 1;
@@ -59,7 +60,7 @@ export class AudiocallGameField extends Renderable {
     }
   }
 
-  renderCard(question: IAudiocallQuestion) {
+  renderCard(question: IGameQuestion) {
     const cardQuestion = new AudiocallQuestion(question);
     cardQuestion.onAnswer = (questionData, isCorrect) => {
       this.result.push({ questionData, isCorrect });

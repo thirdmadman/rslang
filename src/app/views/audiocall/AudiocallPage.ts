@@ -1,13 +1,14 @@
 import { AudiocallStatisticPage } from './AudiocallStatisticPage';
-import { IAudiocallAnswer } from '../../interfaces/IAudiocallAnswer';
-import { IAudiocallQuestion } from '../../interfaces/IAudiocallQuestion';
-import { IAudiocallQuestionArray } from '../../interfaces/IAudiocallQuestionArray';
+
 import { IWord } from '../../interfaces/IWord';
 import { WordService } from '../../services/WordService';
 import Renderable from '../Renderable';
 import { AudiocallGameField } from './AudiocallGameField';
 import { AudiocallStartPage } from './AudiocallStartPage';
 import { IResultData } from '../../interfaces/IResultData';
+import { IGameQuestionArray } from '../../interfaces/IGameQuestionArray';
+import { IGameQuestion } from '../../interfaces/IGameQuestion';
+import { IGameAnswer } from '../../interfaces/IGameAnswer';
 
 export class AudiocallPage extends Renderable {
   constructor(group: number, page: number) {
@@ -21,7 +22,7 @@ export class AudiocallPage extends Renderable {
           const questionsData = {
             questions: this.createQuestions(wordData.array),
             currentQuestion: 0,
-          } as IAudiocallQuestionArray;
+          } as IGameQuestionArray;
 
           this.rootNode.innerHTML = '';
           gameField.setQuestionsArray(questionsData);
@@ -48,12 +49,12 @@ export class AudiocallPage extends Renderable {
     const incorrectVariants = shuffledAndCutArray.map((word) => ({
       wordData: word,
       isCorrect: false,
-    } as IAudiocallAnswer));
+    } as IGameAnswer));
 
     const correctVariant = {
       wordData: currentWord,
       isCorrect: true,
-    } as IAudiocallAnswer;
+    } as IGameAnswer;
 
     return incorrectVariants.concat(correctVariant).sort(() => Math.random() - 0.5);
   };
@@ -63,7 +64,7 @@ export class AudiocallPage extends Renderable {
       (word) => ({
         wordData: word,
         variants: this.createVariantsForAnswer(wordsArray, 4, word),
-      } as IAudiocallQuestion),
+      } as IGameQuestion),
     );
 
     return result.sort(() => Math.random() - 0.5);

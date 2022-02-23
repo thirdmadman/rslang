@@ -1,7 +1,8 @@
 import { dch } from '../dch';
 import Renderable from '../Renderable';
 import { GlobalConstants } from '../../../GlobalConstants';
-import { IAudiocallAnswer } from '../../interfaces/IAudiocallAnswer';
+import { IGameAnswer } from '../../interfaces/IGameAnswer';
+
 import './AudiocallStartPage.scss';
 
 export class AudiocallStartPage extends Renderable {
@@ -13,7 +14,7 @@ export class AudiocallStartPage extends Renderable {
 
   page: number;
 
-  arrayAnswers: IAudiocallAnswer[];
+  arrayAnswers: IGameAnswer[];
 
   title: HTMLElement;
 
@@ -45,18 +46,13 @@ export class AudiocallStartPage extends Renderable {
     );
 
     this.startButton = dch('button', ['audiocall-page--button'], 'Start decoding');
+    this.startButton.addEventListener('click', () => {
+      this.onStartGame(this.group, this.page);
+    });
+
+    this.buttonsContainer = dch('div', ['button-container']);
     this.buttonContainerText = dch('p', ['button-container--text'], 'Choose your level of depth');
     this.levelBtnContainer = dch('div', ['level-button-container']);
-    this.buttonsContainer = dch(
-      'div',
-      ['button-container'],
-      '',
-      this.buttonContainerText,
-      this.levelBtnContainer,
-      this.startButton,
-    );
-    this.mainContainer = dch('div', ['audiocall-page--main'], '', this.titleContainer, this.gameDescription);
-    this.rootNode = dch('div', ['audiocall-page'], '', this.mainContainer, this.buttonsContainer);
 
     const getRandomInt = (min: number, max: number) => {
       const minAggregated = Math.ceil(min);
@@ -81,10 +77,18 @@ export class AudiocallStartPage extends Renderable {
           levelBtn.classList.add('level-button-active');
         });
       }
+
+      this.buttonsContainer.append(
+        this.buttonContainerText,
+        this.levelBtnContainer,
+      );
     }
 
-    this.startButton.addEventListener('click', () => {
-      this.onStartGame(this.group, this.page);
-    });
+    this.buttonsContainer.append(
+      this.startButton,
+    );
+
+    this.mainContainer = dch('div', ['audiocall-page--main'], '', this.titleContainer, this.gameDescription);
+    this.rootNode = dch('div', ['audiocall-page'], '', this.mainContainer, this.buttonsContainer);
   }
 }

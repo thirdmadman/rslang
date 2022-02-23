@@ -1,13 +1,13 @@
 import { dch } from '../dch';
 import Renderable from '../Renderable';
-import { IAudiocallQuestion } from '../../interfaces/IAudiocallQuestion';
 import { GlobalConstants } from '../../../GlobalConstants';
 import { musicPlayer } from '../../services/SingleMusicPlayer';
 import { IWord } from '../../interfaces/IWord';
 import './AudiocallQuestion.scss';
+import { IGameQuestion } from '../../interfaces/IGameQuestion';
 
 export class AudiocallQuestion extends Renderable {
-  private questionData: IAudiocallQuestion;
+  private questionData: IGameQuestion;
 
   private audioWord: string;
 
@@ -17,7 +17,7 @@ export class AudiocallQuestion extends Renderable {
 
   private answersContainer: HTMLElement;
 
-  constructor(questionData: IAudiocallQuestion) {
+  constructor(questionData: IGameQuestion) {
     super();
 
     this.questionData = questionData;
@@ -51,6 +51,7 @@ export class AudiocallQuestion extends Renderable {
   };
 
   destroy() {
+    document.removeEventListener('keyup', this.handlerKey);
     this.rootNode.remove();
   }
 
