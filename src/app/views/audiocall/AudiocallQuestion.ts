@@ -35,7 +35,7 @@ export class AudiocallQuestion extends Renderable {
 
     this.questionData.variants.sort(() => Math.random() - 0.5)
       .forEach((answer, index) => {
-        const answerBtnNum = dch('div', ['button-answer--count'], `${index}`);
+        const answerBtnNum = dch('div', ['button-answer--count'], `${index + 1}`);
         const answerBtn = dch('div', ['button-answer--text'], answer.wordData.wordTranslate);
         const answerBtnContainer = dch('div', ['button-answer'], '', answerBtn, answerBtnNum);
         this.answersContainer.append(answerBtnContainer);
