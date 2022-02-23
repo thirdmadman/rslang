@@ -8,15 +8,17 @@ import { UserWordService } from '../../../../services/UserWordService';
 import './Card.scss';
 
 export class Card extends Renderable {
-  data: IWordAdanced;
+  private data: IWordAdanced;
 
-  buttonSetDifficultyState: HTMLElement;
+  private buttonSetDifficultyState: HTMLElement;
 
-  buttonSetLearnedState: HTMLElement;
+  private buttonSetLearnedState: HTMLElement;
 
   private isWordDifficult = false;
 
   private isWordLearned = false;
+
+  private image = new Image();
 
   constructor(data: IWordAdanced) {
     super();
@@ -24,9 +26,9 @@ export class Card extends Renderable {
     const userId = TokenProvider.getUserId();
     this.rootNode = dch('div', ['word-card']);
 
-    const image = dch('img', ['word-card__image']);
-    image.setAttribute('src', `${GlobalConstants.DEFAULT_API_URL}/${this.data.word.image}`);
-    image.setAttribute('alt', this.data.word.word);
+    this.image = dch('img', ['word-card__image']) as HTMLImageElement;
+    this.image.setAttribute('src', `${GlobalConstants.DEFAULT_API_URL}/${this.data.word.image}`);
+    this.image.setAttribute('alt', this.data.word.word);
     const imageContainer = dch('div', ['word-card__image-container']);
 
     const buttonShowEngDescription = dch('button', ['word-card__button-vertical', 'word-card__button-vertical_show']);
@@ -102,7 +104,7 @@ export class Card extends Renderable {
     ruDescriptionContainer.append(buttonHideRuDescription, textWordRu, textWordRuMeaning, textWordRuExample);
 
     textContainer.append(buttonShowEngDescription, textWordEnglish, textWordTranscription);
-    imageContainer.append(image);
+    imageContainer.append(this.image);
     this.rootNode.append(
       imageContainer,
       textContainer,
@@ -117,26 +119,36 @@ export class Card extends Renderable {
     this.buttonSetLearnedState = dch('button', ['word-card__button-learned']);
     this.buttonSetLearnedState.onclick = () => this.buttonToggleLearnedHandler();
 
-    if (userId) {
-      if (this.data.userData) {
-        if (this.data.userData.difficulty && this.data.userData.difficulty !== 'normal') {
-          this.isWordDifficult = true;
-          this.buttonSetDifficultyState.classList.add('word-card__button-difficulty_true');
-        }
+    if (!userId) {
+      return;
+    }
 
-        if (this.data.userData.optional && this.data.userData.optional.isLearned) {
-          this.isWordLearned = true;
-          this.buttonSetLearnedState.classList.add('word-card__button-learned_true');
+    imageContainer.append(this.buttonSetDifficultyState, this.buttonSetLearnedState);
 
-          const resultText = `${this.data.userData.optional.successCounter}/
-          ${this.data.userData.optional.successCounter + this.data.userData.optional.successCounter}`;
+    if (!this.data.userData) {
+      return;
+    }
 
-          const gamesResultContainer = dch('div', ['word-card__games-result'], resultText);
-          imageContainer.append(gamesResultContainer);
-          image.classList.add('word-card__image_started');
-        }
-      }
-      imageContainer.append(this.buttonSetDifficultyState, this.buttonSetLearnedState);
+    if (this.data.userData.difficulty && this.data.userData.difficulty !== 'normal') {
+      this.isWordDifficult = true;
+      this.buttonSetDifficultyState.classList.add('word-card__button-difficulty_true');
+    }
+
+    if (!this.data.userData.optional) {
+      return;
+    }
+
+    const resultText = `${this.data.userData.optional.successCounter}/
+    ${this.data.userData.optional.failCounter + this.data.userData.optional.successCounter}`;
+
+    const gamesResultContainer = dch('div', ['word-card__games-result'], resultText);
+    imageContainer.append(gamesResultContainer);
+    this.image.classList.add('word-card__image_started');
+
+    if (this.data.userData.optional.isLearned) {
+      this.image.classList.add('word-card__image_learned');
+      this.isWordLearned = true;
+      this.buttonSetLearnedState.classList.add('word-card__button-learned_true');
     }
   }
 
@@ -176,6 +188,7 @@ export class Card extends Renderable {
         .then((userWord) => {
           if (userWord) {
             this.isWordLearned = true;
+            this.image.classList.add('word-card__image_learned');
             this.buttonSetLearnedState.classList.add('word-card__button-learned_true');
           }
         })
@@ -185,6 +198,7 @@ export class Card extends Renderable {
         .then((userWord) => {
           if (userWord) {
             this.isWordLearned = false;
+            this.image.classList.remove('word-card__image_learned');
             this.buttonSetLearnedState.classList.remove('word-card__button-learned_true');
           }
         })

@@ -64,7 +64,6 @@ export class Wordbook extends Renderable {
   }
 
   changeLevel(btn: string) {
-    console.log('GG');
     if (btn === 'prev') {
       if (this.data.currentGroup > 0) this.data.currentGroup--;
       PathBus.setCurrentPath(

@@ -9,6 +9,14 @@ $color-light-m: #f6f6f6;
     align-items: center;
     gap: 30px;
 
+    .word-container--question-text {
+      font-weight: 100;
+      font-size: 36px;
+      line-height: 60px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
     &--title {
         font-size: 36px;
         line-height: 50px;         
@@ -20,7 +28,8 @@ $color-light-m: #f6f6f6;
 .audio-btn {
     border: 1px solid #767676;
     background-image: url('../../../assets/img/svg/icon-audio.svg');
-    background-size: cover;
+    background-size: auto;
+    background-position: center;
     background-repeat: no-repeat;
     height: 62px;
     width: 62px;
@@ -33,7 +42,7 @@ $color-light-m: #f6f6f6;
 }
 
 .button-answer {
-    background: url('/src/assets/img/svg/corner-left-top.svg') top left no-repeat,
+  background: url('/src/assets/img/svg/corner-left-top.svg') top left no-repeat,
     url('/src/assets/img/svg/corner-right-bottom.svg') bottom right no-repeat;
   display: flex;
   padding: 10px 30px;

@@ -4,6 +4,8 @@ import { IResultData } from '../../interfaces/IResultData';
 import { GlobalConstants } from '../../../GlobalConstants';
 import { musicPlayer } from '../../services/SingleMusicPlayer';
 import './AudiocallStatisticPage.scss';
+import { TokenProvider } from '../../services/TokenProvider';
+import { UserWordService } from '../../services/UserWordService';
 
 export class AudiocallStatisticPage extends Renderable {
   resultData: IResultData[];
@@ -35,6 +37,13 @@ export class AudiocallStatisticPage extends Renderable {
     this.correctWordsContainer = dch('div', ['result-words-container'], '');
     this.inCorrectWordsContainer = dch('div', ['result-words-container'], '');
     this.resultData.forEach((item) => {
+      const userId = TokenProvider.getUserId();
+
+      if (userId && !TokenProvider.checkIsExpired()) {
+        UserWordService.setWordStatistic(userId, item.questionData.id, item.isCorrect)
+          .catch((e) => console.error(e));
+      }
+
       const word = dch(
         'p',
         ['button-word--text-item'],

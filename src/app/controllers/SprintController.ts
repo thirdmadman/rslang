@@ -1,21 +1,15 @@
 import { AbstractController } from './AbstractController';
-import { SprintStartPage } from '../views/sprint/SprintStartPage';
 import { Menu } from '../views/menu/Menu';
+import { SprintPage } from '../views/sprint/SprintPage';
 
 export class SprintController extends AbstractController {
   resolve(path: string) {
     this.rootNode.innerHTML = '';
     this.rootNode.append(new Menu().getElement());
-    const currentPage = +path.split('/')[2] || 1;
-    const currentGroup = +path.split('/')[1] || 1;
 
-    if (!path) {
-      const startPage = new SprintStartPage();
-      this.rootNode.append(startPage.getElement());
-    } else {
-      const startPage = new SprintStartPage(currentGroup, currentPage);
+    const currentGroup = Number(path.split('/')[1]) || -1;
+    const currentPage = Number(path.split('/')[2]) || -1;
 
-      this.rootNode.append(startPage.getElement());
-    }
+    this.rootNode.append(new SprintPage(currentGroup, currentPage).getElement());
   }
 }

@@ -5,19 +5,20 @@ $color-light-m: #f6f6f6;
 
 
 .audiocall-page {
-  font-family: "Roboto";
-  font-weight: 100;
-  text-align: center;
   margin: 0 auto;
-  color: #767676;
+  max-width: 1000px;
   width: 100%;
   height: 100vh;
-  display: flex;  
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   align-content: center;
   justify-content: center;
   gap: 50px;
-  flex-wrap: wrap;
-  max-width: 1000px;
+  font-family: "Roboto";
+  font-weight: 100;
+  text-align: center;
+  color: #767676;
 
   @media screen and (max-width: 768px) {
     padding: 20px;
@@ -105,14 +106,23 @@ $color-light-m: #f6f6f6;
   font-family: 'Roboto';
   font-weight: 100;
   font-size: 48px;
-  line-height: 56px;
+  line-height: 50px;
   text-transform: uppercase;
   color: $color-dark-s;
   cursor: pointer;
+
   &:hover {
     font-weight: 300;
     transition: all 0.1s;
   }
+
+  &-active {
+    background: url('/src/assets/img/svg/corner-left-bottom.svg') bottom left no-repeat,
+    url('/src/assets/img/svg/corner-right-bottom.svg') bottom right no-repeat,
+    url('/src/assets/img/svg/corner-right-top.svg') top right no-repeat,
+    url('/src/assets/img/svg/corner-left-top.svg') top left no-repeat;
+  }
+
   &:active {
     color: $color-dark-xl;
     font-weight: 300;
