@@ -24,7 +24,7 @@ export class AudiocallGameField extends Renderable {
   constructor() {
     super();
 
-    this.title = dch('h2', ['audiocall-page--title'], 'Audio decoding');
+    this.title = dch('h2', ['audiocall-page--title', 'audiocall-page--title--in-game'], 'Audio decoding');
     this.rootNode = dch('div', ['gamefield-container'], '', this.title);
   }
 

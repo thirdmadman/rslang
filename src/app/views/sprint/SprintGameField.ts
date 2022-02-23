@@ -30,7 +30,7 @@ export class SprintGameField extends Renderable {
   constructor() {
     super();
 
-    this.title = dch('h2', ['sprint-page--title'], 'MEANING RESOLVING');
+    this.title = dch('h2', ['sprint-page--title', 'sprint-page--title--in-game'], 'MEANING RESOLVING');
     const subTitle = dch('h3', ['sprint-page--sub-title'], 'In progress');
     this.timerText = dch('div', ['sprint-page--timer-text'], String(GlobalConstants.GAME_TIME));
     this.rootNode = dch('div', ['gamefield-container'], '', this.title, subTitle, this.timerText);

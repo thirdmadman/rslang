@@ -76,7 +76,7 @@ $color-light-m: #f6f6f6;
   font-family: 'Roboto';
 
   &:hover {
-    color: $color-dark-xl;
+    transform: scale(1.1);
     transition: all 0.1s;
   }
 }

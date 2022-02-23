@@ -25,7 +25,8 @@ export class AudiocallStatisticPage extends Renderable {
   constructor(resultData: IResultData[], answerChain: number) {
     super();
     this.resultData = resultData;
-    this.title = dch('h3', ['word-container--title'], 'results');
+    this.title = dch('h3', ['result-page--title'], 'AUDIO DECODING');
+    const subTitle = dch('div', ['result-page--subtitle'], 'results');
     const rightResult = this.resultData.filter((el) => el.isCorrect).length;
     const wrongResult = this.resultData.length - rightResult;
     const rightCount = dch('div', ['result-words--title', 'count'], `${rightResult}`);
@@ -78,13 +79,14 @@ export class AudiocallStatisticPage extends Renderable {
       }
     });
 
-    this.statisticContainer = dch('p', ['result-text'], `The longest answer Chain - ${answerChain}`);
+    this.statisticContainer = dch('p', ['result-page--chain-text'], `The longest answer Chain: ${answerChain}`);
     this.resultContainer = dch('div', ['result-container']);
     this.rootNode = dch(
       'div',
       ['result-page'],
       '',
       this.title,
+      subTitle,
       this.statisticContainer,
       rightTitleContainer,
       this.correctWordsContainer,

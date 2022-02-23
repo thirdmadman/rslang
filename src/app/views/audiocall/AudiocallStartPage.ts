@@ -22,8 +22,6 @@ export class AudiocallStartPage extends Renderable {
 
   buttonsContainer: HTMLElement;
 
-  titleContainer: HTMLElement;
-
   buttonContainerText: HTMLElement;
 
   levelBtnContainer: HTMLElement;
@@ -37,11 +35,10 @@ export class AudiocallStartPage extends Renderable {
     this.page = page;
     this.arrayAnswers = [];
     this.title = dch('h2', ['audiocall-page--title'], 'audio decoding');
-    this.titleContainer = dch('div', ['audiocall-page--title-container'], '', this.title);
     this.gameDescription = dch(
       'div',
       ['audiocall-page--text'],
-      `Record of vice will be played.
+      `Record of vice will be played.<br>
     Make a match between what is said and what is written.`,
     );
 
@@ -88,7 +85,7 @@ export class AudiocallStartPage extends Renderable {
       this.startButton,
     );
 
-    this.mainContainer = dch('div', ['audiocall-page--main'], '', this.titleContainer, this.gameDescription);
+    this.mainContainer = dch('div', ['audiocall-page--main'], '', this.title, this.gameDescription);
     this.rootNode = dch('div', ['audiocall-page'], '', this.mainContainer, this.buttonsContainer);
   }
 }

@@ -3,59 +3,62 @@ $color-dark-m: #555555;
 $color-dark-xl: #1b1b1b;
 $color-light-m: #f6f6f6;
 
-
 .audiocall-page {
-  margin: 0 auto;
-  max-width: 1000px;
+  margin: 20px auto;
   width: 100%;
-  height: 100vh;
+  max-width: 1000px;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-content: center;
   justify-content: center;
-  gap: 50px;
   font-family: "Roboto";
   font-weight: 100;
   text-align: center;
   color: #767676;
 
   @media screen and (max-width: 768px) {
-    padding: 20px;
+    padding: 0 20px;
   }
   @media screen and (max-width: 555px) {
-    height: auto;
-    margin-top: 25%;
+    min-height: 100%;
   }
 
-  &--main {
+  .audiocall-page--main {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    align-items: center;
     max-width: 600px;
   }
 
-  &--title {
+  .audiocall-page--title {
+    margin-bottom: 50px;
+    padding: 0 40px;
     font-size: 60px;
     line-height: 70px;
     text-transform: uppercase;
     font-weight: 100;
+    background: url('/src/assets/img/svg/corner-left-top.svg') top left no-repeat,
+    url('/src/assets/img/svg/corner-right-bottom.svg') bottom right no-repeat;
+
+    &--in-game {
+      margin-bottom: 15px;
+    }
 
     @media screen and (max-width: 768px) {
       font-size: 40px
     }
   }
-  &--text {
+
+  .audiocall-page--text {
+    margin-bottom: 50px;
     font-size: 36px;
     line-height: 50px;
   }
-  &--title-container {
-    padding: 3px 20px;
-    background: url('/src/assets/img/svg/corner-left-top.svg') top left no-repeat,
-      url('/src/assets/img/svg/corner-right-bottom.svg') bottom right no-repeat;
-  }
-  &--button {
+
+  .audiocall-page--button {
     width: 300px;
     height: 50px;
     background-color: white;
@@ -69,9 +72,10 @@ $color-light-m: #f6f6f6;
     cursor: pointer;
 
     &:hover {
-      font-weight: 300;
+      transform: scale(1.1);
       transition: all 0.1s;
     }
+
     &:active {
       color: $color-dark-xl;
       font-weight: 300;
@@ -86,18 +90,20 @@ $color-light-m: #f6f6f6;
   flex-direction: column;
   align-items: center;
 
-  &--text {
+  .button-container--text {
     font-size: 36px;
     line-height: 42px;
     text-transform: uppercase;
   }
 }
+
 .level-button-container {
   display: flex;
   gap: 40px;
   flex-wrap: wrap;
   justify-content: center;
 }
+
 .level-button {
   width: 50px;
   height: 50px;
@@ -113,7 +119,7 @@ $color-light-m: #f6f6f6;
   cursor: pointer;
 
   &:hover {
-    font-weight: 300;
+    transform: scale(1.1);
     transition: all 0.1s;
   }
 

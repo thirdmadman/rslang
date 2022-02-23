@@ -21,8 +21,6 @@ export class SprintStartPage extends Renderable {
 
   buttonsContainer: HTMLElement;
 
-  titleContainer: HTMLElement;
-
   buttonContainerText: HTMLElement;
 
   levelBtnContainer: HTMLElement;
@@ -36,11 +34,10 @@ export class SprintStartPage extends Renderable {
     this.page = page;
     this.arrayAnswers = [];
     this.title = dch('h2', ['sprint-page--title'], 'MEANING RESOLVING');
-    this.titleContainer = dch('div', ['sprint-page--title-container'], '', this.title);
     this.gameDescription = dch(
       'div',
       ['sprint-page--text'],
-      `Your time is limited.    
+      `Your time is limited.<br>  
       Make decisions - is it correct match of word meaning.`,
     );
 
@@ -87,7 +84,7 @@ export class SprintStartPage extends Renderable {
       this.startButton,
     );
 
-    this.mainContainer = dch('div', ['sprint-page--main'], '', this.titleContainer, this.gameDescription);
+    this.mainContainer = dch('div', ['sprint-page--main'], '', this.title, this.gameDescription);
     this.rootNode = dch('div', ['sprint-page'], '', this.mainContainer, this.buttonsContainer);
   }
 }

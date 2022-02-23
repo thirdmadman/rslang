@@ -4,41 +4,41 @@ $color-dark-xl: #1b1b1b;
 $color-light-m: #f6f6f6;
 
 .word-container {
-    display: flex;
-    flex-direction: column;    
-    align-items: center;
-    gap: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
 
-    .word-container--question-text {
-      font-weight: 100;
-      font-size: 36px;
-      line-height: 60px;
-      text-align: center;
-      text-transform: uppercase;
-    }
+  .word-container--question-text {
+    font-weight: 100;
+    font-size: 36px;
+    line-height: 60px;
+    text-align: center;
+    text-transform: uppercase;
+  }
 
-    &--title {
-        font-size: 36px;
-        line-height: 50px;         
-        text-transform: uppercase;
-        font-weight: 100;
-        
-    }
+  .word-container--title {
+    font-size: 36px;
+    line-height: 50px;
+    text-transform: uppercase;
+    font-weight: 100;
+  }
 }
-.audio-btn {
-    border: 1px solid #767676;
-    background-image: url('../../../assets/img/svg/icon-audio.svg');
-    background-size: auto;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 62px;
-    width: 62px;
-    background-color: white;
 
-    &:hover {
-        transform: scale(1.1);
-        transition: all 0.1s;
-      }
+.audio-btn {
+  border: 1px solid #767676;
+  background-image: url('../../../assets/img/svg/icon-audio.svg');
+  background-size: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 62px;
+  width: 62px;
+  background-color: white;
+
+  &:hover {
+    transform: scale(1.1);
+    transition: all 0.1s;
+  }
 }
 
 .button-answer {
@@ -49,7 +49,7 @@ $color-light-m: #f6f6f6;
   padding-right: 0;
   cursor: pointer;
 
-  &--text {
+  .button-answer--text {
     font-weight: 100;
     font-size: 24px;
     line-height: 50px;
@@ -57,56 +57,52 @@ $color-light-m: #f6f6f6;
     text-align: center;
 
     &:hover {
-        font-weight: 300;        
-        transition: all 0.1s;
-      }
-      &:active {
-        color: $color-dark-xl;
-        font-weight: 300;
-      }
+      transform: scale(1.1);
+      transition: all 0.1s;
+    }
+    &:active {
+      color: $color-dark-xl;
+      font-weight: 300;
+    }
   }
 
-  &--count {
+  .button-answer--count {
     margin-left: 10px;
     width: 20px;
     line-height: 20px;
-    text-align: center;  
+    text-align: center;
     font-size: 18px;
-    line-height: 0px;
     text-transform: uppercase;
-}
-
-
+  }
 }
 
 .game-btn {
-    padding: 10px 20px;
-    border: none;
-    background: url('/src/assets/img/svg/corner-left-top.svg') top left no-repeat,
+  padding: 10px 20px;
+  border: none;
+  background: url('/src/assets/img/svg/corner-left-top.svg') top left no-repeat,
     url('/src/assets/img/svg/corner-right-bottom.svg') bottom right no-repeat;
-    display: flex;
-    gap: 30px;
-    font-family: 'Roboto';    
-    font-weight: 100;
-    font-size: 24px;
-    line-height: 28px;    
-    text-transform: uppercase;
-    color: $color-dark-s;
-    cursor: pointer;
+  display: flex;
+  gap: 30px;
+  font-family: 'Roboto';
+  font-weight: 100;
+  font-size: 24px;
+  line-height: 28px;
+  text-transform: uppercase;
+  color: $color-dark-s;
+  cursor: pointer;
 
-    &:hover {
-        font-weight: 300;
-        color: $color-dark-xl;
-        transition: all 0.1s;
-      }
-      &:active {
-        color: $color-dark-xl;
-        font-weight: 300;
-      }
+  &:hover {
+    transform: scale(1.1);
+    transition: all 0.1s;
+  }
+  &:active {
+    color: $color-dark-xl;
+    font-weight: 300;
+  }
 }
 .game-btn-container {
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
