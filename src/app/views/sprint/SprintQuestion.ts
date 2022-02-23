@@ -1,55 +1,57 @@
 import { dch } from '../dch';
 import Renderable from '../Renderable';
-import { ISprintQuestionData } from '../../interfaces/ISprintQuestionData';
+import { IWord } from '../../interfaces/IWord';
+import { IGameQuestion } from '../../interfaces/IGameQuestion';
 
 export class SprintQuestion extends Renderable {
-  questionData: ISprintQuestionData;
+  private questionData: IGameQuestion;
 
-  question: HTMLElement;
+  private rightBtn: HTMLElement;
 
-  translate: HTMLElement;
+  private wrongBtn: HTMLElement;
 
-  questionContainer: HTMLElement;
-
-  rightBtn: HTMLElement;
-
-  wrongBtn: HTMLElement;
-
-  btnContainer: HTMLElement;
-
-  constructor(questionData: ISprintQuestionData) {
+  constructor(questionData: IGameQuestion) {
     super();
+
     this.questionData = questionData;
-    this.question = dch('div', ['question'], `${questionData.word.word}`);
-    this.translate = dch('div', ['translate'], `${questionData.translate}`);
-    this.questionContainer = dch('div', ['question-container'], '', this.question, this.translate);
+    const questionText = dch('h3', ['game-question--question-text'], 'Is correct match?');
+    const assumptionContainer = dch('div', ['assumption']);
+
+    const wordOriginal = dch('div', ['assumption--original'], this.questionData.wordData.word);
+    const wordSeparator = dch('div', ['assumption--separator']);
+    const wordQuestion = dch('div', ['assumption--question'], this.questionData.variants[0].wordData.wordTranslate);
+
+    assumptionContainer.append(wordOriginal, wordSeparator, wordQuestion);
+
     this.rightBtn = dch('button', ['question-container_btn'], 'true');
     this.rightBtn.onclick = () => {
-      this.onAnswer(this.questionData, true);
+      this.onAnswer(this.questionData.wordData, this.questionData.variants[0].isCorrect === true);
     };
     this.wrongBtn = dch('button', ['question-container_btn'], 'false');
     this.wrongBtn.onclick = () => {
-      this.onAnswer(this.questionData, false);
+      this.onAnswer(this.questionData.wordData, this.questionData.variants[0].isCorrect === false);
     };
-    this.btnContainer = dch('div', ['button-container'], '', this.wrongBtn, this.rightBtn);
-    this.rootNode = dch('div', ['question-section'], '', this.questionContainer, this.btnContainer);
+    const btnContainer = dch('div', ['game-btn-container'], '', this.rightBtn, this.wrongBtn);
+
+    this.rootNode = dch('div', ['game-question'], '', assumptionContainer, questionText, btnContainer);
     document.addEventListener('keyup', this.handlerKey);
   }
 
   destroy() {
+    document.removeEventListener('keyup', this.handlerKey);
     this.rootNode.remove();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onAnswer = (questionData: ISprintQuestionData, answer: boolean) => {};
+  onAnswer = (questionData: IWord, isCorrect: boolean) => {};
 
   handlerKey = (event: KeyboardEvent) => {
     if (event.code === 'Digit1') {
-      this.wrongBtn.click();
+      this.rightBtn.click();
       document.removeEventListener('keyup', this.handlerKey);
     } else if (event.code === 'Digit2') {
-      this.rightBtn.click();
-      document.removeEventListener('keydown', this.handlerKey);
+      this.wrongBtn.click();
+      document.removeEventListener('keyup', this.handlerKey);
     }
   };
 }
