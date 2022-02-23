@@ -56,7 +56,6 @@ export class MusicPlayer {
     if (this.currentTrack === -1) {
       this.currentTrack = 0;
     }
-    console.log(this.audio.volume);
     if (!this.isPlaying && !this.isPaused) {
       this.audio.src = this.currentPlaylist[this.currentTrack];
       this.audio.volume = this.currentVolume;
