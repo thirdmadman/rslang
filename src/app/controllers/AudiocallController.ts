@@ -8,7 +8,7 @@ export class AudiocallController extends AbstractController {
   resolve(path: string) {
     const currentTrack = musicPlayer2.getCurrentPlayingTrack();
     if (!currentTrack || currentTrack.indexOf(GlobalConstants.AUDIOCALL_MUSIC_NAME) < 0) {
-      musicPlayer2.setVolume(0.3);
+      musicPlayer2.setVolume(0.1);
       musicPlayer2.setPlayList([`${GlobalConstants.MUSIC_PATH + GlobalConstants.AUDIOCALL_MUSIC_NAME}`], true);
       musicPlayer2.play().catch(() => {});
     }
