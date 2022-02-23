@@ -2,30 +2,77 @@ $color-dark-s: #767676;
 $color-dark-m: #555555;
 $color-dark-xl: #1b1b1b;
 $color-light-m: #f6f6f6;
-.result-word-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 15px;
-}
+
 .result-page {
-    margin: 0 auto;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 }
-.result-audio-btn {
-    border: 1px solid #767676;
-    background-image: url('../../../assets/img/svg/icon-audio.svg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 35px;
-    width: 35px;
-    background-color: white;
+
+.result-words-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 33px;
+  max-width: 715px;
+  justify-content: space-between;
+
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+    align-content: center;;
+  }  
 }
-.word-container--item {
+
+.button-word {
+  background: url('/src/assets/img/svg/corner-left-top.svg') top left no-repeat,
+    url('/src/assets/img/svg/corner-right-bottom.svg') bottom right no-repeat;
+  display: flex;
+  padding-left: 30px;
+  gap: 6px;
+
+  &--text {
     font-weight: 100;
     font-size: 18px;
     line-height: 21px;
-    display: flex;
-    align-items: center;
-    text-align: center;
     text-transform: uppercase;
+    text-align: center;
+  }
+
+  &--audio-btn {
+    border: none;
+    line-height: 20px;
+    text-align: center;
+    background-image: url('../../../assets/img/svg/icon-audio-s.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 20px;
+    width: 24px;
+    background-color: white;
+
+    &:hover {
+        transform: scale(1.1);
+        transition: all 0.1s;
+      }
+  }
+}
+
+.title-container {
+  display: flex;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  align-items: center;
+}
+
+.result-words--title {
+  font-size: 36px;
+  line-height: 42px;
+  color: $color-dark-s;
+  text-transform: uppercase;
+}
+
+.count {
+  background: url('/src/assets/img/svg/corner-left-top.svg') top left no-repeat,
+    url('/src/assets/img/svg/corner-right-bottom.svg') bottom right no-repeat;
+  padding: 15px;
 }

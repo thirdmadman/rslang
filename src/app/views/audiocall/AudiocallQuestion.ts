@@ -30,9 +30,11 @@ export class AudiocallQuestion extends Renderable {
     };
     this.rootNode = dch('div', ['word-container'], '', this.title, this.playAudioButton, this.answersContainer);
     this.questionData.variants.sort(() => Math.random() - 0.5)
-      .forEach((answer) => {
-        const answerBtn = dch('button', ['game-btn'], answer.wordData.wordTranslate);
-        this.answersContainer.append(answerBtn);
+      .forEach((answer, index) => {
+        const answerBtnNum = dch('div', ['button-answer--count'], `${index}`);
+        const answerBtn = dch('div', ['button-answer--text'], answer.wordData.wordTranslate);
+        const answerBtnContainer = dch('div', ['button-answer'], '', answerBtn, answerBtnNum);
+        this.answersContainer.append(answerBtnContainer);
         answerBtn.onclick = () => {
           this.onAnswer(this.questionData.wordData, answer.isCorrect);
         };
