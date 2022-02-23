@@ -77,7 +77,7 @@ export class AudiocallGameField extends Renderable {
         this.maxAnswerChain = this.answerChain;
       }
     };
-
+    
     this.rootNode.append(cardQuestion.getElement());
   }
 }

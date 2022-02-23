@@ -14,6 +14,7 @@ $color-light-m: #f6f6f6;
         line-height: 50px;         
         text-transform: uppercase;
         font-weight: 100;
+        
     }
 }
 .audio-btn {
@@ -24,7 +25,51 @@ $color-light-m: #f6f6f6;
     height: 62px;
     width: 62px;
     background-color: white;
+
+    &:hover {
+        transform: scale(1.1);
+        transition: all 0.1s;
+      }
 }
+
+.button-answer {
+    background: url('/src/assets/img/svg/corner-left-top.svg') top left no-repeat,
+    url('/src/assets/img/svg/corner-right-bottom.svg') bottom right no-repeat;
+  display: flex;
+  padding: 10px 30px;
+  padding-right: 0;
+  cursor: pointer;
+
+  &--text {
+    font-weight: 100;
+    font-size: 24px;
+    line-height: 28px;
+    text-transform: uppercase;
+    text-align: center;
+
+    &:hover {
+        font-weight: 300;        
+        transition: all 0.1s;
+      }
+      &:active {
+        color: $color-dark-xl;
+        font-weight: 300;
+      }
+  }
+
+  &--count {
+    margin-left: 10px;
+    width: 20px;
+    line-height: 20px;
+    text-align: center;  
+    font-size: 18px;
+    line-height: 0px;
+    text-transform: uppercase;
+}
+
+
+}
+
 .game-btn {
     padding: 10px 20px;
     border: none;
@@ -41,7 +86,7 @@ $color-light-m: #f6f6f6;
     cursor: pointer;
 
     &:hover {
-        font-weight: 200;
+        font-weight: 300;
         color: $color-dark-xl;
         transition: all 0.1s;
       }
@@ -53,4 +98,6 @@ $color-light-m: #f6f6f6;
 .game-btn-container {
     display: flex;
     gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
