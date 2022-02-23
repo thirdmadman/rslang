@@ -2,6 +2,14 @@ $color-dark-s: #767676;
 $color-dark-m: #555555;
 $color-dark-xl: #1b1b1b;
 $color-light-m: #f6f6f6;
+
+.result-page {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
 .result-words-container {
   display: flex;
   flex-wrap: wrap;
@@ -14,12 +22,7 @@ $color-light-m: #f6f6f6;
     align-content: center;;
   }  
 }
-.result-page {
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
-}
+
 .button-word {
   background: url('/src/assets/img/svg/corner-left-top.svg') top left no-repeat,
     url('/src/assets/img/svg/corner-right-bottom.svg') bottom right no-repeat;
@@ -52,6 +55,7 @@ $color-light-m: #f6f6f6;
       }
   }
 }
+
 .title-container {
   display: flex;
   display: flex;
@@ -59,6 +63,7 @@ $color-light-m: #f6f6f6;
   gap: 30px;
   align-items: center;
 }
+
 .result-words--title {
   font-size: 36px;
   line-height: 42px;
