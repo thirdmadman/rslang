@@ -43,7 +43,7 @@ export class AudiocallStatisticPage extends Renderable {
         UserWordService.setWordStatistic(userId, item.questionData.id, item.isCorrect)
           .catch((e) => console.error(e));
       }
-      
+
       const word = dch(
         'p',
         ['button-word--text-item'],
