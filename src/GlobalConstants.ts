@@ -28,4 +28,14 @@ export class GlobalConstants {
   public static NUMBER_OF_GROUP_AUTH_USER = 7;
 
   public static GAME_TIME = 60;
+
+  public static MUSIC_PATH = 'static/music/';
+
+  public static WORDBOOK_MUSIC_NAME = 'wordbook.mp3';
+
+  public static AUDIOCALL_MUSIC_NAME = 'audiocall.mp3';
+
+  public static AUTH_MUSIC_NAME = 'auth.mp3';
+
+  public static SPRINT_MUSIC_NAME = 'sprint.mp3';
 }

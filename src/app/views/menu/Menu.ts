@@ -1,5 +1,6 @@
 import { GlobalConstants } from '../../../GlobalConstants';
 import { PathBus } from '../../services/PathBus';
+import { musicPlayer2 } from '../../services/SingleMusicPlayer2';
 import { TokenProvider } from '../../services/TokenProvider';
 import { dch } from '../dch';
 import Renderable from '../Renderable';
@@ -109,12 +110,14 @@ export class Menu extends Renderable {
     buttonBurgerMenu.onclick = () => {
       this.main.classList.remove('main-hidden');
       buttonBurgerMenu.classList.add('burger-menu-button-hidden');
+      musicPlayer2.pause();
     };
 
     this.closeBtn = dch('button', ['close-button']);
     this.closeBtn.onclick = () => {
       this.main.classList.add('main-hidden');
       buttonBurgerMenu.classList.remove('burger-menu-button-hidden');
+      musicPlayer2.play().catch((e) => console.error(e));
     };
 
     this.main = dch('div', ['main', 'main-hidden'], '', this.appNameContainer, this.navigationContainer, this.closeBtn);

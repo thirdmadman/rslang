@@ -4,9 +4,17 @@ import { Wordbook } from '../views/wordBook/Wordbook';
 import { GlobalConstants } from '../../GlobalConstants';
 import { Menu } from '../views/menu/Menu';
 import { PathBus } from '../services/PathBus';
+import { musicPlayer2 } from '../services/SingleMusicPlayer2';
 
 export class WordbookController extends AbstractController {
   resolve(path: string) {
+    const currentTrack = musicPlayer2.getCurrentPlayingTrack();
+    if (!currentTrack || currentTrack.indexOf(GlobalConstants.WORDBOOK_MUSIC_NAME) < 0) {
+      musicPlayer2.setVolume(0.09);
+      musicPlayer2.setPlayList([`${GlobalConstants.MUSIC_PATH + GlobalConstants.WORDBOOK_MUSIC_NAME}`], true);
+      musicPlayer2.play().catch(() => {});
+    }
+
     this.rootNode.innerHTML = '';
     this.rootNode.append(new Menu().getElement());
 
