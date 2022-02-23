@@ -75,6 +75,24 @@ export class Menu extends Renderable {
       if (currentPath.indexOf(item.path) === 0) {
         list.classList.add('nav-menu--item-active');
       }
+
+      if (currentPath.indexOf(GlobalConstants.ROUTE_WORDBOOK) === 0) {
+        const currentGroup = Number(currentPath.split('/')[2]);
+        const currentPage = Number(currentPath.split('/')[3]);
+
+        const setNewHref = (path: string, group: number, page: number) => {
+          if (group && page) {
+            link.href = `#${path}/${group}/${page}`;
+          }
+        };
+
+        if (item.path === GlobalConstants.ROUTE_AUDIOCALL) {
+          setNewHref(item.path, currentGroup, currentPage);
+        } else if (item.path === GlobalConstants.ROUTE_SPRINT) {
+          setNewHref(item.path, currentGroup, currentPage);
+        }
+      }
+
       if (item.isAuthNeeded) {
         if (isUserAuth) {
           this.navigationList.append(list);
