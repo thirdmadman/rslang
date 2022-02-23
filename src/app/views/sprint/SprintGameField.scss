@@ -13,11 +13,12 @@
     background: url('/src/assets/img/svg/corner-left-top.svg') top left no-repeat,
     url('/src/assets/img/svg/corner-right-top.svg') top right no-repeat,
     url('/src/assets/img/svg/corner-right-bottom.svg') bottom right no-repeat,
-    url('/src/assets/img/svg/corner-right-bottom.svg') bottom left no-repeat;
+    url('/src/assets/img/svg/corner-left-bottom.svg') bottom left no-repeat;
     padding: 10px;
     font-size: 48px;
     line-height: 56px;
     text-transform: uppercase;
     width: 70px;
+    height: 70px;
     margin-bottom: 52px;
 }
