@@ -1,6 +1,6 @@
 import { IWord } from './IWord';
 
-export interface IAudiocallAnswer {
+export interface IGameAnswer {
   wordData: IWord,
   isCorrect: boolean,
 }
