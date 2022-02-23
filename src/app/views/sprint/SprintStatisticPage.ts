@@ -17,20 +17,27 @@ export class SprintStatisticPage extends Renderable {
 
   title: HTMLElement;
 
-  score: HTMLElement;
+  correctWordsContainer: HTMLElement;
+
+  inCorrectWordsContainer: HTMLElement;
 
   constructor(resultData: IResultData[], answerChain: number) {
     super();
     this.resultData = resultData;
     this.title = dch('h3', ['word-container--title'], 'results');
-    const correctAnswers = this.resultData.filter((item) => item.isCorrect);
-    this.score = dch('div', ['word-container--subtitle'], `${correctAnswers.length}/${this.resultData.length}`);
-    this.statisticContainer = dch('p', ['result-text'], `The longest answer Chain - ${answerChain}`);
-    this.resultContainer = dch('div', ['result-container']);
-    this.rootNode = dch('div', ['result-page'], '', this.title, this.score, this.resultContainer);
-    // this.rootNode.append(new Menu().getElement());
-    this.date = this.formatDate(new Date());
-    resultData.forEach((item) => {
+
+    const rightResult = this.resultData.filter((el) => el.isCorrect).length;
+    const wrongResult = this.resultData.length - rightResult;
+    const rightCount = dch('div', ['result-words--title', 'count'], `${rightResult}`);
+    const wrongCount = dch('div', ['result-words--title', 'count'], `${wrongResult}`);
+    const rightTitle = dch('div', ['result-words--title'], 'correct');
+    const wrongTitle = dch('div', ['result-words--title'], 'incorrect');
+    const rightTitleContainer = dch('div', ['title-container'], '', rightTitle, rightCount);
+    const wrongTitleContainer = dch('div', ['title-container'], '', wrongTitle, wrongCount);
+    this.correctWordsContainer = dch('div', ['result-words-container'], '');
+    this.inCorrectWordsContainer = dch('div', ['result-words-container'], '');
+
+    this.resultData.forEach((item) => {
       const userId = TokenProvider.getUserId();
 
       if (userId && !TokenProvider.checkIsExpired()) {
@@ -38,18 +45,53 @@ export class SprintStatisticPage extends Renderable {
           .catch((e) => console.error(e));
       }
 
+      const word = dch(
+        'p',
+        ['button-word--text-item'],
+        `${item.questionData.wordTranslate}`,
+      );
+      const wordTranslate = dch(
+        'p',
+        ['button-word--text-item'],
+        `${item.questionData.word}`,
+      );
+      const buttonWordText = dch(
+        'div',
+        ['button-word--text'],
+        '',
+        word,
+        wordTranslate,
+      );
+      const buttonWordAudio = dch(
+        'button',
+        ['button-word--audio-btn'],
+      );
       const audioWordData = `${GlobalConstants.DEFAULT_API_URL}/${item.questionData.audio}`;
-      const playAudioBtn = dch('button', ['result-audio-btn']);
-      playAudioBtn.onclick = () => {
+      buttonWordAudio.onclick = () => {
         this.playAudio(audioWordData);
       };
-      const word = dch('p', ['word-container--item'], `${item.questionData.word}`);
-      const wordTranslate = dch('p', ['word-container_item'], `${item.questionData.wordTranslate}`);
-      const wordResult = dch('p', ['word-container_item'], `${item.isCorrect ? 'true' : 'false'}`);
-      const wordContainer = dch('div', ['result-word-container']);
-      wordContainer.append(playAudioBtn, word, wordTranslate, wordResult);
-      this.resultContainer.append(wordContainer, this.statisticContainer);
+      const buttonWord = dch('div', ['button-word'], '', buttonWordText, buttonWordAudio);
+
+      if (item.isCorrect) {
+        this.correctWordsContainer.append(buttonWord);
+      } else {
+        this.inCorrectWordsContainer.append(buttonWord);
+      }
     });
+    this.statisticContainer = dch('p', ['result-text'], `The longest answer Chain - ${answerChain}`);
+    this.resultContainer = dch('div', ['result-container']);
+    this.rootNode = dch(
+      'div',
+      ['result-page'],
+      '',
+      this.title,
+      this.statisticContainer,
+      rightTitleContainer,
+      this.correctWordsContainer,
+      wrongTitleContainer,
+      this.inCorrectWordsContainer,
+    );
+    this.date = this.formatDate(new Date());
   }
 
   playAudio = (audio: string) => {

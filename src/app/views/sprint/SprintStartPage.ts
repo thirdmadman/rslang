@@ -2,6 +2,7 @@ import { dch } from '../dch';
 import Renderable from '../Renderable';
 import { GlobalConstants } from '../../../GlobalConstants';
 import { IGameAnswer } from '../../interfaces/IGameAnswer';
+import './SprintStartPage.scss';
 
 export class SprintStartPage extends Renderable {
   gameDescription: HTMLElement;
@@ -39,11 +40,11 @@ export class SprintStartPage extends Renderable {
     this.gameDescription = dch(
       'div',
       ['sprint-page--text'],
-      `Your time is limited.
+      `Your time is limited.    
       Make decisions - is it correct match of word meaning.`,
     );
 
-    this.startButton = dch('button', ['audiocall-page--button'], 'START RESOLVING');
+    this.startButton = dch('button', ['sprint-page--button'], 'START RESOLVING');
     this.startButton.addEventListener('click', () => {
       this.onStartGame(this.group, this.page);
     });
@@ -86,7 +87,7 @@ export class SprintStartPage extends Renderable {
       this.startButton,
     );
 
-    this.mainContainer = dch('div', ['audiocall-page--main'], '', this.titleContainer, this.gameDescription);
-    this.rootNode = dch('div', ['audiocall-page'], '', this.mainContainer, this.buttonsContainer);
+    this.mainContainer = dch('div', ['sprint-page--main'], '', this.titleContainer, this.gameDescription);
+    this.rootNode = dch('div', ['sprint-page'], '', this.mainContainer, this.buttonsContainer);
   }
 }
