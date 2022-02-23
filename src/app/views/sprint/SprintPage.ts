@@ -22,8 +22,6 @@ export class SprintPage extends Renderable {
             currentQuestion: 0,
           } as IGameQuestionArray;
 
-          console.log(questionsData);
-
           this.rootNode.innerHTML = '';
           gameField.setQuestionsArray(questionsData);
           gameField.startGame();
