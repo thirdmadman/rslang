@@ -85,6 +85,7 @@ export class AudiocallStatisticPage extends Renderable {
       ['result-page'],
       '',
       this.title,
+      this.statisticContainer,
       rightTitleContainer,
       this.correctWordsContainer,
       wrongTitleContainer,

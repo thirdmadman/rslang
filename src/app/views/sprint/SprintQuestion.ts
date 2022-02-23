@@ -2,6 +2,7 @@ import { dch } from '../dch';
 import Renderable from '../Renderable';
 import { IWord } from '../../interfaces/IWord';
 import { IGameQuestion } from '../../interfaces/IGameQuestion';
+import './SprintQuestion.scss';
 
 export class SprintQuestion extends Renderable {
   private questionData: IGameQuestion;
@@ -17,21 +18,24 @@ export class SprintQuestion extends Renderable {
     const questionText = dch('h3', ['game-question--question-text'], 'Is correct match?');
     const assumptionContainer = dch('div', ['assumption']);
 
-    const wordOriginal = dch('div', ['assumption--original'], this.questionData.wordData.word);
+    const wordOriginal = dch('div', ['assumption--text'], this.questionData.wordData.word);
     const wordSeparator = dch('div', ['assumption--separator']);
-    const wordQuestion = dch('div', ['assumption--question'], this.questionData.variants[0].wordData.wordTranslate);
+    const wordQuestion = dch('div', ['assumption--text'], this.questionData.variants[0].wordData.wordTranslate);
 
     assumptionContainer.append(wordOriginal, wordSeparator, wordQuestion);
-
-    this.rightBtn = dch('button', ['question-container_btn'], 'true');
+    const rightBtnNum = dch('div', ['question-container_count'], '1');
+    this.rightBtn = dch('button', ['question-container_text'], 'true');
+    const rightBtnContainer = dch('div', ['question-container_btn'], '', this.rightBtn, rightBtnNum);
     this.rightBtn.onclick = () => {
       this.onAnswer(this.questionData.wordData, this.questionData.variants[0].isCorrect === true);
     };
-    this.wrongBtn = dch('button', ['question-container_btn'], 'false');
+    const wrongBtnNum = dch('div', ['question-container_count'], '2');
+    this.wrongBtn = dch('button', ['question-container_text'], 'false');
+    const wrongBtnContainer = dch('div', ['question-container_btn'], '', this.wrongBtn, wrongBtnNum);
     this.wrongBtn.onclick = () => {
       this.onAnswer(this.questionData.wordData, this.questionData.variants[0].isCorrect === false);
     };
-    const btnContainer = dch('div', ['game-btn-container'], '', this.rightBtn, this.wrongBtn);
+    const btnContainer = dch('div', ['game-btn-container'], '', rightBtnContainer, wrongBtnContainer);
 
     this.rootNode = dch('div', ['game-question'], '', assumptionContainer, questionText, btnContainer);
     document.addEventListener('keyup', this.handlerKey);

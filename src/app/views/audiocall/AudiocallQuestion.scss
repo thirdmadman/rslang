@@ -45,14 +45,14 @@ $color-light-m: #f6f6f6;
   background: url('/src/assets/img/svg/corner-left-top.svg') top left no-repeat,
     url('/src/assets/img/svg/corner-right-bottom.svg') bottom right no-repeat;
   display: flex;
-  padding: 10px 30px;
+  padding-left: 30px;
   padding-right: 0;
   cursor: pointer;
 
   &--text {
     font-weight: 100;
     font-size: 24px;
-    line-height: 28px;
+    line-height: 50px;
     text-transform: uppercase;
     text-align: center;
 

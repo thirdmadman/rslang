@@ -5,6 +5,7 @@ import { IGameQuestionArray } from '../../interfaces/IGameQuestionArray';
 import { IGameQuestion } from '../../interfaces/IGameQuestion';
 import { SprintQuestion } from './SprintQuestion';
 import { GlobalConstants } from '../../../GlobalConstants';
+import './SprintGameField.scss';
 
 export class SprintGameField extends Renderable {
   private questionsArray: IGameQuestionArray | null = null;
