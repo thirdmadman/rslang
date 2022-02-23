@@ -1,6 +1,8 @@
 export class MusicPlayer {
   private isPlaying = false;
 
+  private isPaused = false;
+
   private currentVolume = 1;
 
   private currentPlaylist = Array<string>();
@@ -9,11 +11,25 @@ export class MusicPlayer {
 
   private audio = new Audio();
 
+  private isLooping = false;
+
+  getCurrentPlayingTrack() {
+    if (this.isPlaying && this.isPaused) {
+      return this.currentPlaylist[this.currentTrack];
+    }
+    return null;
+  }
+
+  getIsPaused() {
+    return this.isPaused;
+  }
+
   addToPlaylist(srcArray: Array<string>) {
     this.currentPlaylist = this.currentPlaylist.concat(srcArray);
   }
 
-  setPlayList(srcArray: Array<string>) {
+  setPlayList(srcArray: Array<string>, isLooping = false) {
+    this.isLooping = isLooping;
     this.stop();
     this.currentPlaylist = srcArray;
     this.currentTrack = -1;
@@ -41,20 +57,38 @@ export class MusicPlayer {
       this.currentTrack = 0;
     }
 
-    if (!this.isPlaying) {
+    if (!this.isPlaying && !this.isPaused) {
       this.audio.src = this.currentPlaylist[this.currentTrack];
       this.audio.volume = this.currentVolume;
 
       this.audio.onended = () => {
         if (this.currentTrack < this.currentPlaylist.length - 1) {
-          this.isPlaying = !this.isPlaying;
+          this.stop();
+          return this.next();
+        }
+
+        if (this.isLooping) {
           this.stop();
           return this.next();
         }
         return null;
       };
 
-      return this.audio.play();
+      this.isPlaying = true;
+      this.isPaused = false;
+      return this.audio.play().catch((e) => {
+        console.error(e);
+        this.isPlaying = false;
+      });
+    }
+
+    if (this.isPaused) {
+      this.isPlaying = true;
+      this.isPaused = false;
+      return this.audio.play().catch((e) => {
+        console.error(e);
+        this.isPlaying = false;
+      });
     }
 
     return new Promise(() => {});
@@ -74,6 +108,7 @@ export class MusicPlayer {
       this.audio.pause();
       this.audio.currentTime = 0;
     }
+    this.isPaused = false;
     this.isPlaying = false;
   }
 
@@ -81,6 +116,7 @@ export class MusicPlayer {
     if (this.audio) {
       this.audio.pause();
       this.isPlaying = false;
+      this.isPaused = true;
     }
   }
 
