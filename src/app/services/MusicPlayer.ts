@@ -14,7 +14,7 @@ export class MusicPlayer {
   private isLooping = false;
 
   getCurrentPlayingTrack() {
-    if (this.isPlaying && this.isPaused) {
+    if (this.isPlaying && !this.isPaused) {
       return this.currentPlaylist[this.currentTrack];
     }
     return null;
