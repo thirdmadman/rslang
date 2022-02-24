@@ -15,16 +15,6 @@ export class AuthController extends AbstractController {
 
     this.rootNode.innerHTML = '';
     this.rootNode.append(new Menu().getElement());
-    const currentPath = path.split('/');
-    const redirectPage = path.split('?path=');
-    if (!path) {
-      this.rootNode.append(new AuthorizationPage().getElement());
-    }
-    if (path === '/expired') {
-      this.rootNode.append(new AuthorizationPage(GlobalConstants.ROUTE_MAIN).getElement());
-    }
-    if (currentPath[1] === 'expired?path=') {
-      this.rootNode.append(new AuthorizationPage(redirectPage[1]).getElement());
-    }
+    this.rootNode.append(new AuthorizationPage(path).getElement());
   }
 }
