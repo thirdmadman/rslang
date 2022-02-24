@@ -14,7 +14,7 @@ export class AuthorizationPage extends Renderable {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onCancelButtonClick = () => {};
 
-  private redirectPage = GlobalConstants.ROUTE_MAIN;
+  private redirectPage = GlobalConstants.ROUTE_WORDBOOK;
 
   constructor(path: string) {
     super();
