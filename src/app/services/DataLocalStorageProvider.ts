@@ -30,9 +30,9 @@ class DataLocalStorageProvider {
         return dataIConfigs;
       }
     } else {
-      const genaratedData = DataLocalStorageProvider.generateData();
-      DataLocalStorageProvider.setData(genaratedData);
-      return genaratedData;
+      const generatedData = DataLocalStorageProvider.generateData();
+      DataLocalStorageProvider.setData(generatedData);
+      return generatedData;
     }
     return null;
   }
