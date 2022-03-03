@@ -95,7 +95,7 @@ export class SprintGameField extends Renderable {
 
   startTimer() {
     this.gameTimer = window.setInterval(() => {
-      this.currentTime--;
+      this.currentTime -= 1;
       this.timerText.innerText = `${this.currentTime}`;
       if (this.currentTime === 0) {
         clearInterval(this.gameTimer);

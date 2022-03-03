@@ -122,7 +122,7 @@ export class MusicPlayer {
   prev() {
     this.stop();
     if (this.currentTrack > 0) {
-      this.currentTrack--;
+      this.currentTrack += 1;
     } else {
       this.currentTrack = this.currentPlaylist.length - 1;
     }
@@ -132,7 +132,7 @@ export class MusicPlayer {
   next() {
     this.stop();
     if (this.currentTrack < this.currentPlaylist.length - 1) {
-      this.currentTrack++;
+      this.currentTrack += 1;
     } else {
       this.currentTrack = 0;
     }

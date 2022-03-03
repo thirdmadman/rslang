@@ -49,14 +49,14 @@ export class Wordbook extends Renderable {
 
   changePage(btn: string) {
     if (btn === 'prev') {
-      if (this.data.currentPage > 0) this.data.currentPage--;
+      if (this.data.currentPage > 0) this.data.currentPage -= 1;
       PathBus.setCurrentPath(
         `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
       );
     }
 
     if (btn === 'next') {
-      if (this.data.currentPage < GlobalConstants.NUMBER_OF_PAGES - 1) this.data.currentPage++;
+      if (this.data.currentPage < GlobalConstants.NUMBER_OF_PAGES - 1) this.data.currentPage += 1;
       PathBus.setCurrentPath(
         `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
       );
@@ -65,14 +65,14 @@ export class Wordbook extends Renderable {
 
   changeLevel(btn: string) {
     if (btn === 'prev') {
-      if (this.data.currentGroup > 0) this.data.currentGroup--;
+      if (this.data.currentGroup > 0) this.data.currentGroup -= 1;
       PathBus.setCurrentPath(
         `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
       );
     }
 
     if (btn === 'next') {
-      if (this.data.currentGroup < GlobalConstants.NUMBER_OF_GROUP_NO_AUTH_USER - 1) this.data.currentGroup++;
+      if (this.data.currentGroup < GlobalConstants.NUMBER_OF_GROUP_NO_AUTH_USER - 1) this.data.currentGroup += 1;
       PathBus.setCurrentPath(
         `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
       );

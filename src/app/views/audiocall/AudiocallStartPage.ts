@@ -61,7 +61,7 @@ export class AudiocallStartPage extends Renderable {
       this.group = 0;
       this.page = 0;
 
-      for (let i = 0; i < GlobalConstants.NUMBER_OF_GROUP_NO_AUTH_USER; i++) {
+      for (let i = 0; i < GlobalConstants.NUMBER_OF_GROUP_NO_AUTH_USER; i += 1) {
         const levelBtn = dch('button', ['level-button'], `${i + 1}`);
         this.levelBtnContainer.append(levelBtn);
 
