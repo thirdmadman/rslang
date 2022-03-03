@@ -10,8 +10,6 @@
   },
   "plugins": ["@typescript-eslint", "import"],
   "rules": {
-    "no-inferrable-types": "off",
-    "no-plusplus": "off",
     "no-console": "off",
     "max-len": ["warn", {"code": 120}],
     "indent": [
@@ -28,7 +26,6 @@
         "SwitchCase": 1
       }
     ],
-    "import/prefer-default-export": "off",
     "no-param-reassign": [
       "error",
       {
