@@ -1,6 +1,6 @@
 import { GlobalConstants } from '../../GlobalConstants';
 import { IPaginatedArray } from '../interfaces/IPaginatedArray';
-import { axiosIntance } from './axiosIntance';
+import { axiosInstance } from './axiosInstance';
 import { IAggregatedWord } from '../interfaces/IAggregatedWord';
 
 type IPaginatedResults = [
@@ -32,7 +32,7 @@ export class UsersAggregatedWordsService {
     if (filter.length > 0) {
       params.append('filter', String(filter));
     }
-    return axiosIntance()
+    return axiosInstance()
       .get(`${GlobalConstants.API_ENDPOINT_USERS}/${id}/aggregatedWords`, { params })
       .then((res) => {
         const resultData = res.data as IPaginatedResults;
@@ -50,7 +50,7 @@ export class UsersAggregatedWordsService {
    * This method uses token
    */
   static getAggregatedWordsByUserIdAndWordId(id: string, wordId: string) {
-    return axiosIntance()
+    return axiosInstance()
       .get(`${GlobalConstants.API_ENDPOINT_USERS}/${id}/aggregatedWords/${wordId}`)
       .then((res) => {
         const resultData = res.data as Array<IAggregatedWord>;

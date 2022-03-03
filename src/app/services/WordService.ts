@@ -1,11 +1,11 @@
 import { GlobalConstants } from '../../GlobalConstants';
 import { IPaginatedArray } from '../interfaces/IPaginatedArray';
 import { IWord } from '../interfaces/IWord';
-import { axiosIntance } from './axiosIntance';
+import { axiosInstance } from './axiosInstance';
 
 export class WordService {
   static getWordsByGroupAndPage(group: number, page: number) {
-    return axiosIntance(true)
+    return axiosInstance(true)
       .get(`${GlobalConstants.DEFAULT_API_URL}${GlobalConstants.API_ENDPOINT_WORDS}`, {
         params: {
           group,
@@ -25,7 +25,7 @@ export class WordService {
   }
 
   static getWordsById(id: string) {
-    return axiosIntance(true)
+    return axiosInstance(true)
       .get(`${GlobalConstants.DEFAULT_API_URL}${GlobalConstants.API_ENDPOINT_WORDS}/${id}`)
       .then((res) => res.data as IWord);
   }

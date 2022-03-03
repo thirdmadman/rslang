@@ -2,14 +2,14 @@ import { GlobalConstants } from '../../GlobalConstants';
 import { IUserWord } from '../interfaces/IUserWord';
 import { IUserWordData } from '../interfaces/IUserWordData';
 import { IUserWordOptional } from '../interfaces/IUserWordOptional';
-import { axiosIntance } from './axiosIntance';
+import { axiosInstance } from './axiosInstance';
 
 export class UserWordService {
   /**
    * This method uses token
    */
   static getAllWordsByUserId(id: string) {
-    return axiosIntance()
+    return axiosInstance()
       .get(`${GlobalConstants.API_ENDPOINT_USERS}/${id}/words`)
       .then((res) => res.data as Array<IUserWord>);
   }
@@ -18,7 +18,7 @@ export class UserWordService {
    * This method uses token
    */
   static getUserWordById(id: string, wordId: string) {
-    return axiosIntance()
+    return axiosInstance()
       .get(`${GlobalConstants.API_ENDPOINT_USERS}/${id}/words/${wordId}`)
       .then((res) => res.data as IUserWord);
   }
@@ -27,7 +27,7 @@ export class UserWordService {
    * This method uses token
    */
   static createUserWord(id: string, wordId: string, userWordData: IUserWordData) {
-    return axiosIntance()
+    return axiosInstance()
       .post(`${GlobalConstants.API_ENDPOINT_USERS}/${id}/words/${wordId}`, userWordData)
       .then((res) => res.data as IUserWord);
   }
@@ -128,7 +128,7 @@ export class UserWordService {
    * This method uses token
    */
   static updateUserWord(id: string, wordId: string, userWordData: IUserWordData) {
-    return axiosIntance()
+    return axiosInstance()
       .put(`${GlobalConstants.API_ENDPOINT_USERS}/${id}/words/${wordId}`, userWordData)
       .then((res) => res.data as IUserWord);
   }
@@ -137,7 +137,7 @@ export class UserWordService {
    * This method uses token
    */
   static deleteUser(id: string, wordId: string) {
-    return axiosIntance().delete(`${GlobalConstants.API_ENDPOINT_USERS}/${id}/words/${wordId}`);
+    return axiosInstance().delete(`${GlobalConstants.API_ENDPOINT_USERS}/${id}/words/${wordId}`);
   }
 
   static setWordStatistic(id: string, wordId: string, isCorrect: boolean) {

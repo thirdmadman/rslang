@@ -2,7 +2,7 @@ import axios from 'axios';
 import { GlobalConstants } from '../../GlobalConstants';
 import { TokenProvider } from './TokenProvider';
 
-export function axiosIntance(isIgnoreToken = false) {
+export function axiosInstance(isIgnoreToken = false) {
   if (!isIgnoreToken) {
     if (TokenProvider.redirectIfTokenExpired()) {
       throw new Error('Token expired');

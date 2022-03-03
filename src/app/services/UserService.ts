@@ -2,20 +2,20 @@ import { GlobalConstants } from '../../GlobalConstants';
 import { IAuth } from '../interfaces/IAuth';
 import { ICreatedUser } from '../interfaces/ICreatedUser';
 import { IUser } from '../interfaces/IUser';
-import { axiosIntance } from './axiosIntance';
+import { axiosInstance } from './axiosInstance';
 
 export class UserService {
   /**
    * This method uses token
    */
   static getUserById(id: string) {
-    return axiosIntance()
+    return axiosInstance()
       .get(`${GlobalConstants.API_ENDPOINT_USERS}/${id}`)
       .then((res) => res.data as IUser);
   }
 
   static createUser(email: string, password: string, name: string = email) {
-    return axiosIntance(true)
+    return axiosInstance(true)
       .post(`${GlobalConstants.API_ENDPOINT_USERS}`, {
         name,
         email,
@@ -28,7 +28,7 @@ export class UserService {
    * This method uses token
    */
   static updateUser(email: string, password: string, id: string) {
-    return axiosIntance()
+    return axiosInstance()
       .put(`${GlobalConstants.API_ENDPOINT_USERS}/${id}`, {
         email,
         password,
@@ -40,14 +40,14 @@ export class UserService {
    * This method uses token
    */
   static deleteUser(id: string) {
-    return axiosIntance().delete(`${GlobalConstants.API_ENDPOINT_USERS}/${id}`);
+    return axiosInstance().delete(`${GlobalConstants.API_ENDPOINT_USERS}/${id}`);
   }
 
   /**
    * This method uses token
    */
   static refreshUserToken(id: string) {
-    return axiosIntance()
+    return axiosInstance()
       .get(`${GlobalConstants.API_ENDPOINT_USERS}/${id}/tokens`)
       .then((res) => res.data as IAuth);
   }
