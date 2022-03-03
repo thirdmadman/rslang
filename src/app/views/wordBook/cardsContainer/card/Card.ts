@@ -1,4 +1,4 @@
-import { IWordAdanced } from '../../../../interfaces/IWordAdvanced';
+import { IWordAdvanced } from '../../../../interfaces/IWordAdvanced';
 import { GlobalConstants } from '../../../../../GlobalConstants';
 import { dch } from '../../../dch';
 import Renderable from '../../../Renderable';
@@ -8,7 +8,7 @@ import { UserWordService } from '../../../../services/UserWordService';
 import './Card.scss';
 
 export class Card extends Renderable {
-  private data: IWordAdanced;
+  private data: IWordAdvanced;
 
   private buttonSetDifficultyState: HTMLElement;
 
@@ -20,7 +20,7 @@ export class Card extends Renderable {
 
   private image = new Image();
 
-  constructor(data: IWordAdanced) {
+  constructor(data: IWordAdvanced) {
     super();
     this.data = data;
     const userId = TokenProvider.getUserId();

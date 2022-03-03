@@ -5,7 +5,7 @@ import Renderable from '../../Renderable';
 import { IPaginatedArray } from '../../../interfaces/IPaginatedArray';
 import { TokenProvider } from '../../../services/TokenProvider';
 import { UserWordService } from '../../../services/UserWordService';
-import { IWordAdanced } from '../../../interfaces/IWordAdvanced';
+import { IWordAdvanced } from '../../../interfaces/IWordAdvanced';
 import './CardsContainer.scss';
 
 export class CardsContainer extends Renderable {
@@ -17,7 +17,7 @@ export class CardsContainer extends Renderable {
     this.rootNode = dch('div', ['cards-container']);
 
     const userId = TokenProvider.getUserId();
-    let advancedWords = this.data.array.map((word) => ({ word } as IWordAdanced));
+    let advancedWords = this.data.array.map((word) => ({ word } as IWordAdvanced));
     if (userId && !TokenProvider.checkIsExpired()) {
       UserWordService.getAllWordsByUserId(userId).then((wordsData) => {
         advancedWords = this.data.array.map((word) => {
@@ -26,11 +26,11 @@ export class CardsContainer extends Renderable {
             return {
               word,
               userData: userWordFound,
-            } as IWordAdanced;
+            } as IWordAdvanced;
           }
           return {
             word,
-          } as IWordAdanced;
+          } as IWordAdvanced;
         });
         this.addCards(advancedWords);
       }).catch((e) => console.error(e));
@@ -39,7 +39,7 @@ export class CardsContainer extends Renderable {
     }
   }
 
-  addCards(arrayWords: Array<IWordAdanced>) {
+  addCards(arrayWords: Array<IWordAdvanced>) {
     arrayWords.forEach((el) => {
       const card = new Card(el);
       this.rootNode.append(card.getElement());

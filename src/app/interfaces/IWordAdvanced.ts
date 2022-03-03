@@ -1,7 +1,7 @@
 import { IUserWord } from './IUserWord';
 import { IWord } from './IWord';
 
-export interface IWordAdanced {
+export interface IWordAdvanced {
   word: IWord;
   userData?: IUserWord;
 }
