@@ -1,5 +1,5 @@
 export class GlobalConstants {
-  public static DEFAULT_API_URL = 'https://thirdmadman-rs-lang.herokuapp.com';
+  public static DEFAULT_API_URL = 'https://unusual-cummerbund-slug.cyclic.app';
 
   public static API_ENDPOINT_WORDS = '/words';
 
