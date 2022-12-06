@@ -116,7 +116,7 @@ export class Menu extends Renderable {
 
     this.closeBtn = dch('button', ['close-button']);
     this.closeBtn.onclick = () => {
-      window.document.documentElement.style.overflowY = 'auto';
+      window.document.documentElement.removeAttribute('style');
       this.main.classList.add('main-hidden');
       buttonBurgerMenu.classList.remove('burger-menu-button-hidden');
       musicPlayer2.play().catch((e) => console.error(e));
