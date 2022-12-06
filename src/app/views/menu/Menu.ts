@@ -108,6 +108,7 @@ export class Menu extends Renderable {
 
     const buttonBurgerMenu = dch('button', ['burger-menu-button']);
     buttonBurgerMenu.onclick = () => {
+      window.document.documentElement.style.overflowY = 'hidden';
       this.main.classList.remove('main-hidden');
       buttonBurgerMenu.classList.add('burger-menu-button-hidden');
       musicPlayer2.pause();
@@ -115,6 +116,7 @@ export class Menu extends Renderable {
 
     this.closeBtn = dch('button', ['close-button']);
     this.closeBtn.onclick = () => {
+      window.document.documentElement.style.overflowY = 'auto';
       this.main.classList.add('main-hidden');
       buttonBurgerMenu.classList.remove('burger-menu-button-hidden');
       musicPlayer2.play().catch((e) => console.error(e));
