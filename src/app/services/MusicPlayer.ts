@@ -84,7 +84,7 @@ export class MusicPlayer {
     if (this.isPaused) {
       this.isPlaying = true;
       this.isPaused = false;
-      return this.audio.play().catch((e) => {
+      return this.audio.play().then(() => this.riseVolume(this.currentVolume, 0.001, 5)).catch((e) => {
         console.error(e);
         this.isPlaying = false;
       });
@@ -113,9 +113,11 @@ export class MusicPlayer {
 
   pause() {
     if (this.audio) {
-      this.audio.pause();
-      this.isPlaying = false;
-      this.isPaused = true;
+      this.fadeVolume(0, 0.001, 5).then(() => {
+        this.audio.pause();
+        this.isPlaying = false;
+        this.isPaused = true;
+      }).catch((e) => console.error(e));
     }
   }
 
@@ -137,5 +139,31 @@ export class MusicPlayer {
       this.currentTrack = 0;
     }
     return this.play();
+  }
+
+  fadeVolume(fadeToVolume: number, factor: number, speed: number) {
+    return new Promise((resolve) => {
+      const refreshId = window.setInterval(() => {
+        if (this.audio.volume - factor >= fadeToVolume) {
+          this.audio.volume -= factor;
+        } else {
+          clearInterval(refreshId);
+          resolve(0);
+        }
+      }, speed);
+    });
+  }
+
+  riseVolume(riseToVolume: number, factor: number, speed: number) {
+    return new Promise((resolve) => {
+      const refreshId = window.setInterval(() => {
+        if (this.audio.volume + factor <= riseToVolume) {
+          this.audio.volume += factor;
+        } else {
+          clearInterval(refreshId);
+          resolve(0);
+        }
+      }, speed);
+    });
   }
 }
