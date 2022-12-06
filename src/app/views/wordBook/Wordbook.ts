@@ -5,14 +5,56 @@ import { PathBus } from '../../services/PathBus';
 import { dch } from '../dch';
 import Renderable from '../Renderable';
 import { CardsContainer } from './cardsContainer/CardsContainer';
+import { Spinner } from '../common/Spinner';
 import './Wordbook.scss';
 
 export class Wordbook extends Renderable {
-  private data: IPaginatedArray<IWord>;
+  private data: IPaginatedArray<IWord> | null = null;
 
-  constructor(data: IPaginatedArray<IWord>) {
+  constructor() {
     super();
     this.rootNode = dch('div', ['wordbook']);
+    const spinner = new Spinner().getElement();
+    this.rootNode.appendChild(spinner);
+  }
+
+  changePage(btn: string) {
+    if (!this.data) return;
+
+    if (btn === 'prev') {
+      if (this.data.currentPage > 0) this.data.currentPage -= 1;
+      PathBus.setCurrentPath(
+        `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
+      );
+    }
+
+    if (btn === 'next') {
+      if (this.data.currentPage < GlobalConstants.NUMBER_OF_PAGES - 1) this.data.currentPage += 1;
+      PathBus.setCurrentPath(
+        `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
+      );
+    }
+  }
+
+  changeLevel(btn: string) {
+    if (!this.data) return;
+
+    if (btn === 'prev') {
+      if (this.data.currentGroup > 0) this.data.currentGroup -= 1;
+      PathBus.setCurrentPath(
+        `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
+      );
+    }
+
+    if (btn === 'next') {
+      if (this.data.currentGroup < GlobalConstants.NUMBER_OF_GROUP_NO_AUTH_USER - 1) this.data.currentGroup += 1;
+      PathBus.setCurrentPath(
+        `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
+      );
+    }
+  }
+
+  render(data: IPaginatedArray<IWord>) {
     this.data = data;
 
     const pageTitle = dch('div', ['wordbook__title'], 'Their memories');
@@ -43,39 +85,7 @@ export class Wordbook extends Renderable {
 
     const navigationContainer = dch('div', ['navigation-container']);
     navigationContainer.append(paginationLevel, paginationPage);
-
+    this.rootNode.innerHTML = '';
     this.rootNode.append(pageTitle, navigationContainer, cardsContainer.getElement());
-  }
-
-  changePage(btn: string) {
-    if (btn === 'prev') {
-      if (this.data.currentPage > 0) this.data.currentPage -= 1;
-      PathBus.setCurrentPath(
-        `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
-      );
-    }
-
-    if (btn === 'next') {
-      if (this.data.currentPage < GlobalConstants.NUMBER_OF_PAGES - 1) this.data.currentPage += 1;
-      PathBus.setCurrentPath(
-        `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
-      );
-    }
-  }
-
-  changeLevel(btn: string) {
-    if (btn === 'prev') {
-      if (this.data.currentGroup > 0) this.data.currentGroup -= 1;
-      PathBus.setCurrentPath(
-        `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
-      );
-    }
-
-    if (btn === 'next') {
-      if (this.data.currentGroup < GlobalConstants.NUMBER_OF_GROUP_NO_AUTH_USER - 1) this.data.currentGroup += 1;
-      PathBus.setCurrentPath(
-        `${GlobalConstants.ROUTE_WORDBOOK}/${this.data.currentGroup + 1}/${this.data.currentPage + 1}`,
-      );
-    }
   }
 }

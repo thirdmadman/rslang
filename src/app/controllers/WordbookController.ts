@@ -38,8 +38,13 @@ export class WordbookController extends AbstractController {
       currentGroup = GlobalConstants.NUMBER_OF_GROUP_NO_AUTH_USER;
     }
 
-    WordService.getWordsByGroupAndPage(currentGroup - 1, currentPage - 1).then((data) => {
-      this.rootNode.append(new Wordbook(data).getElement());
-    }).catch((e) => console.error(e));
+    const wordbook = new Wordbook();
+    this.rootNode.append(wordbook.getElement());
+
+    WordService.getWordsByGroupAndPage(currentGroup - 1, currentPage - 1)
+      .then((data) => {
+        wordbook.render(data);
+      })
+      .catch((e) => console.error(e));
   }
 }
