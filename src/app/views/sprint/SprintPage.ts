@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import { IWord } from '../../interfaces/IWord';
 import { WordService } from '../../services/WordService';
 import Renderable from '../Renderable';

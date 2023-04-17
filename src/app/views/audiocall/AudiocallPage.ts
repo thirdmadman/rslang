@@ -41,6 +41,7 @@ export class AudiocallPage extends Renderable {
     this.rootNode = startPage.getElement();
   }
 
+  // eslint-disable-next-line class-methods-use-this
   createVariantsForAnswer = (wordsArray: Array<IWord>, count: number, currentWord: IWord) => {
     const onlyDifferentWords = wordsArray.filter((word) => word.id !== currentWord.id);
 

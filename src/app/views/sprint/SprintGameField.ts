@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import { dch } from '../dch';
 import Renderable from '../Renderable';
 import { IResultData } from '../../interfaces/IResultData';
