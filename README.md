@@ -22,9 +22,20 @@ Link on figma: <https://www.figma.com/file/6c9pgV98Sp7acAZIc2AFR5/rslang-ui?node
 
 ## Screenshots
 
+### Main screen
+
 ![min-screen](./rslang-main-screen.png)
+
+### Menu
+
 ![menu](./rslang-menu.png)
+
+### Audio decoding mini game
+
 ![audio-decoding](./rslang-audio-decoding.png)
+
+### Meaning resolving mini game
+
 ![meaning-resolving](./rslang-meaning-resolving.png)
 
 ## Original Task description
