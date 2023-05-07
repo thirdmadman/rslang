@@ -12,7 +12,7 @@ Originally RS-lang, SPA, which helps people study english language in form of ga
 
 This is team project, done by [@thirdmadman](https://github.com/thirdmadman) and [@annettabel87](https://github.com/annettabel87)
 
-Our name for this app is "Forgotten memories", it serves same purpose as original, but has different way of looking at things.
+Our name for this app is "FORGOTTEN WORDS", it serves same purpose as original, but has different way of looking at things.
 
 ## Design
 
