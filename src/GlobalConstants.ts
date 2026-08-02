@@ -1,5 +1,5 @@
 export class GlobalConstants {
-  public static DEFAULT_API_URL = 'https://unusual-cummerbund-slug.cyclic.app';
+  public static DEFAULT_API_URL = 'https://react-rslang-be.thirdmadman.com';
 
   public static API_ENDPOINT_WORDS = '/words';
 
